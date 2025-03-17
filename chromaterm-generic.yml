@@ -20,6 +20,14 @@ palette:
   purple: '#8382f7'
 
 rules:
+# uncomment this if you want ct to highlight your prompt
+#- description: For your (username)@(devicename)>   (Green Light) (Light Blue)
+#  regex: ^(\w+)\@((\w+)\.(\w+))(>|#)
+#  color:
+#    1: f.green
+#    2: f.green
+#    5: f.light_blue bold
+
 - description: Numbers
   regex: \s(?<!\.)\d+(\.\d+)?(?!\.)(?:\s|,|$)
   color: f.orange
