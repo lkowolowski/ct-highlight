@@ -26,17 +26,17 @@ rules:
 
 - description: URL
   regex: |
-    (?ix)\b
+    (?ix)(?:\s|^)
         ((htt|ft|lda)ps?|telnet|ssh)://  # Scheme
         ([-%:\w\\/]{1,256}@)?  # User info
         [-\w]{1,63}(\.[-\w]{1,63}){0,126}(:\d{1,5})?  # Host and port
         (/[-+=~@%&?#.:;,\w\\/()]*)?  # Path, query, and fragment
-    ((?=[.:;,)])|\b)  # Avoid highlighting trailing path characters by matching them in a lookahead
+    ((?=[.:;,)])|\s)  # Avoid highlighting trailing path characters by matching them in a lookahead
   color: f.blue_gray
   exclusive: true
 
 - description: IPv4
-  regex: \b(?<!\.)((25[0-5]|(2[0-4]|[0-1]?\d)?\d)\.){3}(25[0-5]|(2[0-4]|[0-1]?\d)?\d)(/\d+)?\b
+  regex: (?:\s)(?<!\.)((25[0-5]|(2[0-4]|[0-1]?\d)?\d)\.){3}(25[0-5]|(2[0-4]|[0-1]?\d)?\d)(/\d+)?(?:\s)
   color: f.light_blue
   exclusive: true
 
@@ -61,16 +61,16 @@ rules:
 
 - description: MAC address
   regex: |
-    (?ix)\b(
+    (?ix:\s)(
         (?<!:)([\da-f]{1,2}:){5}[\da-f]{1,2}(?!:)|  # 11:22:33:aa:bb:cc
         (?<!\.)([\da-f]{4}\.){2}[\da-f]{4}(?!\.)  # 1122.33aa.bbcc
-    )\b
+    )(?:\s|$)
   color: f.blue_gray
   exclusive: true
 
 - description: Date
   regex: |
-    (?ix)\b(
+    (?ix)(?:\s|^)(
         (\d{2}|\d{4})(?P<sep1>[-/])(0?[1-9]|1[0-2])(?P=sep1)(3[0-1]|[1-2]\d|0?[1-9])|  # YYYY-MM-DD, YY-MM-DD, YYYY/MM/DD, YY/MM/DD
         (3[0-1]|[1-2]\d|0?[1-9])(?P<sep2>[-/])(0?[1-9]|1[0-2])(?P=sep2)(\d{2}|\d{4})|  # DD-MM-YYYY, DD-MM-YY, DD/MM/YYYY, DD/MM/YY
         (0?[1-9]|1[0-2])(?P<sep3>[-/])(3[0-1]|[1-2]\d|0?[1-9])(?P=sep3)(\d{2}|\d{4})|  # MM-DD-YYYY, MM-DD-YY, MM/DD/YYYY, MM/DD/YY
@@ -83,38 +83,43 @@ rules:
 
 - description: Time
   regex: |
-    (?ix)(?<![\.:])(\b|(?<=T))
+    (?ix)(?<![\.:])(\s|(?<=T))
         (2[0-3]|[0-1]\d):[0-5]\d  # Hours and minutes
         (:[0-5]\d([\.,]\d{3,6})?)?  # (Seconds (sub-seconds, 3 to 6 decimal places)?)?
         ([\-\+](\d{2}|\d{4})|Z)?  # (Timezone)?
-    (?![\.:])\b
+    (?![\.:])(?:\s|$)
   color: f.orange
   exclusive: true
 
 - description: Size, like 123G 123Gb 123Gib 1.23G 123Gbps
-  regex: (?i)\s\d+(\.\d+)?\s?((([KMGTPEZY](i?B)?)|B)(ps)?)\s
+  regex: (?i)(?:\s|^)\d+(\.\d+)?\s?((([KMGTPEZY](i?B)?)|B)(ps)?)(?:\s|$)
   color:
     0: f.pink
     2: bold
   exclusive: true
 
 - description: Generic - Bad
-  regex: (?i)\b(password|abnormal(ly)?|down|los(t|ing)|err(ors?)?|(den(y|ies|ied)?)|reject(ing|ed)?|drop(ped|s)?|(err\-)?disabled?|(timed?\-?out)|fail(s|ed|iure)?|disconnect(ed)?|unreachable|invalid|bad|notconnect|unusable|blk|inaccessible|wrong|collisions?|unsynchronized|mismatch|runts)\b
+  regex: (?i)(?:\s|^)(password|abnormal(ly)?|down|los(t|ing)|err(ors?)?|(den(y|ies|ied)?)|reject(ing|ed)?|drop(ped|s)?|(err\-)?disabled?|(timed?\-?out)|fail(s|ed|iure)?|disconnect(ed)?|unreachable|invalid|bad|notconnect|unusable|blk|inaccessible|wrong|collisions?|unsynchronized|mismatch|runts)(?:\s|$)
   color: f.red
+  exclusive: true
 
 - description: Generic - Ambigious bad
-  regex: (?i)\b(no(pe)?|exit(ed)?|reset(t?ing)?|discard(ed|ing)?|block(ed|ing)?|filter(ed|ing)?|stop(p(ed|ing))?|never|bad)\b
+  regex: (?i)(?:\s|^)(no(pe)?|exit(ed)?|reset(t?ing)?|discard(ed|ing)?|block(ed|ing)?|filter(ed|ing)?|stop(p(ed|ing))?|never|bad)(?:\s|$)
   color: f.orange
+  exclusive: true
 
 - description: Generic - Not too bad
-  regex: (?i)\b(warnings?)\b
+  regex: (?i)(?:\s|^)(warning(s)?)(?:\s|$)
   color: f.yellow
+  exclusive: true
 
 - description: Generic - Ambigious good
-  regex: (?i)\b(ye(s|ah?|p)?|start(ed|ing)?|running|good)\b
+  regex: (?i)(?:\s|^)(ye(s|ah?|p)?|start(ed|ing)?|running|good)(?:\s|$)
   color: f.yellow_green
+  exclusive: true
 
 - description: Generic - Good
-  regex: (?i)\b(up|ok(ay)?|permit(ed|s)?|accept(s|ed)?|enabled?|online|succe((ss(ful|fully)?)|ed(ed)?)?|connect(ed)?|reachable|valid|forwarding|synchronized)\b
-  color: f.green
-
+  regex: (?i)(?:\s|^)(up|ok(ay)?|permit(ed|s)?|accept(s|ed)?|enabled?|online|succe((ss(ful|fully)?)|ed(ed)?)?|connect(ed)?|reachable|valid|forwarding|synchronized)(?:\s|$)
+  color:
+    1: f.green
+  exclusive: true
