@@ -1,34 +1,17 @@
-# GENERAL
-- description: For your (username)@(devicename)>   (Green Light) (Light Blue)
-  regex: ^(\w+)\@((\w+)\.(\w+))(>|#)
-  color:
-    1: f.green
-    2: f.green
-    5: f.light_blue bold
-
 # Juniper Interfaces colored orange
-- description: Interfaces that follow <letters>-<number>/<number>/<number>:<number>.<number> format
-  regex: (?:^|\s+)(([fgx]e)|((et)|(gr)|(lsq)|([lm]t)|(sp)|(vcp)|(ip)))-\d+\/\d+\/\d+(:\d+)?(\.\d+)? 
-  color: f.orange
-  exclusive: true
-
-- description: Interfaces that follow <letters><number>.<number> format
-  regex: (?:^|\s+)((ae)|([bv]?me)|(em)|(fti)|(fxp)|(lo)|(pp[de]?)|(st)|(fab)|(swfab)|(reth))\d+(\.\d+)?
-  color: f.orange
-  exclusive: true
-
-- description: Interfaces that follow the <letters>.<number> format
-  regex: (?:^|\s+)((jsrv)|(irb)|(vlan))(\.\d+)?
-  color: f.orange
-  exclusive: true
-
-- description: Interfaces that follow the <letters> format
-  regex: (?:^|\s+)((dsc)|(esi)|(gre)|(ipip)|(mtun)|(pim[de]?)|(rbeb)|(tap))
+- description: Interfaces names
+  regex: |
+    (?ix)(?:\s|^)
+        ((([fgx]e)|((et)|(gr)|(lsq)|([lm]t)|(sp)|(vcp)|(ip)))-\d+\/\d+\/\d+(:\d+)?(\.\d+)?)| # Interfaces that follow <letters>-<number>/<number>/<number>:<number>.<number> format
+        (((ae)|([bv]?me)|(em)|(fti)|(fxp)|(lo)|(pp[de]?)|(st)|(fab)|(swfab)|(reth))\d+(\.\d+)?)| # Interfaces that follow <letters><number>.<number> format
+        (((jsrv)|(irb)|(vlan))(\.\d+)?)|  # Interfaces that follow the <letters>.<number> format
+        ((dsc)|(esi)|(gre)|(ipip)|(mtun)|(pim[de]?)|(rbeb)|(tap)|(lsi)|(vtep)) # Interfaces that follow the <letters> format
+    (?:\s|$)
   color: f.orange
   exclusive: true
 
 - description: Interface description (Light blue)
-  regex: (?:\s\s(?:D|d)escription\:\s+)(.*)(?:$)
+  regex: (?:\s+(?:D|d)escription\:\s+)(.*)(?:$)
   color:
     1: f.light_blue
   exclusive: true
@@ -45,7 +28,10 @@
 # set policy-options prefix-list ike-gateways apply-path "security ike gateway <*> address <*.*.*.*>"
 # set policy-options prefix-list ospf 224.0.0.5/32
 - description: prefix-list (white) name (green) apply-path "string" (blue)
-  regex: (?:set policy-options )(prefix-list) ([a-zA-Z0-9_-]+)(\s+apply-path (\".*(\<.*\>)\")?)?(?:\s+|$)
+  regex: |
+    (?:set policy-options )(prefix-list) ([a-zA-Z0-9_-]+)
+    (\s+apply-path (\".*(\<.*\>)\")?)?
+    (?:\s+|$)
   color:
     1: f.white
     2: f.green
@@ -70,7 +56,11 @@
 
 # Security Policies
 - description: Security policies (white) from-zone (Light Green) to-zone (Light Red) policy (Bright Green)
-  regex: ((set|deactivate)( groups [a-zA-Z0-9_-]+)? security policies) (from-zone [a-zA-Z0-9_\-\<\>\*]+ )(to-zone [a-zA-Z0-9_\-\<\>\*]+ )(policy|apply-groups) ([a-zA-Z0-9_-]+)(\s|$)
+  regex: |
+    ((set|deactivate)(\sgroups\s[a-zA-Z0-9_-]+)?\ssecurity\spolicies\s)
+    (from-zone\s[a-zA-Z0-9_\-\<\>\*]+\s)(to-zone\s[a-zA-Z0-9_\-\<\>\*]+\s)
+    (policy|apply-groups)\s([a-zA-Z0-9_-]+)
+    (?:\s|$)
   color:
     1: f.white
     4: f.green
@@ -79,12 +69,12 @@
     7: f.green
 
 - description: Security Policies - Description (Light Blue)
-  regex: (?:description\s+)(["\/a-zA-Z0-9\.\s_\*(),-]+)$   #"
+  regex: (?:description\s+)(["\/a-zA-Z0-9\.\s_\*(),-]+)$
   color:
     1: f.light_blue
 
 - description: Security Policies - Match|Then (White)
-  regex: (?:\b|\s+)(match|then)(?:\b|\s+)
+  regex: (?:\s)(match|then)(?:\s)
   color: f.white
 
 - description: Security Policies - Source-Adress (Light Green)
