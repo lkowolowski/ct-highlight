@@ -1,0 +1,31 @@
+Physical interface: ge-0/0/0, Enabled, Physical link is Up
+  Interface index: 138, SNMP ifIndex: 513
+  Description: Transit: TDS Telecom (AS4181) [1Gbit]
+  Link-level type: Ethernet, MTU: 1514, LAN-PHY mode, Link-mode: Full-duplex, Speed: 1000mbps, BPDU Error: None, Loop Detect PDU Error: None, Ethernet-Switching Error: None, MAC-REWRITE Error: None, Loopback: Disabled, Source filtering: Disabled, Flow control: Disabled, Auto-negotiation: Enabled, Remote fault: Online
+  Device flags   : Present Running
+  Interface Specific flags: Internal: 0x0
+  Interface flags: SNMP-Traps Internal: 0x0
+  Link flags     : None
+  CoS queues     : 8 supported, 8 maximum usable queues
+  Current address: 70:cd:60:f3:c9:74, Hardware address: d8:b1:22:dd:9b:49
+  Last flapped   : 2025-02-10 20:28:15 UTC (3w6d 03:03 ago)
+  Input rate     : 766392 bps (1480 pps)
+  Output rate    : 29072 bps (23 pps)
+  Active alarms  : None
+  Active defects : None
+  PCS statistics                      Seconds
+    Bit errors                             0
+    Errored blocks                         0
+  Interface transmit statistics: Disabled
+
+  Logical interface ge-0/0/0.0 (Index 75) (SNMP ifIndex 535)
+    Flags: Up SNMP-Traps 0x0 Encapsulation: ENET2
+    Input packets : 3078542411
+    Output packets: 150650450
+    Security: Zone: untrust
+    Allowed host-inbound traffic : router-discovery dhcp ike ping traceroute dhcpv6
+    Protocol inet, MTU: 1500
+    Max nh cache: 100000, New hold nh limit: 100000, Curr nh cnt: 1, Curr new hold cnt: 0, NH drop cnt: 0
+      Flags: Sendbcast-pkt-to-re, Is-Primary
+      Addresses, Flags: Is-Preferred Is-Primary
+        Destination: 72.35.128/19, Local: 72.35.158.167, Broadcast: 72.35.159.255

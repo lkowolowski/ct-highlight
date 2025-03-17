@@ -1,0 +1,120 @@
+palette:
+  #orange: '#dc8968'
+  #orange: '#c96901'
+  #orange: '#ca9102'
+  orange: '#f09536'
+  brown: '#a35a00'
+  blue_gray: '#5698c8'
+  light_blue: '#00D1DB'
+  #magenta: '#ef2e9f'
+  magenta: '#F701FF'
+  pink: '#df99f0'
+  red: '#c71800'
+  #yellow: '#cab902'
+  yellow: '#C6D243'
+  #yellow: '#a2bc02'
+  yellow_green: '#79bf02'
+  #green: '#03d28d'
+  green: '#28c501'
+  white: '#FFFFFF'
+  purple: '#8382f7'
+
+rules:
+- description: Numbers
+  regex: \s(?<!\.)\d+(\.\d+)?(?!\.)(?:\s|,|$)
+  color: f.orange
+
+- description: URL
+  regex: |
+    (?ix)\b
+        ((htt|ft|lda)ps?|telnet|ssh)://  # Scheme
+        ([-%:\w\\/]{1,256}@)?  # User info
+        [-\w]{1,63}(\.[-\w]{1,63}){0,126}(:\d{1,5})?  # Host and port
+        (/[-+=~@%&?#.:;,\w\\/()]*)?  # Path, query, and fragment
+    ((?=[.:;,)])|\b)  # Avoid highlighting trailing path characters by matching them in a lookahead
+  color: f.blue_gray
+  exclusive: true
+
+- description: IPv4
+  regex: \b(?<!\.)((25[0-5]|(2[0-4]|[0-1]?\d)?\d)\.){3}(25[0-5]|(2[0-4]|[0-1]?\d)?\d)(/\d+)?\b
+  color: f.light_blue
+  exclusive: true
+
+- description: IPv6
+  regex: |
+    (?ix)(?<![\w:])(
+        ([\da-f]{1,4}:){7}[\da-f]{1,4}|  # 1:2:3:4:5:6:7:8
+        [\da-f]{1,4}:(:[\da-f]{1,4}){1,6}|  # 1::3:4:5:6:7:8
+        ([\da-f]{1,4}:){1,2}(:[\da-f]{1,4}){1,5}|  # 1:2::4:5:6:7:8
+        ([\da-f]{1,4}:){1,3}(:[\da-f]{1,4}){1,4}|  # 1:2:3::5:6:7:8
+        ([\da-f]{1,4}:){1,4}(:[\da-f]{1,4}){1,3}|  # 1:2:3:4::6:7:8
+        ([\da-f]{1,4}:){1,5}(:[\da-f]{1,4}){1,2}|  # 1:2:3:4:5::7:8
+        ([\da-f]{1,4}:){1,6}:[\da-f]{1,4}|  # 1:2:3:4:5:6::8
+        ([\da-f]{1,4}:){1,7}:|  # 1:2:3:4:5:6:7::
+        :((:[\da-f]{1,4}){1,7}|:)  # ::2:3:4:5:6:7:8
+    )(:(?=\W))?  # \W is an exclusive-flag hack to color the : before an IPv4-embedded address
+    (%[\da-z]+)?  # Zone index
+    (/\d+)?  # Prefix length
+    (?!:?\w)
+  color: f.magenta
+  exclusive: true
+
+- description: MAC address
+  regex: |
+    (?ix)\b(
+        (?<!:)([\da-f]{1,2}:){5}[\da-f]{1,2}(?!:)|  # 11:22:33:aa:bb:cc
+        (?<!\.)([\da-f]{4}\.){2}[\da-f]{4}(?!\.)  # 1122.33aa.bbcc
+    )\b
+  color: f.blue_gray
+  exclusive: true
+
+- description: Date
+  regex: |
+    (?ix)\b(
+        (\d{2}|\d{4})(?P<sep1>[-/])(0?[1-9]|1[0-2])(?P=sep1)(3[0-1]|[1-2]\d|0?[1-9])|  # YYYY-MM-DD, YY-MM-DD, YYYY/MM/DD, YY/MM/DD
+        (3[0-1]|[1-2]\d|0?[1-9])(?P<sep2>[-/])(0?[1-9]|1[0-2])(?P=sep2)(\d{2}|\d{4})|  # DD-MM-YYYY, DD-MM-YY, DD/MM/YYYY, DD/MM/YY
+        (0?[1-9]|1[0-2])(?P<sep3>[-/])(3[0-1]|[1-2]\d|0?[1-9])(?P=sep3)(\d{2}|\d{4})|  # MM-DD-YYYY, MM-DD-YY, MM/DD/YYYY, MM/DD/YY
+        (jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\s+(  # MMM
+            (3[0-1]|[1-2]\d|0?[1-9])(\s+\d{4})?|\d{4}  # DD (YYYY)?, YYYY
+        )|(3[0-1]|[1-2]\d|0?[1-9])\s(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)(?!\s+(3[0-1]|[1-2]\d|0?[1-9])([^\w:]|$))(\s+\d{4})?  # DD MMM (YYYY)?
+    )((?=[\WT_])|$)
+  color: f.orange
+  exclusive: true
+
+- description: Time
+  regex: |
+    (?ix)(?<![\.:])(\b|(?<=T))
+        (2[0-3]|[0-1]\d):[0-5]\d  # Hours and minutes
+        (:[0-5]\d([\.,]\d{3,6})?)?  # (Seconds (sub-seconds, 3 to 6 decimal places)?)?
+        ([\-\+](\d{2}|\d{4})|Z)?  # (Timezone)?
+    (?![\.:])\b
+  color: f.orange
+  exclusive: true
+
+- description: Size, like 123G 123Gb 123Gib 1.23G 123Gbps
+  regex: (?i)\s\d+(\.\d+)?\s?((([KMGTPEZY](i?B)?)|B)(ps)?)\s
+  color:
+    0: f.pink
+    2: bold
+  exclusive: true
+
+- description: Generic - Bad
+  regex: (?i)\b(password|abnormal(ly)?|down|los(t|ing)|err(ors?)?|(den(y|ies|ied)?)|reject(ing|ed)?|drop(ped|s)?|(err\-)?disabled?|(timed?\-?out)|fail(s|ed|iure)?|disconnect(ed)?|unreachable|invalid|bad|notconnect|unusable|blk|inaccessible|wrong|collisions?|unsynchronized|mismatch|runts)\b
+  color: f.red
+
+- description: Generic - Ambigious bad
+  regex: (?i)\b(no(pe)?|exit(ed)?|reset(t?ing)?|discard(ed|ing)?|block(ed|ing)?|filter(ed|ing)?|stop(p(ed|ing))?|never|bad)\b
+  color: f.orange
+
+- description: Generic - Not too bad
+  regex: (?i)\b(warnings?)\b
+  color: f.yellow
+
+- description: Generic - Ambigious good
+  regex: (?i)\b(ye(s|ah?|p)?|start(ed|ing)?|running|good)\b
+  color: f.yellow_green
+
+- description: Generic - Good
+  regex: (?i)\b(up|ok(ay)?|permit(ed|s)?|accept(s|ed)?|enabled?|online|succe((ss(ful|fully)?)|ed(ed)?)?|connect(ed)?|reachable|valid|forwarding|synchronized)\b
+  color: f.green
+

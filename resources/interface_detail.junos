@@ -1,0 +1,106 @@
+Physical interface: ge-0/0/0, Enabled, Physical link is Up
+  Interface index: 138, SNMP ifIndex: 513, Generation: 141
+  Description: Transit: TDS Telecom (AS4181) [1Gbit]
+  Link-level type: Ethernet, MTU: 1514, LAN-PHY mode, Link-mode: Full-duplex, Speed: 1000mbps, BPDU Error: None, Loop Detect PDU Error: None, Ethernet-Switching Error: None, MAC-REWRITE Error: None, Loopback: Disabled, Source filtering: Disabled, Flow control: Disabled, Auto-negotiation: Enabled, Remote fault: Online
+  Device flags   : Present Running
+  Interface Specific flags: Internal: 0x0
+  Interface flags: SNMP-Traps Internal: 0x0
+  Link flags     : None
+  CoS queues     : 8 supported, 8 maximum usable queues
+  Hold-times     : Up 0 ms, Down 0 ms
+  Current address: 70:cd:60:f3:c9:74, Hardware address: d8:b1:22:dd:9b:49
+  Last flapped   : 2025-02-10 20:28:15 UTC (3w5d 21:52 ago)
+  Statistics last cleared: Never
+  Traffic statistics:
+   Input  bytes  :         637471225730               596256 bps
+   Output bytes  :          54442904938                37808 bps
+   Input  packets:           3055227889                 1190 pps
+   Output packets:            149574763                   22 pps
+  Egress queues: 8 supported, 4 in use
+  Queue counters:       Queued packets  Transmitted packets      Dropped packets
+    0                        148764239            148764239                    0
+    1                                0                    0                    0
+    2                                0                    0                    0
+    3                           810436               810436                    0
+  Queue number:         Mapped forwarding classes
+    0                   best-effort
+    1                   expedited-forwarding
+    2                   assured-forwarding
+    3                   network-control
+  Active alarms  : None
+  Active defects : None
+  PCS statistics                      Seconds
+    Bit errors                             0
+    Errored blocks                         0
+  Interface transmit statistics: Disabled
+  MACSec statistics:
+    Output
+        Secure Channel Transmitted
+        Protected Packets               : 0
+        Encrypted Packets               : 0
+        Protected Bytes                 : 0
+        Encrypted Bytes                 : 0
+     Input
+        Secure Channel Received
+        Accepted Packets                : 0
+        Validated Bytes                 : 0
+        Decrypted Bytes                 : 0
+
+  Logical interface ge-0/0/0.0 (Index 75) (SNMP ifIndex 535) (Generation 140)
+    Flags: Up SNMP-Traps 0x0 Encapsulation: ENET2
+    Traffic statistics:
+     Input  bytes  :         637471212430
+     Output bytes  :          54413309958
+     Input  packets:           3055227914
+     Output packets:            149574763
+   Local statistics:
+    Input  bytes  :          43459585337
+    Output bytes  :             59447792
+    Input  packets:            724675067
+    Output packets:               823672
+   Transit statistics:
+    Input  bytes  :         594011627093               448200 bps
+    Output bytes  :          54353862166                37488 bps
+    Input  packets:           2330552847                  882 pps
+    Output packets:            148751091                   22 pps
+    Security: Zone: untrust
+    Allowed host-inbound traffic : router-discovery dhcp ike ping traceroute dhcpv6
+    Flow Statistics :  
+    Flow Input statistics :
+      Self packets :                     774591
+      ICMP packets :                     1468603
+      VPN packets :                      0
+      Multicast packets :                0
+      Bytes permitted by policy :        477746194622
+      Connections established :          46299 
+    Flow Output statistics: 
+      Multicast packets :                0
+      Bytes permitted by policy :        54314466119 
+    Flow error statistics (Packets dropped due to): 
+      Address spoofing:                  0
+      Authentication failed:             0
+      Incoming NAT errors:               0
+      Invalid zone received packet:      0
+      Multiple user authentications:     0 
+      Multiple incoming NAT:             0
+      No parent for a gate:              0
+      No one interested in self packets: 220       
+      No minor session:                  0 
+      No more sessions:                  0
+      No NAT gate:                       0 
+      No route present:                  1722 
+      No SA for incoming SPI:            0 
+      No tunnel found:                   0
+      No session for a gate:             0 
+      No zone or NULL zone binding       0
+      Policy denied:                     0
+      Security association not active:   0 
+      TCP sequence number out of window: 240
+      Syn-attack protection:             0
+      User authentication errors:        0
+    Protocol inet, MTU: 1500
+    Max nh cache: 100000, New hold nh limit: 100000, Curr nh cnt: 1, Curr new hold cnt: 0, NH drop cnt: 0
+    Generation: 155, Route table: 0
+      Flags: Sendbcast-pkt-to-re, Is-Primary
+      Addresses, Flags: Is-Preferred Is-Primary
+        Destination: 72.35.128/19, Local: 72.35.158.167, Broadcast: 72.35.159.255, Generation: 156

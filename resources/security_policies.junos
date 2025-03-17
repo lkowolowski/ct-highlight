@@ -1,0 +1,123 @@
+set groups default-deny-template security policies from-zone <*> to-zone <*> policy defult-deny match source-address any
+set groups default-deny-template security policies from-zone <*> to-zone <*> policy defult-deny match destination-address any
+set groups default-deny-template security policies from-zone <*> to-zone <*> policy defult-deny match application any
+set groups default-deny-template security policies from-zone <*> to-zone <*> policy defult-deny then deny
+set groups default-deny-template security policies from-zone <*> to-zone <*> policy defult-deny then log session-init
+set groups star-to-trust-dhcp security policies from-zone <*> to-zone trust policy any-to-trust-DHCP match source-address any
+set groups star-to-trust-dhcp security policies from-zone <*> to-zone trust policy any-to-trust-DHCP match destination-address dns
+set groups star-to-trust-dhcp security policies from-zone <*> to-zone trust policy any-to-trust-DHCP match application junos-dhcp-relay
+set groups star-to-trust-dhcp security policies from-zone <*> to-zone trust policy any-to-trust-DHCP match application junos-dhcp-server
+set groups star-to-trust-dhcp security policies from-zone <*> to-zone trust policy any-to-trust-DHCP match application junos-dhcp-client
+set groups star-to-trust-dhcp security policies from-zone <*> to-zone trust policy any-to-trust-DHCP match application DHCP
+set groups star-to-trust-dhcp security policies from-zone <*> to-zone trust policy any-to-trust-DHCP match application DHCPv6
+set groups star-to-trust-dhcp security policies from-zone <*> to-zone trust policy any-to-trust-DHCP then permit
+set groups star-to-trust-dns security policies from-zone <*> to-zone trust policy any-to-trust-DNS match source-address any
+set groups star-to-trust-dns security policies from-zone <*> to-zone trust policy any-to-trust-DNS match destination-address dns
+set groups star-to-trust-dns security policies from-zone <*> to-zone trust policy any-to-trust-DNS match application junos-dns-tcp
+set groups star-to-trust-dns security policies from-zone <*> to-zone trust policy any-to-trust-DNS match application junos-dns-udp
+set groups star-to-trust-dns security policies from-zone <*> to-zone trust policy any-to-trust-DNS then permit
+set groups star-to-trust-influx security policies from-zone <*> to-zone trust policy any-to-trust-INFLUX match source-address any
+set groups star-to-trust-influx security policies from-zone <*> to-zone trust policy any-to-trust-INFLUX match destination-address monitor
+set groups star-to-trust-influx security policies from-zone <*> to-zone trust policy any-to-trust-INFLUX match application INFLUX
+set groups star-to-trust-influx security policies from-zone <*> to-zone trust policy any-to-trust-INFLUX then permit
+set groups star-to-star-ntp security policies from-zone <*> to-zone <*> policy any-to-any-NTP match source-address any
+set groups star-to-star-ntp security policies from-zone <*> to-zone <*> policy any-to-any-NTP match destination-address any
+set groups star-to-star-ntp security policies from-zone <*> to-zone <*> policy any-to-any-NTP match application junos-ntp
+set groups star-to-star-ntp security policies from-zone <*> to-zone <*> policy any-to-any-NTP then permit
+set groups trust-to-star-icmp security policies from-zone trust to-zone <*> policy trust-to-any-ICMP match source-address net-198_18_11_0_m24
+set groups trust-to-star-icmp security policies from-zone trust to-zone <*> policy trust-to-any-ICMP match destination-address any
+set groups trust-to-star-icmp security policies from-zone trust to-zone <*> policy trust-to-any-ICMP match application junos-icmp-ping
+set groups trust-to-star-icmp security policies from-zone trust to-zone <*> policy trust-to-any-ICMP match application junos-icmp6-echo-request
+set groups trust-to-star-icmp security policies from-zone trust to-zone <*> policy trust-to-any-ICMP match application junos-icmp6-time-exceed-transit
+set groups trust-to-star-icmp security policies from-zone trust to-zone <*> policy trust-to-any-ICMP match application junos-icmp6-time-exceed-reassembly
+set groups trust-to-star-icmp security policies from-zone trust to-zone <*> policy trust-to-any-ICMP then permit
+set security policies from-zone IoT to-zone untrust policy IoT-to-untrust_allow-all match source-address net-198_18_9_0_m24
+set security policies from-zone IoT to-zone untrust policy IoT-to-untrust_allow-all match destination-address any
+set security policies from-zone IoT to-zone untrust policy IoT-to-untrust_allow-all match application any
+set security policies from-zone IoT to-zone untrust policy IoT-to-untrust_allow-all then permit
+set security policies from-zone untrust to-zone IoT policy untrust-to-IoT_traceroute match source-address any
+set security policies from-zone untrust to-zone IoT policy untrust-to-IoT_traceroute match destination-address net-198_18_9_0_m24
+set security policies from-zone untrust to-zone IoT policy untrust-to-IoT_traceroute match application TRACEROUTE
+set security policies from-zone untrust to-zone IoT policy untrust-to-IoT_traceroute then permit
+deactivate security policies from-zone untrust to-zone IoT policy untrust-to-IoT_traceroute
+set security policies from-zone untrust to-zone IoT policy untrust-to-IoT_XBOX-LIVE match source-address any
+set security policies from-zone untrust to-zone IoT policy untrust-to-IoT_XBOX-LIVE match destination-address XBOX
+set security policies from-zone untrust to-zone IoT policy untrust-to-IoT_XBOX-LIVE match application XBOX-APP-SET
+set security policies from-zone untrust to-zone IoT policy untrust-to-IoT_XBOX-LIVE then permit
+deactivate security policies from-zone untrust to-zone IoT policy untrust-to-IoT_XBOX-LIVE
+set security policies from-zone untrust to-zone trust policy untrust-to-trust_Plex match source-address any
+set security policies from-zone untrust to-zone trust policy untrust-to-trust_Plex match destination-address net-198_18_3_0_m24
+set security policies from-zone untrust to-zone trust policy untrust-to-trust_Plex match application PLEX
+set security policies from-zone untrust to-zone trust policy untrust-to-trust_Plex then permit
+deactivate security policies from-zone untrust to-zone trust policy untrust-to-trust_Plex
+set security policies from-zone untrust to-zone trust policy untrust-to-trust_SyncThing match source-address any
+set security policies from-zone untrust to-zone trust policy untrust-to-trust_SyncThing match destination-address syncthing
+set security policies from-zone untrust to-zone trust policy untrust-to-trust_SyncThing match application SyncThing
+set security policies from-zone untrust to-zone trust policy untrust-to-trust_SyncThing then permit
+set security policies from-zone untrust to-zone trust policy untrust-to-trust_BitTorrent match source-address any
+set security policies from-zone untrust to-zone trust policy untrust-to-trust_BitTorrent match destination-address net-198_18_3_0_m24
+set security policies from-zone untrust to-zone trust policy untrust-to-trust_BitTorrent match application TRANSMISSION
+set security policies from-zone untrust to-zone trust policy untrust-to-trust_BitTorrent then permit
+deactivate security policies from-zone untrust to-zone trust policy untrust-to-trust_BitTorrent
+set security policies from-zone untrust to-zone trust policy untrust-to-trust_traceroute match source-address any
+set security policies from-zone untrust to-zone trust policy untrust-to-trust_traceroute match destination-address any
+set security policies from-zone untrust to-zone trust policy untrust-to-trust_traceroute match application TRACEROUTE
+set security policies from-zone untrust to-zone trust policy untrust-to-trust_traceroute then permit
+deactivate security policies from-zone untrust to-zone trust policy untrust-to-trust_traceroute
+set security policies from-zone site-2-site to-zone trust policy site-2-site-to-trust_ICMP match source-address net-198_18_17_0_m24
+set security policies from-zone site-2-site to-zone trust policy site-2-site-to-trust_ICMP match source-address net-10_10_2_20_m32
+set security policies from-zone site-2-site to-zone trust policy site-2-site-to-trust_ICMP match destination-address net-198_18_3_0_m24
+set security policies from-zone site-2-site to-zone trust policy site-2-site-to-trust_ICMP match application junos-icmp-ping
+set security policies from-zone site-2-site to-zone trust policy site-2-site-to-trust_ICMP match application junos-icmp6-echo-request
+set security policies from-zone site-2-site to-zone trust policy site-2-site-to-trust_ICMP match application junos-icmp6-echo-reply
+set security policies from-zone site-2-site to-zone trust policy site-2-site-to-trust_ICMP match application junos-icmp6-time-exceed-reassembly
+set security policies from-zone site-2-site to-zone trust policy site-2-site-to-trust_ICMP match application junos-icmp6-time-exceed-transit
+set security policies from-zone site-2-site to-zone trust policy site-2-site-to-trust_ICMP then permit
+set security policies from-zone site-2-site to-zone trust policy site-2-site-to-trust_ICMP then count
+set security policies from-zone site-2-site to-zone trust policy site-2-site-to-trust_SyncThing match source-address any
+set security policies from-zone site-2-site to-zone trust policy site-2-site-to-trust_SyncThing match destination-address syncthing
+set security policies from-zone site-2-site to-zone trust policy site-2-site-to-trust_SyncThing match application SyncThing
+set security policies from-zone site-2-site to-zone trust policy site-2-site-to-trust_SyncThing then permit
+deactivate security policies from-zone site-2-site to-zone trust policy site-2-site-to-trust_SyncThing
+set security policies from-zone trust to-zone site-2-site policy trust-to-site-2-site_fk-SyncThing match source-address any
+set security policies from-zone trust to-zone site-2-site policy trust-to-site-2-site_fk-SyncThing match destination-address any
+set security policies from-zone trust to-zone site-2-site policy trust-to-site-2-site_fk-SyncThing match application SyncThing
+set security policies from-zone trust to-zone site-2-site policy trust-to-site-2-site_fk-SyncThing then permit
+deactivate security policies from-zone trust to-zone site-2-site policy trust-to-site-2-site_fk-SyncThing
+set security policies from-zone trust to-zone site-2-site policy trust-to-site-2-site_allow-all match source-address net-198_18_3_0_m24
+set security policies from-zone trust to-zone site-2-site policy trust-to-site-2-site_allow-all match destination-address net-198_18_17_0_m24
+set security policies from-zone trust to-zone site-2-site policy trust-to-site-2-site_allow-all match destination-address net-10_10_2_20_m32
+set security policies from-zone trust to-zone site-2-site policy trust-to-site-2-site_allow-all match application any
+set security policies from-zone trust to-zone site-2-site policy trust-to-site-2-site_allow-all then permit
+set security policies from-zone trust to-zone site-2-site policy trust-to-site-2-site_allow-all then count
+set security policies from-zone trust to-zone untrust apply-groups star-to-star-ntp
+set security policies from-zone trust to-zone untrust apply-groups trust-to-star-icmp
+set security policies from-zone trust to-zone untrust policy trust-to-untrust_allow-all match source-address any
+set security policies from-zone trust to-zone untrust policy trust-to-untrust_allow-all match destination-address any
+set security policies from-zone trust to-zone untrust policy trust-to-untrust_allow-all match application any
+set security policies from-zone trust to-zone untrust policy trust-to-untrust_allow-all then permit
+set security policies from-zone trust to-zone trust policy trust-to-trust_allow-all match source-address any
+set security policies from-zone trust to-zone trust policy trust-to-trust_allow-all match destination-address any
+set security policies from-zone trust to-zone trust policy trust-to-trust_allow-all match application any
+set security policies from-zone trust to-zone trust policy trust-to-trust_allow-all then permit
+set security policies from-zone IoT to-zone trust apply-groups star-to-trust-dhcp
+set security policies from-zone IoT to-zone trust apply-groups star-to-trust-dns
+set security policies from-zone IoT to-zone trust policy UniFi match source-address net-198_18_9_0_m24
+set security policies from-zone IoT to-zone trust policy UniFi match destination-address net-198_18_2_250_m32
+set security policies from-zone IoT to-zone trust policy UniFi match application UniFi
+set security policies from-zone IoT to-zone trust policy UniFi then permit
+set security policies from-zone IoT to-zone trust policy SyncThing match source-address net-198_18_9_0_m24
+set security policies from-zone IoT to-zone trust policy SyncThing match destination-address any
+set security policies from-zone IoT to-zone trust policy SyncThing match application SyncThing
+set security policies from-zone IoT to-zone trust policy SyncThing then permit
+set security policies from-zone IoT to-zone trust policy IoT-to-trust_emby match source-address any
+set security policies from-zone IoT to-zone trust policy IoT-to-trust_emby match destination-address net-198_18_3_0_m24
+set security policies from-zone IoT to-zone trust policy IoT-to-trust_emby match application EMBY
+set security policies from-zone IoT to-zone trust policy IoT-to-trust_emby then permit
+set security policies from-zone trust to-zone IoT policy trust-to-IoT_allow-all description "Allow outbound from IoT"
+set security policies from-zone trust to-zone IoT policy trust-to-IoT_allow-all match source-address any
+set security policies from-zone trust to-zone IoT policy trust-to-IoT_allow-all match destination-address net-198_18_9_0_m24
+set security policies from-zone trust to-zone IoT policy trust-to-IoT_allow-all match application any
+set security policies from-zone trust to-zone IoT policy trust-to-IoT_allow-all then permit
+set security policies policy-rematch extensive
+set security policies policy-stats system-wide enable

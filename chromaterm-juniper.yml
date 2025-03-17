@@ -1,0 +1,112 @@
+# GENERAL
+- description: For your (username)@(devicename)>   (Green Light) (Light Blue)
+  regex: ^(\w+)\@((\w+)\.(\w+))(>|#)
+  color:
+    1: f.green
+    2: f.green
+    5: f.light_blue bold
+
+# Juniper Interfaces colored orange
+- description: Interfaces that follow <letters>-<number>/<number>/<number>:<number>.<number> format
+  regex: (?:^|\s+)(([fgx]e)|((et)|(gr)|(lsq)|([lm]t)|(sp)|(vcp)|(ip)))-\d+\/\d+\/\d+(:\d+)?(\.\d+)? 
+  color: f.orange
+  exclusive: true
+
+- description: Interfaces that follow <letters><number>.<number> format
+  regex: (?:^|\s+)((ae)|([bv]?me)|(em)|(fti)|(fxp)|(lo)|(pp[de]?)|(st)|(fab)|(swfab)|(reth))\d+(\.\d+)?
+  color: f.orange
+  exclusive: true
+
+- description: Interfaces that follow the <letters>.<number> format
+  regex: (?:^|\s+)((jsrv)|(irb)|(vlan))(\.\d+)?
+  color: f.orange
+  exclusive: true
+
+- description: Interfaces that follow the <letters> format
+  regex: (?:^|\s+)((dsc)|(esi)|(gre)|(ipip)|(mtun)|(pim[de]?)|(rbeb)|(tap))
+  color: f.orange
+  exclusive: true
+
+- description: Interface description (Light blue)
+  regex: (?:\s\s(?:D|d)escription\:\s+)(.*)(?:$)
+  color:
+    1: f.light_blue
+  exclusive: true
+
+# By default, interface up/up and down/down are properly colored (green/green, red/red)
+- description: Interface descriptions up/down (Green)(Yellow)
+  regex: (?:\s+)(((U|u)p)\s{2,4}((D|d)own))
+  color:
+    2: f.green
+    4: f.yellow
+
+# Prefix lists
+# set policy-options prefix-list dns-servers apply-path "system name-server <*>"
+# set policy-options prefix-list ike-gateways apply-path "security ike gateway <*> address <*.*.*.*>"
+# set policy-options prefix-list ospf 224.0.0.5/32
+- description: prefix-list (white) name (green) apply-path "string" (blue)
+  regex: (?:set policy-options )(prefix-list) ([a-zA-Z0-9_-]+)(\s+apply-path (\".*(\<.*\>)\")?)?(?:\s+|$)
+  color:
+    1: f.white
+    2: f.green
+    4: f.light_blue
+    5: f.red
+
+# set firewall family inet filter accept-ssh apply-flags omit
+# set firewall family inet filter accept-ssh term accept-ssh from source-prefix-list trusted-ipv4
+# set firewall family inet filter accept-ssh term accept-ssh from destination-prefix-list router-ipv4
+# set firewall family inet filter accept-ssh term accept-ssh from destination-prefix-list router-ipv4-logical-systems
+# set firewall family inet filter accept-ssh term accept-ssh from protocol tcp
+# set firewall family inet filter accept-ssh term accept-ssh from destination-port ssh
+# set firewall family inet filter accept-ssh term accept-ssh then policer management-5m
+# set firewall family inet filter accept-ssh term accept-ssh then count accept-ssh
+# set firewall family inet filter accept-ssh term accept-ssh then accept
+# Firewall rules
+- description: Firewall filter name (green) term name (green)
+  regex: (?:set firewall family inet[6]? filter )([a-zA-Z0-9_-]+)((\s+term\s+)([a-zA-z0-9_-]+))?
+  color:
+    1: f.green
+    4: f.green
+
+# Security Policies
+- description: Security policies (white) from-zone (Light Green) to-zone (Light Red) policy (Bright Green)
+  regex: ((set|deactivate)( groups [a-zA-Z0-9_-]+)? security policies) (from-zone [a-zA-Z0-9_\-\<\>\*]+ )(to-zone [a-zA-Z0-9_\-\<\>\*]+ )(policy|apply-groups) ([a-zA-Z0-9_-]+)(\s|$)
+  color:
+    1: f.white
+    4: f.green
+    5: f.red
+    6: f.white
+    7: f.green
+
+- description: Security Policies - Description (Light Blue)
+  regex: (?:description\s+)(["\/a-zA-Z0-9\.\s_\*(),-]+)$   #"
+  color:
+    1: f.light_blue
+
+- description: Security Policies - Match|Then (White)
+  regex: (?:\b|\s+)(match|then)(?:\b|\s+)
+  color: f.white
+
+- description: Security Policies - Source-Adress (Light Green)
+  regex: (?:source-address\s+)([\/a-zA-Z0-9\._-]+)?
+  color:
+    1: f.green
+
+- description: Security Policies - Destination-Adress (Light Red)
+  regex: (?:destination-address\s+)([\/a-zA-Z0-9\._-]+)?
+  color:
+    1: f.red
+
+- description: Security Policies - Application (Magenta)
+  regex: (?:application\s+)([\/a-zA-Z0-9\._-]+)?
+  color:
+    1: f.magenta
+
+- description: Security Policies - reject or deny (Red Italic Style)
+  regex: (?:then\s+)(reject|deny)$
+  color:
+    1: f.red
+
+- description: Security Policies - log (Red)
+  regex: (log [/a-zA-Z0-9\._-]+)?$
+  color: f.red

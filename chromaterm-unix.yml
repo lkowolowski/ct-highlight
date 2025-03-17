@@ -1,0 +1,21 @@
+# Interfaces colored orange
+- description: MacOS Interfaces that follow <letters><number>.<number> format
+  regex: (?:^|\s+)((en)|(lo))\d+(\.\d+)?
+  color: f.orange
+  exclusive: true
+
+- description: FreeBSD Interfaces that follow <letters><number>.<number> format
+  regex: (?:^|\s+)((em)|(i?xl)|(igb)|(lagg)|(lo))\d+(\.\d+)?
+  color: f.orange
+  exclusive: true
+
+- description: Linux Interfaces that follow <letters><number>.<number> format
+  regex: (?:^|\s+)((ens)|(lan)|(bond)|(main)|(lo))\d+(\.\d+)?
+  color: f.orange
+  exclusive: true
+
+- description: Unix Interfaces that follow <letters><number>.<number> format
+  regex: (?:^|\s+)((ipmi))\d+(\.\d+)?
+  color: f.orange
+  exclusive: true
+

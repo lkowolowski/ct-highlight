@@ -1,0 +1,114 @@
+## Force10 / CISCO
+# General
+- description: Cisco MAC Address Notation (Purple)
+  regex: ([0-9a-f]{4}\.[0-9a-f]{4}\.[0-9a-f]{4}).*
+  color: f.purple
+
+# show run
+- description: Interfaces in shutdown (Red) no shutdown (Bright Green)
+  regex: (?:\s+)(shutdown)|(no shutdown)(?:$)
+  color:
+    1: f.red
+    2: f.green bold
+
+- description: route-map name (Light Blue)
+  regex: (route-map\s[a-zA-Z0-9_-]+)
+  color: f.light_blue bold
+
+- description: route-map permit (Green) or deny (Red) seq number (Light Blue)
+  regex: (?:\s+)((permit)|(deny))(\s+[0-9]+$)?
+  color:
+    2: f.red
+    3: f.green bold
+    4: f.light_blue bold
+
+- description: route-map set clauses (Light Green)
+  regex: \s\sset .*
+  color: f.green
+
+- description: prefix-list name (Purple)
+  regex: (prefix-list\s[a-zA-Z0-9_-]+)
+  color: f.purple bold
+
+- description: prefix-list Matching prefixes eq|gre (Light Green)
+  regex: \s(eq\s[0-9]+|ge\s[0-9]{1,2}|le\s[0-9]+)
+  color: f.green
+
+- description: ip access-list Name (Purple)
+  regex: ip access-list ([a-zA-Z0-9_-]+)
+  color: f.purple bold
+
+- description: vrf name (Light Green)
+  regex: \s\s\svrf .*
+  color: f.green
+
+- description: local-as number (Purple)
+  regex: local-as .*
+  color: f.purple bold
+
+
+# Interfaces
+- description: show interfaces description. Interface status in (Red)
+  regex: (\s\s\sdown|notpresent|lowerlayerdown|admin\sdown)
+  color: f.green bold
+
+- description: show interfaces description - Interface name (Bright Green)
+  regex: (Et[0-9]+|Lo[0-9]|Ma[0-9]|Po[0-9]+|Vl[0-9]+)
+  color: f.red
+
+- description: show run (To match inteface... ET VLAN, ETC) (Bright Green)
+  regex: ^interface.*
+  color: f.red
+
+- description: show run (To match vrf forwarding name) (Light Green)
+  regex: \s\svrf forwarding (.*)$
+  color:
+    1: f.green
+
+- description: Interface - Physical status Up (Bright Green) Down (Red)
+  regex: ((^Ethernet[0-9]+ is up)|^Ethernet[0-9]+ is down)
+  color:
+    1: f.green bold
+    2: f.red
+
+- description: Interface - Line Protocol Up(Bright Green) Down|lowerl (Red)
+  regex: ((line protocol is down.*$)|(line protocol is lowerlayer.*)|line protocol is up.*$)
+  color:
+    1: f.red
+    2: f.green bold
+    3: f.green bold
+
+- description: Interface - Last time it went Up (Bright Green) or Down (Red)
+  regex: (^\s\sUp\s.*)|(^\s\sDown\s.*)
+  color:
+    1: f.red
+    2: f.green bold
+
+
+# show ip bgp summary
+- description: Matches not Established bgp states (Red)
+  regex: (?:\b|\s+)((Idle.*)|(Active)|(Connect)|(Established[l]?)|(Estab[l]?))(?:\b|\s+)
+  color:
+    1: f.red
+    2: f.green bold
+    3: f.green bold
+    4: f.green bold
+
+- description: show ip bgp summary Local AS Number (Purple)
+  regex: \slocal AS number ([0-9].*)$
+  color:
+    1: f.purple bold
+
+- description: show ip bgp VRF NAME (Light Green)
+  regex: ^BGP summary information for (VRF .*)$
+  color:
+    1: f.green
+
+- description: show ip route VRF NAME (Light Green)
+  regex: '^VRF name: .*'
+  color: f.green
+
+- description: show ip route Interface NAME (Bright Green)
+  regex: ', (Vlan[0-9]+$|Ethernet[0-9]+$|Loopback[0-9]+$|Management[1]+$)'
+  color:
+    1: f.red
