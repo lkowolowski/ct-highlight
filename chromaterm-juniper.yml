@@ -107,3 +107,24 @@
 - description: Security Policies - log (Red)
   regex: (log [/a-zA-Z0-9\._-]+)?$
   color: f.red
+
+# Routing policies
+# set policy-options policy-statement ospf-default from protocol access-internal
+# set policy-options policy-statement ospf-default from route-filter 0.0.0.0/0 exact
+# set policy-options policy-statement ospf-default then accept
+# set policy-options policy-statement load-balance term 1 then load-balance per-packet
+- description: Routing policies (white) policy-name (Light Green) term (white) term-name (Light Green) from (white)
+  regex: |
+    (?ix)(?:^)
+    ((set|deactivate)\spolicy-options\spolicy-statement\s)
+    ([a-zA-Z0-9_-]+\s)  # policy name
+    ((from|then)?|  # from/then clause
+    ((term\s)([a-zA-Z0-9_-]+))?)  # term term-name
+    (?:\s)
+  color:
+    1: f.white
+    3: f.green
+    5: f.white
+    7: f.white
+    8: f.green
+
