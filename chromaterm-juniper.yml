@@ -57,6 +57,7 @@
 # Security Policies
 - description: Security policies (white) from-zone (Light Green) to-zone (Light Red) policy (Bright Green)
   regex: |
+    (?ix)(?:\s|^)
     ((set|deactivate)(\sgroups\s[a-zA-Z0-9_-]+)?\ssecurity\spolicies\s)
     (from-zone\s[a-zA-Z0-9_\-\<\>\*]+\s)(to-zone\s[a-zA-Z0-9_\-\<\>\*]+\s)
     (policy|apply-groups)\s([a-zA-Z0-9_-]+)
@@ -68,8 +69,14 @@
     6: f.white
     7: f.green
 
+- description: Security Policies - Policy (White)
+  regex: (?:\s|^)(policy\s+)(["\/a-zA-Z-2-9\.\s_\*(),-]+)(?:{?(\s|$))
+  color:
+    1: f.white
+    2: f.green
+
 - description: Security Policies - Description (Light Blue)
-  regex: (?:\s|^)(description\s+)(["\/a-zA-Z-2-9\.\s_\*(),-]+)(?:;(\s|$))
+  regex: (?:\s|^)(description\s+)(["\/a-zA-Z-2-9\.\s_\*(),-]+)(?:;?(\s|$))
   color:
     2: f.light_blue
 
@@ -78,17 +85,17 @@
   color: f.white
 
 - description: Security Policies - Source-Adress (Light Green)
-  regex: (?:\s+|^)(source-address\s+)([\/a-zA-Z0-9\._-]+)?(?:;(\s|$))
+  regex: (?:\s+|^)(source-address\s+)([\/a-zA-Z0-9\._-]+)?(?:;?(\s|$))
   color:
     1: f.green
 
 - description: Security Policies - Destination-Adress (Light Red)
-  regex: (?:\s+|^)(destination-address\s+)([\/a-zA-Z0-9\._-]+)?(?:;(\s|$))
+  regex: (?:\s+|^)(destination-address\s+)([\/a-zA-Z0-9\._-]+)?(?:;?(\s|$))
   color:
     1: f.red
 
 - description: Security Policies - Application (Magenta)
-  regex: (?:\s+|^)(application\s+)([\/a-zA-Z0-9\._-]+)?(?:;(\s|$))
+  regex: (?:\s+|^)(application\s+)([\/a-zA-Z0-9\._-]+)?(?:;?(\s|$))
   color:
     1: f.magenta
 
