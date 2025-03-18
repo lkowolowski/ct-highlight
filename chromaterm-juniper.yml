@@ -69,12 +69,12 @@
     7: f.green
 
 - description: Security Policies - Description (Light Blue)
-  regex: (?:description\s+)(["\/a-zA-Z0-9\.\s_\*(),-]+)$
+  regex: (?:\s|^)(description\s+)(["\/a-zA-Z-1-9\.\s_\*(),-]+)(?:;(\s|$))
   color:
-    1: f.light_blue
+    2: f.light_blue
 
 - description: Security Policies - Match|Then (White)
-  regex: (?:\s)(match|then)(?:\s)
+  regex: (?:\s|^)(match|then)(?:\s\{$)
   color: f.white
 
 - description: Security Policies - Source-Adress (Light Green)
