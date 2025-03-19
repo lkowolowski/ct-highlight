@@ -63,18 +63,15 @@ This repo is the syntax highlighting I use on a frequent, if not daily basis whe
 
 ## Usage
 
-- Create a venv: `python -m venv chromaterm`
-  - If you are on a Mac with [homebrew](https://brew.sh), you may want to do `/opt/homebrew/bin/python3 -m venv chromaterm` (I put mine in .config, so its `opt/homebrew/bin/python3 -m venv ${HOME}/.config/py-chromaterm`)
-- Install the following package: `cd ${HOME}/.config/py-chromaterm && source bin/activate && pip3 install chromaterm`
+- On a Mac with [homebrew](https://brew.sh) install [uv](https://docs.astral.sh/uv/) with `brew install uv`
+- Install chromaterm with `uv tool install chromaterm`
+  - You can also install with `pip install chromaterm`
+- Make sure you have ${HOME}/.local/bin in your path
+  - For bash: `echo 'PATH=$PATH:${HOME}/.local/bin/' >> ${HOME}/.bash_profile`
+  - For zsh: `echo 'path=(path ${HOME}/.local/bin/)' >> ${HOME}/.zshrc`
 - Clone this repo: `git clone git@github.com:louisk/ct-highlight.git ${HOME}/.config/chromaterm` (chromaterm will look in this directory for the config file by default)
 - Customize the config: edit the yaml files, when you're done, run the `generate_conf.sh` script to build a new `chromaterm.yml`
   - If you create any new yaml files, don't forget to add them to the `generate_conf.sh` script.
-- If you use **bash** as your shell, issue:
-  - `echo 'ct(){ "${HOME}/.config/py-chromaterm/bin/ct" "$@" ;}' >> ~/.bash_profile`
-  - `echo 'ssh(){ ct /usr/bin/ssh "$@" ;}' >> ~/.bash_profile`
-- If you use **zsh** as your shell, issue:
-  - `echo 'ct(){ "${HOME}/.config/py-chromaterm/bin/ct" "$@" ;}' >> ~/.zshrc`
-  - `echo 'ssh(){ ct /usr/bin/ssh "$@" ;}' >> ~/.zshrc`
 - To test, open a new window in you terminal, use one of the following examples provided in the resources/ folder and pipe it to chromaterm (ct). For example: `cat resources/interface.junos | ct`
 - Last, connect to a `Juniper|Force10|Cisco` via ssh and issue a `show interfaces`
 
