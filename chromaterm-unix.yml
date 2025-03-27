@@ -1,0 +1,26 @@
+# Interfaces colored orange
+- description: MacOS Interfaces 
+  regex: |
+    (?x)
+    (?:^|\ )
+    ((bridge)|(llw)|(p2p)|(awdl)|(pktap)|(gif)|(stf)|(vlan)|(en)|(utun)|(lo))\d+
+    (?::|\  $)
+  color: f.orange
+
+- description: FreeBSD Interfaces 
+  regex: |
+    (?x)
+    (?:^|\ )
+    ((((em)|(i?xl)|(igb)|(lagg)|(lo)|(vlan)|(vnet)|(pflog)|(ipmi))(\d+))(\.\d+)?)
+    |(epair\d+b)
+    (?:\ |$)
+  color: f.orange
+
+- description: Linux Interfaces 
+  regex: |
+    (?x)
+    (?:^|\ )
+    ((((eth)|(ens)|(lan)|(bond)|(main)|(wlan))\d+)(\.\d+)?)
+    |(lo)
+    (?:\:|\ |$)
+  color: f.orange

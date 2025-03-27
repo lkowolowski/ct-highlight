@@ -1,0 +1,23 @@
+set policy-options prefix-list dns-servers apply-path "system name-server <*>"
+set policy-options prefix-list localhost 127.0.0.1/32
+set policy-options prefix-list ntp-server apply-path "system ntp server <*>"
+set policy-options prefix-list ntp-server-peers apply-path "system ntp peer <*>"
+set policy-options prefix-list router-ipv4 apply-path "interfaces <*> unit <*> family inet address <*>"
+set policy-options prefix-list router-ipv4-logical-systems apply-path "logical-systems <*> interfaces <*> unit <*> family inet address <*>"
+set policy-options prefix-list trusted-ipv4 198.18.0.0/20
+set policy-options prefix-list rfc1918 10.0.0.0/8
+set policy-options prefix-list rfc1918 172.16.0.0/12
+set policy-options prefix-list rfc1918 192.168.0.0/16
+set policy-options prefix-list bgp-neighbors apply-path "protocols bgp group <*> neighbor <*>"
+set policy-options prefix-list bgp-neighbors-instances apply-path "routing-instances <*> protocols bgp group <*> neighbor <*>"
+set policy-options prefix-list bgp-neighbors-logical-systems apply-path "logical-systems <*> protocols bgp group <*> neighbor <*>"
+set policy-options prefix-list ike-gateways apply-path "security ike gateway <*> address <*.*.*.*>"
+set policy-options prefix-list multicast-all-routers 224.0.0.2/32
+set policy-options prefix-list ospf 224.0.0.5/32
+set policy-options prefix-list ospf 224.0.0.6/32
+set policy-options prefix-list radius-servers apply-path "system radius-server <*>"
+set policy-options prefix-list rip 224.0.0.9/32
+set policy-options prefix-list snmp-client-lists apply-path "snmp client-list <*> <*>"
+set policy-options prefix-list snmp-community-clients apply-path "snmp community <*> clients <*>"
+set policy-options prefix-list tacas-servers apply-path "system tacplus-server <*>"
+set policy-options prefix-list vrrp 224.0.0.18/32

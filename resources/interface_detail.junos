@@ -1,0 +1,154 @@
+Physical interface: ge-0/0/7, Enabled, Physical link is Up
+  Interface index: 145, SNMP ifIndex: 520, Generation: 148
+  Description: Core: switch0.cmhome ge-0/0/11 [1Gbit]
+  Link-level type: Ethernet, MTU: 1514, LAN-PHY mode, Link-mode: Full-duplex, Speed: 1000mbps, BPDU Error: None, Loop Detect PDU Error: None, Ethernet-Switching Error: None, MAC-REWRITE Error: None, Loopback: Disabled, Source filtering: Disabled, Flow control: Disabled, Auto-negotiation: Enabled, Remote fault: Online
+  Device flags   : Present Running
+  Interface Specific flags: Internal: 0x0
+  Interface flags: SNMP-Traps Internal: 0x0
+  Link flags     : None
+  CoS queues     : 8 supported, 8 maximum usable queues
+  Hold-times     : Up 0 ms, Down 0 ms
+  Current address: d8:b1:22:dd:9b:50, Hardware address: d8:b1:22:dd:9b:50
+  Last flapped   : 2025-02-10 20:28:18 UTC (6w6d 02:32 ago)
+  Statistics last cleared: Never
+  Traffic statistics:
+   Input  bytes  :         112468042207                28024 bps
+   Output bytes  :         767647791925                70800 bps
+   Input  packets:            274383329                   30 pps
+   Output packets:            653621348                   39 pps
+  Dropped traffic statistics due to STP State:
+   Input  bytes  :                    0
+   Output bytes  :                    0
+   Input  packets:                    0
+   Output packets:                    0
+  Input errors:
+    Errors: 0, Drops: 0, Framing errors: 0, Runts: 0, Policed discards: 0, L3 incompletes: 0, L2 channel errors: 1507, L2 mismatch timeouts: 0, FIFO errors: 0, Resource errors: 0
+  Output errors:
+    Carrier transitions: 1, Errors: 0, Drops: 0, Collisions: 0, Aged packets: 0, FIFO errors: 0, HS link CRC errors: 0, MTU errors: 0, Resource errors: 0
+  Egress queues: 8 supported, 4 in use
+  Queue counters:       Queued packets  Transmitted packets      Dropped packets
+    0                        653091400            653091400                    0
+    1                                0                    0                    0
+    2                                0                    0                    0
+    3                           529701               529701                    0
+  Queue number:         Mapped forwarding classes
+    0                   best-effort
+    1                   expedited-forwarding
+    2                   assured-forwarding
+    3                   network-control
+  Active alarms  : None
+  Active defects : None
+  PCS statistics                      Seconds
+    Bit errors                             0
+    Errored blocks                         0
+  MAC statistics:                      Receive         Transmit
+    Total octets                  117828171074     780331641730
+    Total packets                    274384962        653621124
+    Unicast packets                  273849688        653086124
+    Broadcast packets                     6087             5965
+    Multicast packets                   529187           529035
+    CRC/Align errors                         0                0
+    FIFO errors                              0                0
+    MAC control frames                       0                0
+    MAC pause frames                         0                0
+    Oversized frames                         0
+    Jabber frames                            0
+    Fragment frames                          0
+    VLAN tagged frames                       0
+    Code violations                          0
+  Filter statistics:
+    Input packet count                       0
+    Input packet rejects                     0
+    Input DA rejects                         0
+    Input SA rejects                         0
+    Output packet count                                       0
+    Output packet pad count                                   0
+    Output packet error count                                 0
+    CAM destination filters: 4, CAM source filters: 0
+  Autonegotiation information:
+    Negotiation status: Complete
+    Link partner:
+        Link mode: Full-duplex, Flow control: None, Remote fault: OK
+    Local resolution:
+        Flow control: None, Remote fault: Link OK
+  Packet Forwarding Engine configuration:
+    Destination slot: 0
+  CoS information:
+    Direction : Output
+    CoS transmit queue               Bandwidth               Buffer Priority   Limit
+                              %            bps     %           usec
+    0 best-effort            95      950000000    95              0      low    none
+    3 network-control         5       50000000     5              0      low    none
+  Interface transmit statistics: Disabled
+  MACSec statistics:
+    Output
+        Secure Channel Transmitted
+        Protected Packets               : 0
+        Encrypted Packets               : 0
+        Protected Bytes                 : 0
+        Encrypted Bytes                 : 0
+     Input
+        Secure Channel Received
+        Accepted Packets                : 0
+        Validated Bytes                 : 0
+        Decrypted Bytes                 : 0
+
+  Logical interface ge-0/0/7.0 (Index 85) (SNMP ifIndex 541) (Generation 150)
+    Description: Network devices stub
+    Flags: Up SNMP-Traps 0x0 Encapsulation: ENET2
+    Traffic statistics:
+     Input  bytes  :          81219166694
+     Output bytes  :         490698786841
+     Input  packets:            187715747
+     Output packets:            429012858
+   Local statistics:
+    Input  bytes  :             58627954
+    Output bytes  :             98364846
+    Input  packets:               518963
+    Output packets:               629759
+   Transit statistics:
+    Input  bytes  :          81160538740                13240 bps
+    Output bytes  :         490600421995                42728 bps
+    Input  packets:            187196784                   20 pps
+    Output packets:            428383099                   30 pps
+    Security: Zone: trust
+    Allowed host-inbound traffic : bootp bfd bgp dns dvmrp igmp ldp msdp nhrp ospf ospf3 pgm pim rip ripng router-discovery rsvp sap vrrp dhcp finger ftp tftp ident-reset http https ike netconf ping reverse-telnet reverse-ssh rlogin rpm rsh snmp snmp-trap ssh telnet traceroute xnm-clear-text xnm-ssl lsping lsselfping ntp sip dhcpv6 r2cp webapi-clear-text webapi-ssl tcp-encap sdwan-appqoe high-availability
+    Flow Statistics :  
+    Flow Input statistics :
+      Self packets :                     397764
+      ICMP packets :                     1552985
+      VPN packets :                      0
+      Multicast packets :                0
+      Bytes permitted by policy :        80563230588
+      Connections established :          8893354 
+    Flow Output statistics: 
+      Multicast packets :                0
+      Bytes permitted by policy :        490678232888 
+    Flow error statistics (Packets dropped due to): 
+      Address spoofing:                  0
+      Authentication failed:             0
+      Incoming NAT errors:               0
+      Invalid zone received packet:      0
+      Multiple user authentications:     0 
+      Multiple incoming NAT:             0
+      No parent for a gate:              0
+      No one interested in self packets: 0       
+      No minor session:                  0 
+      No more sessions:                  0
+      No NAT gate:                       0 
+      No route present:                  34 
+      No SA for incoming SPI:            0 
+      No tunnel found:                   0
+      No session for a gate:             0 
+      No zone or NULL zone binding       0
+      Policy denied:                     0
+      Security association not active:   0 
+      TCP sequence number out of window: 42955
+      Syn-attack protection:             0
+      User authentication errors:        0
+    Protocol inet, MTU: 1500
+    Max nh cache: 100000, New hold nh limit: 100000, Curr nh cnt: 1, Curr new hold cnt: 0, NH drop cnt: 0
+    Generation: 164, Route table: 0
+      Flags: Sendbcast-pkt-to-re
+      Addresses, Flags: Is-Preferred Is-Primary
+        Destination: 198.18.1.0/29, Local: 198.18.1.1, Broadcast: 198.18.1.7, Generation: 178

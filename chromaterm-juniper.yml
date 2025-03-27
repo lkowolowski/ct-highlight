@@ -1,0 +1,202 @@
+# Juniper Interfaces colored orange
+- description: Interfaces names
+  regex: |
+    (?x)
+    (?:\ |^)
+        ((([fgx]e)|((et)|(gr)|(lsq)|([lm]t)|(sp)|(vcp)|(ip)))-\d+\/\d+\/\d+(:\d+)?(\.\d+)?)| # Interfaces that follow <letters>-<number>/<number>/<number>:<number>.<number> format
+        (((ae)|([bv]?me)|(em)|(fti)|(fxp)|(lo)|(pp[de]?)|(st)|(fab)|(swfab)|(reth))\d+(\.\d+)?)| # Interfaces that follow <letters><number>.<number> format
+        (((vme)|(jsrv)|(irb)|(vlan))(\.\d+)?)|  # Interfaces that follow the <letters>.<number> format
+        ((dsc)|(esi)|(gre)|(ipip)|(mtun)|(pim[de]?)|(rbeb)|(tap)|(lsi)|(vtep)) # Interfaces that follow the <letters> format
+    (?:\ |$)
+  color: f.orange
+
+# interface descriptions can start with a space, double quote, and end with double quote, or semi-colon
+- description: Interface description (Light blue)
+  regex: |
+    (?ix)
+    (?:\ |^)
+    (?:(?:D|d)escription\:?\s)
+    (.*)|
+    (?:(?:up|down)\ +(?:up|down)\ +)(.*)
+    (?:\s|$)
+  color:
+    1: f.light_blue
+    2: f.light_blue
+  exclusive: true
+
+# By default, interface up/up and down/down are properly colored (green/green, red/red)
+- description: Interface descriptions 
+  regex: |
+    (?ix)
+    (?:\ )
+    (
+    (up\ +up)| # up/up is green
+    (up\ +down)| # up/down is yellow
+    (down\ +down)| # down/down is red
+    (down\ +up) # down/up is red
+    )
+    (?:\ |$)
+  color:
+    2: f.green
+    3: f.yellow
+    4: f.red
+    5: f.red
+
+# Prefix lists
+- description: prefix-list  set commands
+  regex: |
+    (?ix)
+    (?:\ |^)
+    ((set|deactivate)\ policy-options\ prefix-list)\ ([a-zA-Z0-9_-]+) # set statement (white) name (green)
+    (\ (apply-path)\ (\".*(\<.*\>)\")?)? # apply-path (white)
+  color:
+    1: f.white
+    3: f.green
+    5: f.white
+    6: f.light_blue
+
+# Routing policies
+- description: Routing policies set commands
+  regex: |
+    (?ix)(?:^)
+    ((set|deactivate)\spolicy-options\spolicy-statement\s) # set statement (white)
+    ([a-zA-Z0-9_-]+\s)  # policy name (green)
+    ((from|then)?|  # from/then clause (white))
+    ((term\ )([a-zA-Z0-9_-]+\ )(then))?)  # term (white) term-name (green) then (white)
+    (?:\s)
+  color:
+    1: f.white
+    3: f.green
+    5: f.white
+    7: f.white
+    8: f.green
+    9: f.white
+
+# Firewall rules
+- description: Firewall filter name (green) apply-flags|then (white) set commands
+  regex: |
+    (?ix)
+    (?:\ |^)
+    ((set|deactivate)\ firewall\ family\ inet6?\ filter\ ) # set command (white)
+    ([a-zA-Z0-9_-]+)\ # filter-name (green)
+    ((apply-flags\ omit)|((term)\ ([a-zA-Z0-9_-]+)\ (from|then))) # apply flags (white), term (white), term-name (green), from/then (white)
+    (?:\ |$)
+  color:
+    1: f.white
+    3: f.green
+    5: f.white
+    7: f.white
+    8: f.green
+    9: f.white
+    
+# Security Policies
+- description: Security policies set commands
+  regex: |
+    (?ix)
+    (?:\ |^)
+    ((set|deactivate)(\ groups\ [a-zA-Z0-9_-]+)?\ security\ policies\ from-zone)\  # set command (white)
+    ([a-zA-Z0-9_\-\<\>\*]+)\ # zone (green)
+    (to-zone)\ # to-zone (white)
+    ([a-zA-Z0-9_\-\<\>\*]+)\ # zone (red)
+    (policy|apply-groups)\ # policy/apply-groups (white)
+    ([a-zA-Z0-9_-]+) # policy-name (green)
+    (?:\ |$)
+  color:
+    1: f.white
+    4: f.green
+    5: f.white
+    6: f.red
+    7: f.white
+    8: f.green
+
+- description: Security policies - hierarchical apply-groups
+  regex: |
+    (?x)
+    (?:\ |^)
+    (apply-groups)
+    (?:\ \[)?
+    ([a-zA-Z0-9_\-\s]+)
+    (?:\ \])?
+    (?:;$)
+  color:
+    1: f.white
+    2: f.green
+
+- description: Security Policies - hierarchical
+  regex: |
+    (?x)
+    (?:\ |^)
+    (inactive:\ )?
+    (policy\ +)
+    (["\/a-zA-Z-2-9\.\ _\*\(\)\,-]+) # policy (white)
+    (?:{?)
+    (\ |$)
+  color:
+    1: f.white
+    2: f.white
+    3: f.green
+
+- description: Security Policies Description - hierarchical
+  regex: |
+    (?x)
+    (?:\ |^)
+    (?:description\ +)
+    ([a-zA-Z0-9\.\ _\*\(\)\,\/\'\"-]+) # description (light blue)
+    (?:\;$)
+  color:
+    1: f.light_blue
+
+- description: Security Policies - hierarchical Match|Then 
+  regex: |
+    (?x)
+    (?:\ |^)
+    (match|then) # white
+    (?:\ \{$)
+  color: f.white
+
+- description: Security Policies - hierarchical Source-Adress/Destination-Address
+  regex: |
+    (?x)
+    (?:\ +|^)
+    (
+    (source-address)| # white
+    (destination-address)| # white
+    (application)
+    )
+    (?:\ \[)? # optionally start a list
+    ([a-zA-Z0-9_\-\s\/\.]+) # address object(s)
+    (?:\ \])? # optionally terminate a list
+    (?:;?)$
+  color:
+    1: f.white
+    5: f.green
+
+- description: Security Policies - reject or deny (Red Italic Style)
+  regex: |
+    (?x)
+    (?:\ |^)
+    (
+    (permit)| # permit (green)
+    ((reject)|(deny)|(log [/a-zA-Z0-9\._-]+)) # reject/deny/log (red)
+    )
+    (?:;$)
+  color:
+    2: f.green
+    3: f.red
+
+- description: BGP summary
+  regex: |
+    (?ix)
+    (?:\:\d+\ )?
+    (?:
+    (establ)|
+    (active)|
+    (connect)|
+    (idle)
+    )
+    (?:$)
+  color:
+    1: f.green
+    2: f.yellow
+    3: f.yellow
+    4: f.red

@@ -1,0 +1,9 @@
+set firewall family inet filter accept-ssh apply-flags omit
+set firewall family inet filter accept-ssh term accept-ssh from source-prefix-list trusted-ipv4
+set firewall family inet filter accept-ssh term accept-ssh from destination-prefix-list router-ipv4
+set firewall family inet filter accept-ssh term accept-ssh from destination-prefix-list router-ipv4-logical-systems
+set firewall family inet filter accept-ssh term accept-ssh from protocol tcp
+set firewall family inet filter accept-ssh term accept-ssh from destination-port ssh
+set firewall family inet filter accept-ssh term accept-ssh then policer management-5m
+set firewall family inet filter accept-ssh term accept-ssh then count accept-ssh
+set firewall family inet filter accept-ssh term accept-ssh then accept

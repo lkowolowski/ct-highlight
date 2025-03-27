@@ -1,0 +1,32 @@
+Physical interface: ge-0/0/7, Enabled, Physical link is Up
+  Interface index: 145, SNMP ifIndex: 520
+  Description: Core: switch0.cmhome ge-0/0/11 [1Gbit]
+  Link-level type: Ethernet, MTU: 1514, LAN-PHY mode, Link-mode: Full-duplex, Speed: 1000mbps, BPDU Error: None, Loop Detect PDU Error: None, Ethernet-Switching Error: None, MAC-REWRITE Error: None, Loopback: Disabled, Source filtering: Disabled, Flow control: Disabled, Auto-negotiation: Enabled, Remote fault: Online
+  Device flags   : Present Running
+  Interface Specific flags: Internal: 0x0
+  Interface flags: SNMP-Traps Internal: 0x0
+  Link flags     : None
+  CoS queues     : 8 supported, 8 maximum usable queues
+  Current address: d8:b1:22:dd:9b:50, Hardware address: d8:b1:22:dd:9b:50
+  Last flapped   : 2025-02-10 20:28:18 UTC (6w6d 02:32 ago)
+  Input rate     : 27456 bps (25 pps)
+  Output rate    : 61376 bps (32 pps)
+  Active alarms  : None
+  Active defects : None
+  PCS statistics                      Seconds
+    Bit errors                             0
+    Errored blocks                         0
+  Interface transmit statistics: Disabled
+
+  Logical interface ge-0/0/7.0 (Index 85) (SNMP ifIndex 541)
+    Description: Network devices stub
+    Flags: Up SNMP-Traps 0x0 Encapsulation: ENET2
+    Input packets : 187714227
+    Output packets: 429011196
+    Security: Zone: trust
+    Allowed host-inbound traffic : bootp bfd bgp dns dvmrp igmp ldp msdp nhrp ospf ospf3 pgm pim rip ripng router-discovery rsvp sap vrrp dhcp finger ftp tftp ident-reset http https ike netconf ping reverse-telnet reverse-ssh rlogin rpm rsh snmp snmp-trap ssh telnet traceroute xnm-clear-text xnm-ssl lsping lsselfping ntp sip dhcpv6 r2cp webapi-clear-text webapi-ssl tcp-encap sdwan-appqoe high-availability
+    Protocol inet, MTU: 1500
+    Max nh cache: 100000, New hold nh limit: 100000, Curr nh cnt: 1, Curr new hold cnt: 0, NH drop cnt: 0
+      Flags: Sendbcast-pkt-to-re
+      Addresses, Flags: Is-Preferred Is-Primary
+        Destination: 198.18.1.0/29, Local: 198.18.1.1, Broadcast: 198.18.1.7
