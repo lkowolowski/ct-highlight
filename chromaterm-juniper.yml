@@ -1,0 +1,39 @@
+# Juniper Interfaces colored orange
+- description: Interfaces names
+  regex: |
+    (?ix)
+    (?:\ |^)
+        ((([fgx]e)|((et)|(gr)|(lsq)|([lm]t)|(sp)|(vcp)|(ip)))-\d+\/\d+\/\d+(:\d+)?(\.\d+)?)| # Interfaces that follow <letters>-<number>/<number>/<number>:<number>.<number> format
+        (((ae)|([bv]?me)|(em)|(fti)|(fxp)|(lo)|(pp[de]?)|(st)|(fab)|(swfab)|(reth))\d+(\.\d+)?)| # Interfaces that follow <letters><number>.<number> format
+        (((vme)|(jsrv)|(irb)|(vlan))(\.\d+)?)|  # Interfaces that follow the <letters>.<number> format
+        ((dsc)|(esi)|(gre)|(ipip)|(mtun)|(pim[de]?)|(rbeb)|(tap)|(lsi)|(vtep)) # Interfaces that follow the <letters> format
+    (?:\s|$)
+  color: f.orange
+
+# By default, interface up/up and down/down are properly colored (green/green, red/red)
+- description: Interface descriptions up/up (Green)(Green)
+  regex: |
+    (?ix)
+    (?:\ +)
+    (up\ +up\ +)
+    (?:\ |$)
+  color:
+    1: f.green
+- description: Interface descriptions up/down (Green)(Yellow)
+  regex: |
+    (?ix)
+    (?:\ |^)
+    (up)\ +(down)
+    (?:\ |$)
+  color:
+    1: f.green
+    2: f.yellow
+- description: Interface descriptions down/down (Red)(Red)
+  regex: |
+    (?ix)
+    (?:\ +)
+    (down\ +down\ )|(down\ +up\ )
+    (?:\ |$)
+  color:
+    1: f.red
+    2: f.red
