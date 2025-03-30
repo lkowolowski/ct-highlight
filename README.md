@@ -16,15 +16,29 @@
 
 Reading through network device output can be challenging. There is a lot of text, which can make it difficult to scan through and quickly find what you're looking for.
 
+![Junos_Security_Policy](resources/Junos_Security_Policy.png)
+
 **It can be a lot easier when relevant parts are highlighted, allowing you to search faster**
+
+![Colored_Junos_Security_Policy](resources/Junos_Security_Policy_Colored.png)
 
 This repo is the syntax highlighting I use on a frequent, if not daily basis when I have to work on/with network devices.
 
 **Note:** The colors work with both a dark (black) terminal background, or blue(ish), as you can see in the images above.
 
-## Use-cases
+## Examples
 
-TBD
+- **Reading Junos Security Policy Rules (Junos)**
+![Junos_Security_Policy](resources/Junos_Security_Policy_Colored.png)
+
+- **Reading show bgp summary (Junos)**
+![Junos_Show bgp summary](resources/Junos_show_bgp_summary_Colored.png)
+
+- **Reading show interfaces (Junos)**
+![Junos_Show interfaces](resources/Junos_show_int_Colored.png)
+
+- **Reading Prefix lists (Junos)**
+![Junos_Prefix-list](resources/Junos_Prefix-list_Colored.png)
 
 ## Benefits
 
