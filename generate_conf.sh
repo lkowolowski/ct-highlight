@@ -3,6 +3,7 @@
 files_to_include="
 chromaterm-generic.yml
 chromaterm-unix.yml
+chromaterm-juniper.yml
 "
 
 # Start with the base
