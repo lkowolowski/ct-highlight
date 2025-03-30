@@ -1,7 +1,7 @@
 # Juniper Interfaces colored orange
 - description: Interfaces names
   regex: |
-    (?ix)
+    (?x)
     (?:\ |^)
         ((([fgx]e)|((et)|(gr)|(lsq)|([lm]t)|(sp)|(vcp)|(ip)))-\d+\/\d+\/\d+(:\d+)?(\.\d+)?)| # Interfaces that follow <letters>-<number>/<number>/<number>:<number>.<number> format
         (((ae)|([bv]?me)|(em)|(fti)|(fxp)|(lo)|(pp[de]?)|(st)|(fab)|(swfab)|(reth))\d+(\.\d+)?)| # Interfaces that follow <letters><number>.<number> format
@@ -109,3 +109,77 @@
     7: f.white
     8: f.green
 
+- description: Security policies - hierarchical apply-groups
+  regex: |
+    (?x)
+    (?:\ |^)
+    (apply-groups)
+    (?:\ \[)?
+    ([a-zA-Z0-9_\-\s]+)
+    (?:\ \])?
+    (?:;$)
+  color:
+    1: f.white
+    2: f.green
+
+- description: Security Policies - hierarchical
+  regex: |
+    (?x)
+    (?:\ |^)
+    (inactive:\ )?
+    (policy\ +)
+    (["\/a-zA-Z-2-9\.\ _\*\(\)\,-]+) # policy (white)
+    (?:{?)
+    (\ |$)
+  color:
+    1: f.white
+    2: f.white
+    3: f.green
+
+- description: Security Policies Description - hierarchical
+  regex: |
+    (?x)
+    (?:\ |^)
+    (?:description\ +)
+    ([a-zA-Z0-9\.\ _\*\(\)\,\/\'\"-]+) # description (light blue)
+    (?:\;$)
+  color:
+    1: f.light_blue
+
+- description: Security Policies - hierarchical Match|Then 
+  regex: |
+    (?x)
+    (?:\ |^)
+    (match|then) # white
+    (?:\ \{$)
+  color: f.white
+
+- description: Security Policies - hierarchical Source-Adress/Destination-Address
+  regex: |
+    (?x)
+    (?:\ +|^)
+    (
+    (source-address)| # white
+    (destination-address)| # white
+    (application)
+    )
+    (?:\ \[)? # optionally start a list
+    ([a-zA-Z0-9_\-\s\/\.]+) # address object(s)
+    (?:\ \])? # optionally terminate a list
+    (?:;?)$
+  color:
+    1: f.white
+    5: f.green
+
+- description: Security Policies - reject or deny (Red Italic Style)
+  regex: |
+    (?x)
+    (?:\ |^)
+    (
+    (permit)| # permit (green)
+    ((reject)|(deny)|(log [/a-zA-Z0-9\._-]+)) # reject/deny/log (red)
+    )
+    (?:;$)
+  color:
+    2: f.green
+    3: f.red
