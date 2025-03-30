@@ -36,24 +36,46 @@ TBD
 
 - Python 3.7+ Recommended (currently using 3.13)
 - [Chromaterm](https://github.com/hSaria/ChromaTerm) - Shout out to **[hSaria](https://github.com/hSaria)** for buliding this fantastic tool that works with interactive applications such as ssh.
+- On a Mac with [homebrew](https://brew.sh) install [uv](https://docs.astral.sh/uv/) with `brew install uv`
+- Install chromaterm with `uv tool install chromaterm`
+  - By default, uv will install things in ${HOME}/.local/bin 
+  - Add it to your path
+    - For bash: `echo 'PATH=$PATH:${HOME}/.local/bin/' >> ${HOME}/.bash_profile`
+    - For zsh: `echo 'path=(path ${HOME}/.local/bin/)' >> ${HOME}/.zshrc`
+  - You can also install with `pip install chromaterm`
 
 ## Usage
 
-- On a Mac with [homebrew](https://brew.sh) install [uv](https://docs.astral.sh/uv/) with `brew install uv`
-- Install chromaterm with `uv tool install chromaterm`
-  - You can also install with `pip install chromaterm`
-- Make sure you have ${HOME}/.local/bin in your path
-  - For bash: `echo 'PATH=$PATH:${HOME}/.local/bin/' >> ${HOME}/.bash_profile`
-  - For zsh: `echo 'path=(path ${HOME}/.local/bin/)' >> ${HOME}/.zshrc`
 - Clone this repo: `git clone git@github.com:louisk/ct-highlight.git
-- Customize the config: edit the yaml files, when you're done, run `make build install` to build a new `chromaterm.yml`, and install it in ${HOME}.config/chromaterm/chromaterm.yml
-  - If you create any new yaml files, don't forget to add them to the `generate_conf.sh` script.
-  - If you have any running chromaterm processes, you can run `make restart` to pick up any changes you've made
-- To test, open a new window in you terminal, use one of the following examples provided in the resources/ folder and pipe it to chromaterm (ct). For example: `cat resources/interface.junos | ct`
+- Run `make install`. This will create a ${HOME}/.config/chromaterm/chromaterm.yml config file.
 - Last, connect to a `Juniper` via ssh and issue a `show interfaces`
+  - `ct ssh user@device`
+
+## Customizing
+
+- I've created files split up by the type of system they are designed for. If you don't want to use all of them, or you want to create new ones, make sure you update the `generate_conf.sh` script in the `files_to_include` variable.
+- To recreate the chromaterm.yml file and install it, run `make build install`. This will generate a new chromaterm.yml file and install it in ${HOME}.config/chromaterm.
+  - If you have any running chromaterm processes, you can run `make restart` (or append it to the above for `make build install restart` or `make all` for short)
+- To test, open a new window in you terminal, use one of the following examples provided in the resources/ folder and pipe it to chromaterm (ct). For example: `cat resources/interface.junos | ct`
+
+If you don't want to prepend your command with `ct` every time, you can write a function like this:
+
+```bash
+❯ functions _nssh
+_nssh () {
+	if [ -e ${HOME}/.config/bin/ct ]
+	then
+		ct /usr/bin/ssh -ACxt ${1}
+	else
+		/usr/bin/ssh -ACxt $1
+	fi
+}
+❯
+```
 
 ## Testing
 
+- To test, open a new window in you terminal, use one of the following examples provided in the resources/ folder and pipe it to chromaterm (ct). For example: `cat resources/interface.junos | ct`
 - I've included a `resources` dir with relevant snippets of config. You can run `ct cat resources/file` to see what it would look like
 
 ## Limitations
