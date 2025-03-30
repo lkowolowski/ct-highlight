@@ -45,9 +45,10 @@ TBD
 - Make sure you have ${HOME}/.local/bin in your path
   - For bash: `echo 'PATH=$PATH:${HOME}/.local/bin/' >> ${HOME}/.bash_profile`
   - For zsh: `echo 'path=(path ${HOME}/.local/bin/)' >> ${HOME}/.zshrc`
-- Clone this repo: `git clone git@github.com:louisk/ct-highlight.git ${HOME}/.config/chromaterm` (chromaterm will look in this directory for the config file by default)
-- Customize the config: edit the yaml files, when you're done, run the `generate_conf.sh` script to build a new `chromaterm.yml`
+- Clone this repo: `git clone git@github.com:louisk/ct-highlight.git
+- Customize the config: edit the yaml files, when you're done, run `make build install` to build a new `chromaterm.yml`, and install it in ${HOME}.config/chromaterm/chromaterm.yml
   - If you create any new yaml files, don't forget to add them to the `generate_conf.sh` script.
+  - If you have any running chromaterm processes, you can run `make restart` to pick up any changes you've made
 - To test, open a new window in you terminal, use one of the following examples provided in the resources/ folder and pipe it to chromaterm (ct). For example: `cat resources/interface.junos | ct`
 - Last, connect to a `Juniper` via ssh and issue a `show interfaces`
 
