@@ -183,3 +183,21 @@
   color:
     2: f.green
     3: f.red
+
+- description: BGP summary
+  regex: |
+    (?ix)
+    (?:^|\ )
+    (?:\d+(:\d+)?\ )
+    (
+    (establ)|
+    (active)|
+    (connect)|
+    (idle)
+    )
+    (?:$)
+  color:
+    3: f.green
+    4: f.yellow
+    5: f.yellow
+    6: f.red
