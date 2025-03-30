@@ -52,6 +52,10 @@ TBD
 - To test, open a new window in you terminal, use one of the following examples provided in the resources/ folder and pipe it to chromaterm (ct). For example: `cat resources/interface.junos | ct`
 - Last, connect to a `Juniper` via ssh and issue a `show interfaces`
 
+## Testing
+
+- I've included a `resources` dir with relevant snippets of config. You can run `ct cat resources/file` to see what it would look like
+
 ## Limitations
 
 - There are lots of (versions of) network operating systems. It's likely that not all of them will work with the current set of config files, but you can easily modify it by adding or changing the filters to make the content you want colored the way you want.
