@@ -1,7 +1,7 @@
 # Interfaces colored orange
 - description: MacOS Interfaces 
   regex: |
-    (?ix)
+    (?x)
     (?:^|\ )
     ((bridge)|(llw)|(p2p)|(awdl)|(pktap)|(gif)|(stf)|(vlan)|(en)|(utun)|(lo))\d+
     (?::|\  $)
@@ -10,7 +10,7 @@
 
 - description: FreeBSD Interfaces 
   regex: |
-    (?ix)
+    (?x)
     (?:^|\ )
     ((((em)|(i?xl)|(igb)|(lagg)|(lo)|(vlan)|(vnet)|(pflog)|(ipmi))(\d+))(\.\d+)?)
     |(epair\d+b)
@@ -20,7 +20,7 @@
 
 - description: Linux Interfaces 
   regex: |
-    (?ix)
+    (?x)
     (?:^|\ )
     ((((eth)|(ens)|(lan)|(bond)|(main)|(wlan))\d+)(\.\d+)?)
     |(lo)
