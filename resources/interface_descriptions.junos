@@ -1,0 +1,26 @@
+Interface       Admin Link Description
+ge-0/0/0        up    up   Access: Unifi AC-Pro en0 [1Gbit]
+ge-0/0/1        up    up   Access: Unifi AC-Lite en0 [1Gbit]
+ge-0/0/2        up    up   Access: jailer.cmhome ixl0 [1Gbit]
+ge-0/0/3        up    up   Access: freenas.cmhome igb0 [1Gbit]
+ge-0/0/4        up    up   Access: freenas.cmhome igb1 [1Gbit]
+ge-0/0/5        up    up   Management: freenas-drac.cmhome ipmi0 [1Gbit]
+ge-0/0/6        up    up   Access: FA MBP en8 [1Gbit]
+ge-0/0/7        up    up   Access: media.cmhome en1 [1Gbit]
+ge-0/0/8        up    up   Access: mpro.cmhome en1 [1Gbit]
+ge-0/0/9        down  down Access: pdu01.cmhome lan0 [1Gbit]
+ge-0/0/10       up    down Access: KT Gaming lan0 [1Gbit]
+ge-0/0/11       up    up   Edge: srx.cmhome ge-0/0/7 [1Gbit]
+ge-0/0/11.0     up    up   Network devices stub
+ge-1/0/0        up    up   Access: jailer01.cmhome em0 [1Gbit]
+ge-1/0/1        up    up   Access: jailer02.cmhome em0 [1Gbit]
+ge-1/0/2        up    down temp netboot for sas card fixes
+ae1             up    up   Access: freenas.cmhome lagg0 [2Gbit]
+lo0             up    up   Loopback
+vlan.2          up    up   Admin Net
+vlan.3          up    up   Prod Net
+vlan.4          up    down VoIP Net
+vlan.5          up    down Consulting Net
+vlan.6          up    down Hosting Net
+vlan.9          up    up   IoT
+vlan.11         up    up   home Net

@@ -1,0 +1,153 @@
+Physical interface: ge-0/0/0, Enabled, Physical link is Up
+  Interface index: 138, SNMP ifIndex: 513, Generation: 141
+  Description: Transit: TDS Telecom (AS4181) [1Gbit]
+  Link-level type: Ethernet, MTU: 1514, LAN-PHY mode, Link-mode: Full-duplex, Speed: 1000mbps, BPDU Error: None, Loop Detect PDU Error: None, Ethernet-Switching Error: None, MAC-REWRITE Error: None, Loopback: Disabled, Source filtering: Disabled, Flow control: Disabled, Auto-negotiation: Enabled, Remote fault: Online
+  Device flags   : Present Running
+  Interface Specific flags: Internal: 0x0
+  Interface flags: SNMP-Traps Internal: 0x0
+  Link flags     : None
+  CoS queues     : 8 supported, 8 maximum usable queues
+  Hold-times     : Up 0 ms, Down 0 ms
+  Current address: 70:cd:60:f3:c9:74, Hardware address: d8:b1:22:dd:9b:49
+  Last flapped   : 2025-03-25 21:38:59 UTC (1d 05:05 ago)
+  Statistics last cleared: Never
+  Traffic statistics:
+   Input  bytes  :         995218306883               571832 bps
+   Output bytes  :         100146772367                20752 bps
+   Input  packets:           5007950091                 1187 pps
+   Output packets:            246170084                   18 pps
+  Dropped traffic statistics due to STP State:
+   Input  bytes  :                    0
+   Output bytes  :                    0
+   Input  packets:                    0
+   Output packets:                    0
+  Input errors:
+    Errors: 0, Drops: 0, Framing errors: 0, Runts: 0, Policed discards: 0, L3 incompletes: 0, L2 channel errors: 0, L2 mismatch timeouts: 0, FIFO errors: 0, Resource errors: 0
+  Output errors:
+    Carrier transitions: 9, Errors: 0, Drops: 0, Collisions: 0, Aged packets: 0, FIFO errors: 0, HS link CRC errors: 0, MTU errors: 0, Resource errors: 0
+  Egress queues: 8 supported, 4 in use
+  Queue counters:       Queued packets  Transmitted packets      Dropped packets
+    0                        244835560            244835560                    0
+    1                                0                    0                    0
+    2                                0                    0                    0
+    3                          1334422              1334422                    0
+  Queue number:         Mapped forwarding classes
+    0                   best-effort
+    1                   expedited-forwarding
+    2                   assured-forwarding
+    3                   network-control
+  Active alarms  : None
+  Active defects : None
+  PCS statistics                      Seconds
+    Bit errors                             0
+    Errored blocks                         0
+  MAC statistics:                      Receive         Transmit
+    Total octets                 1023940607211     104601887316
+    Total packets                   5007949671        246169746
+    Unicast packets                  615233826        246031910
+    Broadcast packets               4392715780               29
+    Multicast packets                       65           137807
+    CRC/Align errors                         0                0
+    FIFO errors                              0                0
+    MAC control frames                       0                0
+    MAC pause frames                         0                0
+    Oversized frames                         0
+    Jabber frames                            0
+    Fragment frames                          0
+    VLAN tagged frames                       0
+    Code violations                          0
+  Filter statistics:
+    Input packet count                       0
+    Input packet rejects                     0
+    Input DA rejects                         0
+    Input SA rejects                         0
+    Output packet count                                       0
+    Output packet pad count                                   0
+    Output packet error count                                 0
+    CAM destination filters: 2, CAM source filters: 0
+  Autonegotiation information:
+    Negotiation status: Complete
+    Link partner:
+        Link mode: Full-duplex, Flow control: None, Remote fault: OK
+    Local resolution:
+        Flow control: None, Remote fault: Link OK
+  Packet Forwarding Engine configuration:
+    Destination slot: 0
+  CoS information:
+    Direction : Output
+    CoS transmit queue               Bandwidth               Buffer Priority   Limit
+                              %            bps     %           usec
+    0 best-effort            95      950000000    95              0      low    none
+    3 network-control         5       50000000     5              0      low    none
+  Interface transmit statistics: Disabled
+  MACSec statistics:
+    Output
+        Secure Channel Transmitted
+        Protected Packets               : 0
+        Encrypted Packets               : 0
+        Protected Bytes                 : 0
+        Encrypted Bytes                 : 0
+     Input
+        Secure Channel Received
+        Accepted Packets                : 0
+        Validated Bytes                 : 0
+        Decrypted Bytes                 : 0
+
+  Logical interface ge-0/0/0.0 (Index 75) (SNMP ifIndex 535) (Generation 140)
+    Flags: Up SNMP-Traps 0x0 Encapsulation: ENET2
+    Traffic statistics:
+     Input  bytes  :         995218257983
+     Output bytes  :         100098130567
+     Input  packets:           5007949730
+     Output packets:            246170084
+   Local statistics:
+    Input  bytes  :          71470645753
+    Output bytes  :             97674820
+    Input  packets:           1191753826
+    Output packets:              1353875
+   Transit statistics:
+    Input  bytes  :         923747612230               422432 bps
+    Output bytes  :         100000455747                20432 bps
+    Input  packets:           3816195904                  876 pps
+    Output packets:            244816209                   18 pps
+    Security: Zone: untrust
+    Allowed host-inbound traffic : router-discovery dhcp ike ping traceroute dhcpv6
+    Flow Statistics :  
+    Flow Input statistics :
+      Self packets :                     1273127
+      ICMP packets :                     2434651
+      VPN packets :                      0
+      Multicast packets :                63
+      Bytes permitted by policy :        731573621719
+      Connections established :          78333 
+    Flow Output statistics: 
+      Multicast packets :                0
+      Bytes permitted by policy :        99930375533 
+    Flow error statistics (Packets dropped due to): 
+      Address spoofing:                  0
+      Authentication failed:             0
+      Incoming NAT errors:               0
+      Invalid zone received packet:      0
+      Multiple user authentications:     0 
+      Multiple incoming NAT:             0
+      No parent for a gate:              0
+      No one interested in self packets: 281       
+      No minor session:                  0 
+      No more sessions:                  0
+      No NAT gate:                       0 
+      No route present:                  2440 
+      No SA for incoming SPI:            0 
+      No tunnel found:                   0
+      No session for a gate:             0 
+      No zone or NULL zone binding       0
+      Policy denied:                     0
+      Security association not active:   0 
+      TCP sequence number out of window: 325
+      Syn-attack protection:             0
+      User authentication errors:        0
+    Protocol inet, MTU: 1500
+    Max nh cache: 100000, New hold nh limit: 100000, Curr nh cnt: 1, Curr new hold cnt: 0, NH drop cnt: 0
+    Generation: 155, Route table: 0
+      Flags: Sendbcast-pkt-to-re, Is-Primary
+      Addresses, Flags: Is-Preferred Is-Primary
+        Destination: 72.35.128/19, Local: 72.35.158.167, Broadcast: 72.35.159.255, Generation: 198

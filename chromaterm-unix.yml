@@ -6,7 +6,6 @@
     ((bridge)|(llw)|(p2p)|(awdl)|(pktap)|(gif)|(stf)|(vlan)|(en)|(utun)|(lo))\d+
     (?::|\  $)
   color: f.orange
-  exclusive: true
 
 - description: FreeBSD Interfaces 
   regex: |
@@ -16,7 +15,6 @@
     |(epair\d+b)
     (?:\ |$)
   color: f.orange
-  exclusive: true
 
 - description: Linux Interfaces 
   regex: |
@@ -26,4 +24,3 @@
     |(lo)
     (?:\:|\ |$)
   color: f.orange
-  exclusive: true
