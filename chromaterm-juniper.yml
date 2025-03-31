@@ -187,9 +187,8 @@
 - description: BGP summary
   regex: |
     (?ix)
-    (?:^|\ )
-    (?:\d+(:\d+)?\ )
-    (
+    (?:\:\d+\ )?
+    (?:
     (establ)|
     (active)|
     (connect)|
@@ -197,7 +196,7 @@
     )
     (?:$)
   color:
-    3: f.green
-    4: f.yellow
-    5: f.yellow
-    6: f.red
+    1: f.green
+    2: f.yellow
+    3: f.yellow
+    4: f.red
