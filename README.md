@@ -30,6 +30,7 @@ This repo is the syntax highlighting I use on a frequent, if not daily basis whe
 
 - **Reading Junos Security Policy Rules (Junos)**
 ![Junos_Security_Policy](resources/Junos_Security_Policy_Colored.png)
+![Junos_Firewall_Rules](resources/Junos_Firewall_Rules_Colored.png)
 
 - **Reading show bgp summary (Junos)**
 ![Junos_Show bgp summary](resources/Junos_show_bgp_summary_Colored.png)
