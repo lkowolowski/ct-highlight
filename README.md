@@ -1,6 +1,6 @@
 # ct-highlighting
 
-**TLDR:** This repo will generate a chromaterm config (chromaterm.yml) that can be used for real-time syntax highlighting of network device config including Juniper, Cisco, Force10, and others.
+**TLDR:** This repo will generate a chromaterm config (chromaterm.yml) that can be used for real-time syntax highlighting of network device config including Juniper and others.
 
 ## TOC
 
