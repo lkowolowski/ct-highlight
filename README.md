@@ -79,34 +79,45 @@ If you don't want to prepend your command with `ct` every time, you can write a 
 
 ```bash
 _ssh () {
+	local OPTIND
 	local JUNIPER
 	local CISCO
 	local PAN
 	local UNIX
 	local base_dir="${HOME}/.config/chromaterm"
-	if [ -e ${HOME}/.config/bin/ct ]
+	while getopts ":jcup" COMMAND_LINE_ARGUMENT
+	do
+		case "${COMMAND_LINE_ARGUMENT}" in
+			(u) UNIX="YES"  ;;
+			(c) CISCO="YES"  ;;
+			(p) PAN="YES"  ;;
+			(j) JUNIPER="YES"  ;;
+			(\?) echo "-u provides UNIX (and Linux) syntax highlighting"
+				echo "-j provides Juniper syntax highlighting"
+				echo "-c provides Cisco (and alike) syntax highlighting"
+				echo "-p provides PAN syntax highlighting"
+				return 1 ;;
+		esac
+	done
+	shift "$((OPTIND-1))"
+	if [ "${JUNIPER}" = "YES" ]
 	then
-		while getopts ":ju" COMMAND_LINE_ARGUMENT
-		do
-			case "${COMMAND_LINE_ARGUMENT}" in
-				(u) UNIX="YES"  ;;
-				(j) JUNIPER="YES"  ;;
-				(\?) echo "-u provides UNIX (and Linux) syntax highlighting"
-					echo "-j provides Juniper syntax highlighting"
-					return 1 ;;
-			esac
-		done
-		shift "$((OPTIND-1))"
-		if [ "${JUNIPER}" = "YES" ]
-		then
-			platform="juniper"
-		elif [ "${UNIX}" = "YES" ]
-		then
-			platform="unix"
-		else
-			platform="generic"
-		fi
-		conf_file="${base_dir}/${platform}.yml"
+		platform="juniper"
+	elif [ "${CISCO}" = "YES" ]
+	then
+		platform="cisco"
+	elif [ "${PAN}" = "YES" ]
+	then
+		platform="pan"
+	elif [ "${UNIX}" = "YES" ]
+	then
+		platform="unix"
+	else
+		platform="generic"
+	fi
+	conf_file="${base_dir}/${platform}.yml"
+	if which ct > /dev/null
+	then
 		if [ -e "${conf_file}" ]
 		then
 			ct -c "${conf_file}" /usr/bin/ssh -ACxt "$@"
