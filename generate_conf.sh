@@ -2,7 +2,7 @@
 
 files_to_include=$(ls -1 *.yml | grep -v chromaterm.yml)
 
-out_dir="${HOME}/.config/chromaterm"
+out_dir="${HOME}/.local/chromaterm"
 
 # chromaterm-colors.yml is the foundation. All of the others use the definitions
 # provided
@@ -16,10 +16,10 @@ echo "rules:" >>"${out_dir}/chromaterm.yml"
 
 # Add in all the other files we want to include
 for file in ${files_to_include}; do
-	# Check if the file exists, and if so, append it to our config file
-	if [ -e "${file}" ]; then
-		cat "${file}" >>"${out_dir}/chromaterm.yml"
-	fi
+    # Check if the file exists, and if so, append it to our config file
+    if [ -e "${file}" ]; then
+        cat "${file}" >>"${out_dir}/chromaterm.yml"
+    fi
 done
 
 # Build platform specific files
@@ -31,11 +31,11 @@ cat chromaterm-generic.yml >>"${out_dir}/generic.yml"
 
 # Generic, colors, and platform specific patterns
 for platform in juniper cisco unix; do
-	cat chromaterm-colors.yml >"${out_dir}/${platform}.yml"
-	echo "rules:" >>"${out_dir}/${platform}.yml"
-	cat chromaterm-generic.yml >>"${out_dir}/${platform}.yml"
-	# Check if the file exists, and if so, append it to our config file
-	if [ -e "chromaterm-${platform}.yml" ]; then
-		cat "chromaterm-${platform}.yml" >>"${out_dir}/${platform}.yml"
-	fi
+    cat chromaterm-colors.yml >"${out_dir}/${platform}.yml"
+    echo "rules:" >>"${out_dir}/${platform}.yml"
+    cat chromaterm-generic.yml >>"${out_dir}/${platform}.yml"
+    # Check if the file exists, and if so, append it to our config file
+    if [ -e "chromaterm-${platform}.yml" ]; then
+        cat "chromaterm-${platform}.yml" >>"${out_dir}/${platform}.yml"
+    fi
 done

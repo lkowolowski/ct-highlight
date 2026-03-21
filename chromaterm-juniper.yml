@@ -1,202 +1,188 @@
-# Juniper Interfaces colored orange
-- description: Interfaces names
-  regex: |
-    (?x)
-    (?:\ |^)
-        ((([fgx]e)|((et)|(gr)|(lsq)|([lm]t)|(sp)|(vcp)|(ip)))-\d+\/\d+\/\d+(:\d+)?(\.\d+)?)| # Interfaces that follow <letters>-<number>/<number>/<number>:<number>.<number> format
-        (((ae)|([bv]?me)|(em)|(fti)|(fxp)|(lo)|(pp[de]?)|(st)|(fab)|(swfab)|(reth))\d+(\.\d+)?)| # Interfaces that follow <letters><number>.<number> format
-        (((vme)|(jsrv)|(irb)|(vlan))(\.\d+)?)|  # Interfaces that follow the <letters>.<number> format
-        ((dsc)|(esi)|(gre)|(ipip)|(mtun)|(pim[de]?)|(rbeb)|(tap)|(lsi)|(vtep)) # Interfaces that follow the <letters> format
-    (?:\ |$)
-  color: f.orange
+# ChromaTerm highlight rules for JunOS
+# Translated from https://github.com/lkowolowski/junos.vim/blob/master/syntax/junos.vim
+#
+# Vim group -> CT color mapping:
+#   junosLabel      (Identifier)   -> f#e5c07b  yellow/gold
+#   junosKeyword    (Statement)    -> f#c678dd  purple
+#   junosCond       (Type)         -> f#56b6c2  cyan
+#   junosProtocol   (Type)         -> f#56b6c2  cyan
+#   junosAction     (Error)        -> f#e06c75  red
+#   junosFunction   (Function)     -> f#61afef  blue
+#   junosConfigure  (Function)     -> f#61afef  blue
+#   junosDef        (String)       -> f#98c379  green
+#   junosInterface  (Underlined)   -> f#98c379  green  + underline
+#   junosIpv4       (Underlined)   -> f#98c379  green  + underline
+#   junosComment    (Comment)      -> f#5c6370  grey   + italic
+#   junosString     (String)       -> f#98c379  green
+#   junosVar        (String)       -> f#98c379  green
 
-# interface descriptions can start with a space, double quote, and end with double quote, or semi-colon
-- description: Interface description (Light blue)
-  regex: |
-    (?ix)
-    (?:\ |^)
-    (?:(?:D|d)escription\:?\s)
-    (.*)|
-    (?:(?:up|down)\ +(?:up|down)\ +)(.*)
-    (?:\s|$)
-  color:
-    1: f.light_blue
-    2: f.light_blue
-  exclusive: true
+palette:
+  purple: "#c678dd"
+  cyan: "#56b6c2"
+  red: "#e06c75"
+  blue: "#61afef"
+  green: "#98c379"
+  gold: "#e5c07b"
+  grey: "#5c6370"
 
-# By default, interface up/up and down/down are properly colored (green/green, red/red)
-- description: Interface descriptions 
-  regex: |
-    (?ix)
-    (?:\ )
-    (
-    (up\ +up)| # up/up is green
-    (up\ +down)| # up/down is yellow
-    (down\ +down)| # down/down is red
-    (down\ +up) # down/up is red
-    )
-    (?:\ |$)
-  color:
-    2: f.green
-    3: f.yellow
-    4: f.red
-    5: f.red
+rules:
+  # ── junosComment (grey italic) ─────────────────────────────────────────────
+  - description: JunOS description line
+    regex: description.*$
+    color: f.grey italic
 
-# Prefix lists
-- description: prefix-list  set commands
-  regex: |
-    (?ix)
-    (?:\ |^)
-    ((set|deactivate)\ policy-options\ prefix-list)\ ([a-zA-Z0-9_-]+) # set statement (white) name (green)
-    (\ (apply-path)\ (\".*(\<.*\>)\")?)? # apply-path (white)
-  color:
-    1: f.white
-    3: f.green
-    5: f.white
-    6: f.light_blue
+  - description: JunOS inline comment (#)
+    regex: \s*#.*$
+    color: f.grey italic
 
-# Routing policies
-- description: Routing policies set commands
-  regex: |
-    (?ix)(?:^)
-    ((set|deactivate)\spolicy-options\spolicy-statement\s) # set statement (white)
-    ([a-zA-Z0-9_-]+\s)  # policy name (green)
-    ((from|then)?|  # from/then clause (white))
-    ((term\ )([a-zA-Z0-9_-]+\ )(then))?)  # term (white) term-name (green) then (white)
-    (?:\s)
-  color:
-    1: f.white
-    3: f.green
-    5: f.white
-    7: f.white
-    8: f.green
-    9: f.white
+  # ── junosString (green) ────────────────────────────────────────────────────
+  - description: JunOS quoted string
+    regex: '"[^"]*"'
+    color: f.green
 
-# Firewall rules
-- description: Firewall filter name (green) apply-flags|then (white) set commands
-  regex: |
-    (?ix)
-    (?:\ |^)
-    ((set|deactivate)\ firewall\ family\ inet6?\ filter\ ) # set command (white)
-    ([a-zA-Z0-9_-]+)\ # filter-name (green)
-    ((apply-flags\ omit)|((term)\ ([a-zA-Z0-9_-]+)\ (from|then))) # apply flags (white), term (white), term-name (green), from/then (white)
-    (?:\ |$)
-  color:
-    1: f.white
-    3: f.green
-    5: f.white
-    7: f.white
-    8: f.green
-    9: f.white
-    
-# Security Policies
-- description: Security policies set commands
-  regex: |
-    (?ix)
-    (?:\ |^)
-    ((set|deactivate)(\ groups\ [a-zA-Z0-9_-]+)?\ security\ policies\ from-zone)\  # set command (white)
-    ([a-zA-Z0-9_\-\<\>\*]+)\ # zone (green)
-    (to-zone)\ # to-zone (white)
-    ([a-zA-Z0-9_\-\<\>\*]+)\ # zone (red)
-    (policy|apply-groups)\ # policy/apply-groups (white)
-    ([a-zA-Z0-9_-]+) # policy-name (green)
-    (?:\ |$)
-  color:
-    1: f.white
-    4: f.green
-    5: f.white
-    6: f.red
-    7: f.white
-    8: f.green
+  # ── junosVar (green) ───────────────────────────────────────────────────────
+  - description: JunOS numeric value
+    regex: \b\d+\b
+    color: f.green
 
-- description: Security policies - hierarchical apply-groups
-  regex: |
-    (?x)
-    (?:\ |^)
-    (apply-groups)
-    (?:\ \[)?
-    ([a-zA-Z0-9_\-\s]+)
-    (?:\ \])?
-    (?:;$)
-  color:
-    1: f.white
-    2: f.green
+  - description: JunOS low/high keywords
+    regex: \b(low|high)\b
+    color: f.green
 
-- description: Security Policies - hierarchical
-  regex: |
-    (?x)
-    (?:\ |^)
-    (inactive:\ )?
-    (policy\ +)
-    (["\/a-zA-Z-2-9\.\ _\*\(\)\,-]+) # policy (white)
-    (?:{?)
-    (\ |$)
-  color:
-    1: f.white
-    2: f.white
-    3: f.green
+  # ── junosIpv4 (green underline) ────────────────────────────────────────────
+  - description: JunOS IPv4 address (with optional prefix length)
+    regex: \b(25[0-5]|2[0-4]\d|[01]?\d{1,2})(\.(25[0-5]|2[0-4]\d|[01]?\d{1,2})){3}(/[0-9]{1,2})?\b
+    color: f.green underline
 
-- description: Security Policies Description - hierarchical
-  regex: |
-    (?x)
-    (?:\ |^)
-    (?:description\ +)
-    ([a-zA-Z0-9\.\ _\*\(\)\,\/\'\"-]+) # description (light blue)
-    (?:\;$)
-  color:
-    1: f.light_blue
+  # ── junosInterface (green underline) ───────────────────────────────────────
+  - description: JunOS physical interfaces (et/xe/ge/vcp/gr)
+    regex: \b(et|xe|ge|vcp|gr)-\d+/\d+/\d+(\.\d+)?
+    color: f.green underline
 
-- description: Security Policies - hierarchical Match|Then 
-  regex: |
-    (?x)
-    (?:\ |^)
-    (match|then) # white
-    (?:\ \{$)
-  color: f.white
+  - description: JunOS logical interfaces (ae/reth/fab/lo)
+    regex: \b(ae|reth|fab|lo)\d+(\.\d+)?
+    color: f.green underline
 
-- description: Security Policies - hierarchical Source-Adress/Destination-Address
-  regex: |
-    (?x)
-    (?:\ +|^)
-    (
-    (source-address)| # white
-    (destination-address)| # white
-    (application)
-    )
-    (?:\ \[)? # optionally start a list
-    ([a-zA-Z0-9_\-\s\/\.]+) # address object(s)
-    (?:\ \])? # optionally terminate a list
-    (?:;?)$
-  color:
-    1: f.white
-    5: f.green
+  - description: JunOS IRB and st0 interfaces
+    regex: \b(st0|irb)(\.\d+)?
+    color: f.green underline
 
-- description: Security Policies - reject or deny (Red Italic Style)
-  regex: |
-    (?x)
-    (?:\ |^)
-    (
-    (permit)| # permit (green)
-    ((reject)|(deny)|(log [/a-zA-Z0-9\._-]+)) # reject/deny/log (red)
-    )
-    (?:;$)
-  color:
-    2: f.green
-    3: f.red
+  - description: JunOS virtual-chassis and vlan interface keywords
+    regex: \b(virtual-chassis|vlan)\b
+    color: f.green underline
 
-- description: BGP summary
-  regex: |
-    (?ix)
-    (?:\:\d+\ )?
-    (?:
-    (establ)|
-    (active)|
-    (connect)|
-    (idle)
-    )
-    (?:$)
-  color:
-    1: f.green
-    2: f.yellow
-    3: f.yellow
-    4: f.red
+  - description: JunOS vme interface
+    regex: \bvme\b
+    color: f.green underline
+
+  # ── junosLabel (gold) ──────────────────────────────────────────────────────
+  - description: JunOS top-level stanza labels
+    regex: \b(system|chassis|firewall|security|rule|rule-set|pool)\b
+    color: f.gold
+
+  # ── junosKeyword (purple) ──────────────────────────────────────────────────
+  - description: JunOS configuration keywords
+    regex: \b(version|server|class|user|address|route|nat|policy|vlan-id|mtu|filter|term|routing-instances|routing-engine|line-card|next-hop|cluster|vrrp-group|security-zone|encapsulation|storm-control|alg|log|login|node|zone|path|community)\b
+    color: f.purple
+
+  - description: JunOS interfaces keyword
+    regex: \binterfaces?\b
+    color: f.purple
+
+  - description: JunOS vlans keyword
+    regex: \bvlans?\b
+    color: f.purple
+
+  - description: JunOS members keyword
+    regex: \bmembers?\b
+    color: f.purple
+
+  - description: JunOS applications keyword
+    regex: \bapplications?\b
+    color: f.purple
+
+  # ── junosCond (cyan) ───────────────────────────────────────────────────────
+  - description: JunOS conditional / zone keywords
+    regex: \b(if|else|for-each|to-zone|from-zone|match|then|from|to)\b
+    color: f.cyan
+
+  # ── junosProtocol (cyan) ───────────────────────────────────────────────────
+  - description: JunOS L3/L4 protocols
+    regex: \b(ip|ipv6|inet|inet6|tcp|udp)\b
+    color: f.cyan
+
+  - description: JunOS management and service protocols
+    regex: \b(snmp|snmptrap|ntp|syslog|ssh|ftp|ftp-data|dns|sql)\b
+    color: f.cyan
+
+  - description: JunOS routing protocols
+    regex: \b(ospf|ospf3|rip|ripng|isis)\b
+    color: f.cyan
+
+  - description: JunOS layer-2 / multicast protocols
+    regex: \b(igmp|igmp-snooping|lldp|lldp-med|mld|mld-snooping|msdp|mstp|mvrp|mpls|vpls|vrrp|lacp|stp|sflow|vstp|dot1x|msrp|msrpc|sunrpc|icmp|ping|pim|rstp|rsvp|netconf)\b
+    color: f.cyan
+
+  - description: JunOS BGP (eBGP/iBGP)
+    regex: \b[ie]?bgp\b
+    color: f.cyan
+
+  - description: JunOS HTTP/HTTPS
+    regex: \bhttps?\b
+    color: f.cyan
+
+  - description: JunOS 802.3ad / 802.1Q
+    regex: \b802\.(3ad|1Q)\b
+    color: f.cyan
+
+  - description: JunOS built-in junos- application names
+    regex: \bjunos-[-a-z]+
+    color: f.cyan
+
+  # ── junosAction (red) ──────────────────────────────────────────────────────
+  - description: JunOS policy actions
+    regex: \b(any|deny|permit|accept|reject|discard|disable|enable)\b
+    color: f.red
+
+  # ── junosConfigure (blue) ──────────────────────────────────────────────────
+  - description: JunOS operational / configure mode verbs
+    regex: \b(set|delete|rename|insert|request|show)\b
+    color: f.blue
+
+  - description: JunOS interface/port mode keywords
+    regex: \b(trunk|access|static|track|standby|full-duplex|automatic|auto-negotiation|input|output|prefer|active|passive|link-mode|port-mode|speed|queue)\b
+    color: f.blue
+
+  - description: JunOS speed shorthand (e.g. 1g, 100m)
+    regex: \b\d+[gm]\b
+    color: f.blue
+
+  # ── junosFunction (blue) ───────────────────────────────────────────────────
+  - description: JunOS functional / structural keywords
+    regex: \b(redundancy-group|screen|policies|flow|zones|vrf|virtual-router|id|host|host-name|priority|weight|port|protocol|source-address|destination-address|source-port|destination-port|import|export|source|destination|primary|secondary|neighbor)\b
+    color: f.blue
+
+  - description: JunOS groups keyword
+    regex: \bgroups?\b
+    color: f.blue
+
+  - description: JunOS protocols keyword
+    regex: \bprotocols?\b
+    color: f.blue
+
+  - description: JunOS unit stanza (e.g. "unit 0")
+    regex: \bunit\s+\d+
+    color: f.blue
+
+  - description: JunOS vlan sub-interface (e.g. vlan.100)
+    regex: \bvlan\.\d+
+    color: f.blue
+
+  - description: JunOS node reference (e.g. node0, node1)
+    regex: \bnode\d+
+    color: f.blue
+
+  # ── junosDef – leading uppercase word (green) ──────────────────────────────
+  - description: JunOS definition token (leading uppercase identifier)
+    regex: (?<=\s)[A-Z]\S+
+    color: f.green
