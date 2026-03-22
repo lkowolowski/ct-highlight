@@ -2,36 +2,32 @@
 # Usage:
 #   make lint          run all linters
 #   make shellcheck    shellcheck on all .zsh files
-#   make zsh-check     zsh -n syntax check on all .zsh files
 #   make yamllint      yamllint on all .yml files
 #   make markdownlint  markdownlint on all .md files
 #   make pre-commit    run all pre-commit hooks against every file
-
 SH_FILES    := $(shell find . -name '*.sh' -not -path './.git/*')
 YAML_FILES   := $(shell find . -name '*.yml' -not -name '.pre-commit-config.yaml' -not -path './.git/*')
 MD_FILES     := $(shell find . -name '*.md' -not -path './.git/*')
 
-# Copy files into place and reload ct so any running processes pick up the change
-#
-DESTDIR = ${HOME}/.config/chromaterm
-INSTALL = install
-INSTALL_PROGRAM = $(INSTALL)
-INSTALL_OPTS = -pSv -m 644
+XDG_CONFIG_HOME ?= $(HOME)/.config
+DEST            ?= $(XDG_CONFIG_HOME)/chromaterm
 
-.PHONY: all clean restart test lint
+.PHONY: all clean restart test lint shellcheck yamllint markdownlint checkmake pre-commit install uninstall pull
 .DEFAULT: all
 
-all: build install restart
+all: install restart
 
 pull:
 	git pull
 
-build:
-	@./generate_conf.sh
+install:
+	@echo "Installing chromaterm config files to $(DEST)"
+	@mkdir -p $(DEST)
+	@scripts/install-files.sh "$(FILES)" "$(DEST)"
 
-install: build
-	@$(INSTALL_PROGRAM) -d $(DESTDIR)
-	$(INSTALL_PROGRAM) $(INSTALL_OPTS) chromaterm.yml $(DESTDIR)/chromaterm.yml
+uninstall:
+	@echo "Removing installed chromaterm config files from $(DEST)"
+	@scripts/uninstall-files.sh "$(FILES)" "$(DEST)"
 
 restart:
 	ct -r
@@ -64,4 +60,5 @@ pre-commit:
 	@pre-commit run --all-files
 
 clean:
-	rm -f chromaterm.yml
+	@echo "Cleaning up $(DEST) if empty"
+	@scripts/clean-dest.sh "$(DEST)"
