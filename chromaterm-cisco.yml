@@ -19,25 +19,24 @@
 #   white        #eeeeee  error counter text on red background
 
 palette:
-  red: '#e06c75'
-  orange: '#d19a66'
-  gold: '#e5c07b'
-  green: '#98c379'
-  cyan: '#56b6c2'
-  blue: '#61afef'
-  purple: '#c678dd'
-  grey: '#7c8fa0'
-  lightblue: '#00afff'
-  magenta: '#ff00ff'
-  lightmagenta: '#ff87ff'
-  yellow: '#ffff00'
-  white: '#eeeeee'
+  red: "#e06c75"
+  orange: "#d19a66"
+  gold: "#e5c07b"
+  green: "#98c379"
+  cyan: "#56b6c2"
+  blue: "#61afef"
+  purple: "#c678dd"
+  grey: "#7c8fa0"
+  lightblue: "#00afff"
+  magenta: "#ff00ff"
+  lightmagenta: "#ff87ff"
+  yellow: "#ffff00"
+  white: "#eeeeee"
 
 rules:
-
   # ── Comments (! lines) (grey italic) ──────────────────────────────────────
   - description: Cisco IOS comment / remark line
-    regex: '!.*$'
+    regex: "!.*$"
     color: f.grey italic
 
   # ── Interface status (show interfaces output) ─────────────────────────────
@@ -151,7 +150,7 @@ rules:
     color: f.red invert
 
   - description: ErrDisable keyword
-    regex: '[eE]rr[Dd]isable[d ]?'
+    regex: "[eE]rr[Dd]isable[d ]?"
     color: f.white b#e06c75 bold
 
   - description: Rx/Tx pause frames (non-zero)
@@ -249,7 +248,7 @@ rules:
     color: f.blue
 
   - description: hostname value
-    regex: '(?<=hostname ).*$'
+    regex: "(?<=hostname ).*$"
     color: f.orange bold
 
   # ── name keyword ──────────────────────────────────────────────────────────
@@ -258,7 +257,7 @@ rules:
     color: f.blue
 
   - description: name value
-    regex: '(?<=name ).*$'
+    regex: "(?<=name ).*$"
     color: f.orange
 
   # ── version ───────────────────────────────────────────────────────────────
@@ -267,7 +266,7 @@ rules:
     color: f.blue
 
   - description: version value
-    regex: '(?<=[vV]ersion ).*$'
+    regex: "(?<=[vV]ersion ).*$"
     color: f.orange
 
   # ── feature (NX-OS) ───────────────────────────────────────────────────────
@@ -276,7 +275,7 @@ rules:
     color: f.blue
 
   - description: feature value
-    regex: '(?<=feature ).*$'
+    regex: "(?<=feature ).*$"
     color: f.orange
 
   # ── boot system flash ────────────────────────────────────────────────────
@@ -285,7 +284,7 @@ rules:
     color: f.blue
 
   - description: boot image name
-    regex: '(?<=boot system flash ).*$'
+    regex: "(?<=boot system flash ).*$"
     color: f.orange
 
   # ── ACL permit / deny (green / red) ───────────────────────────────────────
@@ -313,19 +312,19 @@ rules:
 
   # ── CDP: Device ID / System Name (blue label / cyan value) ───────────────
   - description: CDP Device ID label
-    regex: 'Device ID:'
+    regex: "Device ID:"
     color: f.blue
 
   - description: CDP Device ID value
-    regex: '(?<=Device ID:).*$'
+    regex: "(?<=Device ID:).*$"
     color: f.cyan bold
 
   - description: CDP System Name label
-    regex: 'System Name:'
+    regex: "System Name:"
     color: f.blue
 
   - description: CDP System Name value
-    regex: '(?<=System Name:).*$'
+    regex: "(?<=System Name:).*$"
     color: f.cyan bold
 
   # ── switchport root keyword (lightblue) ───────────────────────────────────
@@ -335,7 +334,7 @@ rules:
 
   # ── switchport base sub-keywords (purple) ────────────────────────────────
   - description: switchport mode / trunk / access / port-security sub-keywords
-    regex: '(?<![a-zA-Z0-9_-])(access|autostate|backup|block|capture|dot1q|host|mode|monitor|trunk|port-security|private-vlan|priority)(?![a-zA-Z0-9_-])'
+    regex: "(?<![a-zA-Z0-9_-])(access|autostate|backup|block|capture|dot1q|host|mode|monitor|trunk|port-security|private-vlan|priority)(?![a-zA-Z0-9_-])"
     color: f.purple
 
   # ── switchport mode values (magenta) ─────────────────────────────────────
@@ -345,11 +344,11 @@ rules:
 
   # ── switchport trunk vlan operations (magenta) ────────────────────────────
   - description: switchport trunk allowed vlan operations
-    regex: '(?<![a-zA-Z0-9_-])(add|except|remove|none)(?![a-zA-Z0-9_-])'
+    regex: "(?<![a-zA-Z0-9_-])(add|except|remove|none)(?![a-zA-Z0-9_-])"
     color: f.magenta
 
   - description: switchport trunk allowed / native keywords
-    regex: '(?<![a-zA-Z0-9_-])(allowed|native)(?![a-zA-Z0-9_-])'
+    regex: "(?<![a-zA-Z0-9_-])(allowed|native)(?![a-zA-Z0-9_-])"
     color: f.lightblue
 
   # ── encapsulation (blue keyword / magenta type) ───────────────────────────
@@ -362,7 +361,7 @@ rules:
     color: f.magenta
 
   - description: Dot1Q ethertype tag value
-    regex: '0x[6-9a-fA-F][0-9a-fA-F]{3}'
+    regex: "0x[6-9a-fA-F][0-9a-fA-F]{3}"
     color: f.lightmagenta
 
   # ── port-security sub-keywords (orange) ──────────────────────────────────
@@ -375,7 +374,7 @@ rules:
     color: f.white underline
 
   - description: port-security sticky
-    regex: '(?<![a-zA-Z0-9_-])sticky(?![a-zA-Z0-9_-])'
+    regex: "(?<![a-zA-Z0-9_-])sticky(?![a-zA-Z0-9_-])"
     color: f.white
 
   # ── route-map match (lightblue keyword / purple sub-keywords) ─────────────
@@ -393,11 +392,11 @@ rules:
 
   # ── VRF (lightblue root / purple sub-kw / cyan name) ─────────────────────
   - description: vrf keyword
-    regex: '(?<![a-zA-Z0-9_-])vrf(?![a-zA-Z0-9_-])'
+    regex: "(?<![a-zA-Z0-9_-])vrf(?![a-zA-Z0-9_-])"
     color: f.lightblue
 
   - description: vrf sub-keywords (forwarding / context / member)
-    regex: '(?<![a-zA-Z0-9_-])(context|forwarding|member)(?![a-zA-Z0-9_-])'
+    regex: "(?<![a-zA-Z0-9_-])(context|forwarding|member)(?![a-zA-Z0-9_-])"
     color: f.purple
 
   - description: vrf name (follows vrf context/forwarding/member)
@@ -407,7 +406,7 @@ rules:
 
   # ── ip route (blue keyword / cyan via) ───────────────────────────────────
   - description: ip route keyword
-    regex: '(?<![a-zA-Z0-9_-])route(?![a-zA-Z0-9_-])'
+    regex: "(?<![a-zA-Z0-9_-])route(?![a-zA-Z0-9_-])"
     color: f.blue
 
   - description: ip route vrf keyword
@@ -424,7 +423,7 @@ rules:
     color: f.cyan
 
   - description: seq keyword in prefix-list
-    regex: '(?<![a-zA-Z0-9_-])seq(?![a-zA-Z0-9_-])'
+    regex: "(?<![a-zA-Z0-9_-])seq(?![a-zA-Z0-9_-])"
     color: f.blue
 
   - description: seq number value
@@ -437,7 +436,7 @@ rules:
     color: f.blue
 
   - description: match-any name value
-    regex: '(?<=match-any ).*$'
+    regex: "(?<=match-any ).*$"
     color: f.orange
 
   # ── SNMP location / contact ───────────────────────────────────────────────
@@ -447,7 +446,7 @@ rules:
 
   # ── Port-channel members ──────────────────────────────────────────────────
   - description: Port-channel members label
-    regex: 'Members in this channel:'
+    regex: "Members in this channel:"
     color: f.purple
 
   # ── Last clearing of counters (grey italic) ───────────────────────────────
@@ -456,7 +455,7 @@ rules:
     color: f.grey italic
 
   - description: Last clearing time value
-    regex: '(?<=counters ).*$'
+    regex: "(?<=counters ).*$"
     color: f.orange
 
   # ── show bgp summary ──────────────────────────────────────────────────────
@@ -550,7 +549,7 @@ rules:
 
   # ── show lldp neighbors / show lldp neighbors detail ─────────────────────
   - description: LLDP section header / total count line
-    regex: 'Total entries displayed:'
+    regex: "Total entries displayed:"
     color: f.blue
 
   - description: LLDP summary column headers

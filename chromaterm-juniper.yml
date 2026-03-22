@@ -20,19 +20,18 @@
 # match inside hyphenated compound words like access-group, flow-tap, to-zone.
 
 palette:
-  red: '#e06c75'
-  orange: '#d19a66'
-  gold: '#e5c07b'
-  green: '#98c379'
-  cyan: '#56b6c2'
-  blue: '#61afef'
-  lightblue: '#00afff'
-  purple: '#c678dd'
-  grey: '#7c8fa0'
-  white: '#eeeeee'
+  red: "#e06c75"
+  orange: "#d19a66"
+  gold: "#e5c07b"
+  green: "#98c379"
+  cyan: "#56b6c2"
+  blue: "#61afef"
+  lightblue: "#00afff"
+  purple: "#c678dd"
+  grey: "#7c8fa0"
+  white: "#eeeeee"
 
 rules:
-
   # ── Comments / descriptions ────────────────────────────────────────────────
   - description: JunOS description keyword
     regex: \bdescription\s
@@ -59,7 +58,7 @@ rules:
     color: f.grey
 
   - description: JunOS low/high keywords
-    regex: '(?<![a-zA-Z0-9_-])(low|high)(?![a-zA-Z0-9_-])'
+    regex: "(?<![a-zA-Z0-9_-])(low|high)(?![a-zA-Z0-9_-])"
     color: f.grey
 
   # ── IPv4 addresses (gold underline) ───────────────────────────────────────
@@ -142,7 +141,7 @@ rules:
 
   # ── Top-level stanza labels (gold) ────────────────────────────────────────
   - description: JunOS top-level stanza labels
-    regex: '(?<![a-zA-Z0-9_-])(system|chassis|firewall|security|rule|rule-set|pool)(?![a-zA-Z0-9_-])'
+    regex: "(?<![a-zA-Z0-9_-])(system|chassis|firewall|security|rule|rule-set|pool)(?![a-zA-Z0-9_-])"
     color: f.gold
 
   # ── routing-instance (equivalent to Cisco vrf) ────────────────────────────
@@ -160,11 +159,11 @@ rules:
 
   # ── Configuration keywords (purple) ───────────────────────────────────────
   - description: JunOS configuration keywords
-    regex: '(?<![a-zA-Z0-9_-])(version|server|class|user|route|nat|policy|vlan-id|mtu|filter|term|routing-engine|line-card|next-hop|cluster|vrrp-group|security-zone|time-zone|encapsulation|storm-control|alg|log|login|node|zone|path|community)(?![a-zA-Z0-9_-])'
+    regex: "(?<![a-zA-Z0-9_-])(version|server|class|user|route|nat|policy|vlan-id|mtu|filter|term|routing-engine|line-card|next-hop|cluster|vrrp-group|security-zone|time-zone|encapsulation|storm-control|alg|log|login|node|zone|path|community)(?![a-zA-Z0-9_-])"
     color: f.purple
 
   - description: JunOS interfaces keyword
-    regex: '(?<![a-zA-Z0-9_-])interfaces?(?![a-zA-Z0-9_-])'
+    regex: "(?<![a-zA-Z0-9_-])interfaces?(?![a-zA-Z0-9_-])"
     color: f.purple
 
   - description: JunOS vlans keyword
@@ -172,21 +171,21 @@ rules:
     color: f.purple
 
   - description: JunOS members keyword
-    regex: '(?<![a-zA-Z0-9_-])members?(?![a-zA-Z0-9_-])'
+    regex: "(?<![a-zA-Z0-9_-])members?(?![a-zA-Z0-9_-])"
     color: f.purple
 
   - description: JunOS applications keyword
-    regex: '(?<![a-zA-Z0-9_-])applications?(?![a-zA-Z0-9_-])'
+    regex: "(?<![a-zA-Z0-9_-])applications?(?![a-zA-Z0-9_-])"
     color: f.purple
 
   # ── Conditional / zone match keywords (cyan) ──────────────────────────────
   - description: JunOS conditional / zone keywords
-    regex: '(?<![a-zA-Z0-9_-])(if|else|for-each|to-zone|from-zone|match|then|from|to)(?![a-zA-Z0-9_-])'
+    regex: "(?<![a-zA-Z0-9_-])(if|else|for-each|to-zone|from-zone|match|then|from|to)(?![a-zA-Z0-9_-])"
     color: f.cyan
 
   # ── Protocols (cyan) ───────────────────────────────────────────────────────
   - description: JunOS L3/L4 protocols
-    regex: '(?<![a-zA-Z0-9_-])(ip|ipv6|inet|inet6|tcp|udp)(?![a-zA-Z0-9_-])'
+    regex: "(?<![a-zA-Z0-9_-])(ip|ipv6|inet|inet6|tcp|udp)(?![a-zA-Z0-9_-])"
     color: f.cyan
 
   - description: JunOS management and service protocols
@@ -219,20 +218,20 @@ rules:
 
   # ── Policy actions — permit/deny split (green / red) ──────────────────────
   - description: JunOS permit / accept / enable actions
-    regex: '(?<![a-zA-Z0-9_-])(permit|accept|enable)(?![a-zA-Z0-9_-])'
+    regex: "(?<![a-zA-Z0-9_-])(permit|accept|enable)(?![a-zA-Z0-9_-])"
     color: f.green
 
   - description: JunOS deny / reject / discard / disable actions
-    regex: '(?<![a-zA-Z0-9_-])(any|deny|reject|discard|disable)(?![a-zA-Z0-9_-])'
+    regex: "(?<![a-zA-Z0-9_-])(any|deny|reject|discard|disable)(?![a-zA-Z0-9_-])"
     color: f.red
 
   # ── Operational / configure mode verbs (blue) ─────────────────────────────
   - description: JunOS operational / configure mode verbs
-    regex: '(?<![a-zA-Z0-9_-])(set|delete|rename|insert|request|show)(?![a-zA-Z0-9_-])'
+    regex: "(?<![a-zA-Z0-9_-])(set|delete|rename|insert|request|show)(?![a-zA-Z0-9_-])"
     color: f.blue
 
   - description: JunOS interface/port mode keywords
-    regex: '(?<![a-zA-Z0-9_-])(trunk|access|static|track|standby|full-duplex|automatic|auto-negotiation|input|output|prefer|active|passive|link-mode|port-mode|speed|queue)(?![a-zA-Z0-9_-])'
+    regex: "(?<![a-zA-Z0-9_-])(trunk|access|static|track|standby|full-duplex|automatic|auto-negotiation|input|output|prefer|active|passive|link-mode|port-mode|speed|queue)(?![a-zA-Z0-9_-])"
     color: f.blue
 
   - description: JunOS speed shorthand (e.g. 1g, 100m)
@@ -241,15 +240,15 @@ rules:
 
   # ── Functional / structural keywords (blue) ───────────────────────────────
   - description: JunOS functional / structural keywords
-    regex: '(?<![a-zA-Z0-9_-])(redundancy-group|screen|policies|flow|zones|vrf|virtual-router|id|host-name|host|priority|weight|port|protocol|source-address|destination-address|source-port|destination-port|import|export|source|destination|primary|secondary|neighbor)(?![a-zA-Z0-9_-])'
+    regex: "(?<![a-zA-Z0-9_-])(redundancy-group|screen|policies|flow|zones|vrf|virtual-router|id|host-name|host|priority|weight|port|protocol|source-address|destination-address|source-port|destination-port|import|export|source|destination|primary|secondary|neighbor)(?![a-zA-Z0-9_-])"
     color: f.blue
 
   - description: JunOS groups keyword
-    regex: '(?<![a-zA-Z0-9_-])groups?(?![a-zA-Z0-9_-])'
+    regex: "(?<![a-zA-Z0-9_-])groups?(?![a-zA-Z0-9_-])"
     color: f.blue
 
   - description: JunOS protocols keyword
-    regex: '(?<![a-zA-Z0-9_-])protocols?(?![a-zA-Z0-9_-])'
+    regex: "(?<![a-zA-Z0-9_-])protocols?(?![a-zA-Z0-9_-])"
     color: f.blue
 
   - description: JunOS unit stanza (e.g. "unit 0")
@@ -278,11 +277,11 @@ rules:
 
   # ── Physical / logical interface status ───────────────────────────────────
   - description: Physical interface header label
-    regex: 'Physical interface:'
+    regex: "Physical interface:"
     color: f.blue
 
   - description: Logical interface header label
-    regex: 'Logical interface'
+    regex: "Logical interface"
     color: f.blue
 
   - description: Current address / Hardware address field labels (show interfaces)
@@ -294,7 +293,7 @@ rules:
     color: f.green
 
   - description: Physical link Down / Administratively down
-    regex: '(?:Physical link is Down|Administratively down)'
+    regex: "(?:Physical link is Down|Administratively down)"
     color: f.red bold
 
   - description: Link is Up (short form)
@@ -419,7 +418,7 @@ rules:
     color: f.grey italic
 
   - description: Statistics last cleared line
-    regex: 'Statistics last cleared:.*$'
+    regex: "Statistics last cleared:.*$"
     color: f.grey italic
 
   # ── show ethernet-switching table / interfaces ───────────────────────────
@@ -436,7 +435,7 @@ rules:
     color: f.red bold
 
   - description: Ethernet-switching tagging state
-    regex: '(?<![a-zA-Z0-9_-])(tagged|untagged)(?![a-zA-Z0-9_-])'
+    regex: "(?<![a-zA-Z0-9_-])(tagged|untagged)(?![a-zA-Z0-9_-])"
     color: f.blue
 
   - description: Ethernet-switching blocking state — unblocked
@@ -516,7 +515,7 @@ rules:
     color: f.cyan
 
   - description: Next-hop via keyword
-    regex: '(?<![a-zA-Z0-9_-])via(?![a-zA-Z0-9_-])'
+    regex: "(?<![a-zA-Z0-9_-])via(?![a-zA-Z0-9_-])"
     color: f.blue
 
   - description: Route preference and metric block
@@ -590,7 +589,7 @@ rules:
 
   # ── show lldp neighbors / show lldp neighbors detail ─────────────────────
   - description: LLDP section header
-    regex: 'LLDP Neighbor Information:'
+    regex: "LLDP Neighbor Information:"
     color: f.blue bold
 
   - description: LLDP summary column headers
