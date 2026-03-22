@@ -14,17 +14,18 @@
 #   grey      #7c8fa0  secondary info (scope, brd, scopeid, valid_lft, forever)
 
 palette:
-  red: "#e06c75"
-  orange: "#d19a66"
-  gold: "#e5c07b"
-  green: "#98c379"
-  cyan: "#56b6c2"
-  blue: "#61afef"
-  lightblue: "#00afff"
-  purple: "#c678dd"
-  grey: "#7c8fa0"
+  red: '#e06c75'
+  orange: '#d19a66'
+  gold: '#e5c07b'
+  green: '#98c379'
+  cyan: '#56b6c2'
+  blue: '#61afef'
+  lightblue: '#00afff'
+  purple: '#c678dd'
+  grey: '#7c8fa0'
 
 rules:
+
   # ════════════════════════════════════════════════════════════════════════════
   # Interface names (cyan underline)
   # Covers Linux predictable names, legacy ethN, macOS enN/utunN/bridgeN,
@@ -118,11 +119,11 @@ rules:
     regex: '\bepair\d+[ab]\b'
     color: f.cyan underline
 
-  - description: "Interface name at start of ifconfig line (name: or name followed by flags)"
+  - description: 'Interface name at start of ifconfig line (name: or name followed by flags)'
     regex: '^[a-z][a-z0-9\.\-]+(?=:\s)'
     color: f.cyan underline bold
 
-  - description: "Interface index number at start of ip output line (N: ifname:)"
+  - description: 'Interface index number at start of ip output line (N: ifname:)'
     regex: '^\d+(?=:\s)'
     color: f.grey
 
@@ -179,7 +180,7 @@ rules:
   # ════════════════════════════════════════════════════════════════════════════
 
   - description: Interface flags block
-    regex: "<[A-Z_,]+>"
+    regex: '<[A-Z_,]+>'
     color: f.lightblue
 
   # ════════════════════════════════════════════════════════════════════════════
@@ -343,7 +344,7 @@ rules:
     color: f.grey
 
   - description: scopeid value
-    regex: "scopeid 0x[0-9a-fA-F]+"
+    regex: 'scopeid 0x[0-9a-fA-F]+'
     color: f.grey
 
   - description: nd6 options

@@ -19,24 +19,25 @@
 #   white        #eeeeee  error counter text on red background
 
 palette:
-  red: "#e06c75"
-  orange: "#d19a66"
-  gold: "#e5c07b"
-  green: "#98c379"
-  cyan: "#56b6c2"
-  blue: "#61afef"
-  purple: "#c678dd"
-  grey: "#7c8fa0"
-  lightblue: "#00afff"
-  magenta: "#ff00ff"
-  lightmagenta: "#ff87ff"
-  yellow: "#ffff00"
-  white: "#eeeeee"
+  red: '#e06c75'
+  orange: '#d19a66'
+  gold: '#e5c07b'
+  green: '#98c379'
+  cyan: '#56b6c2'
+  blue: '#61afef'
+  purple: '#c678dd'
+  grey: '#7c8fa0'
+  lightblue: '#00afff'
+  magenta: '#ff00ff'
+  lightmagenta: '#ff87ff'
+  yellow: '#ffff00'
+  white: '#eeeeee'
 
 rules:
+
   # ── Comments (! lines) (grey italic) ──────────────────────────────────────
   - description: Cisco IOS comment / remark line
-    regex: "!.*$"
+    regex: '!.*$'
     color: f.grey italic
 
   # ── Interface status (show interfaces output) ─────────────────────────────
@@ -150,7 +151,7 @@ rules:
     color: f.red invert
 
   - description: ErrDisable keyword
-    regex: "[eE]rr[Dd]isable[d ]?"
+    regex: '[eE]rr[Dd]isable[d ]?'
     color: f.white b#e06c75 bold
 
   - description: Rx/Tx pause frames (non-zero)
@@ -229,8 +230,9 @@ rules:
     color: f.blue
 
   - description: Cisco description text
-    regex: '(?<=[dD]escription:?\s).*$'
-    color: f.grey italic
+    regex: '[dD]escription:?\s+(.*$)'
+    color:
+      1: f.grey italic
 
   # ── hostname (blue keyword / orange value) ────────────────────────────────
   - description: hostname keyword
@@ -238,7 +240,7 @@ rules:
     color: f.blue
 
   - description: hostname value
-    regex: "(?<=hostname ).*$"
+    regex: '(?<=hostname ).*$'
     color: f.orange bold
 
   # ── name keyword ──────────────────────────────────────────────────────────
@@ -247,7 +249,7 @@ rules:
     color: f.blue
 
   - description: name value
-    regex: "(?<=name ).*$"
+    regex: '(?<=name ).*$'
     color: f.orange
 
   # ── version ───────────────────────────────────────────────────────────────
@@ -256,7 +258,7 @@ rules:
     color: f.blue
 
   - description: version value
-    regex: "(?<=[vV]ersion ).*$"
+    regex: '(?<=[vV]ersion ).*$'
     color: f.orange
 
   # ── feature (NX-OS) ───────────────────────────────────────────────────────
@@ -265,7 +267,7 @@ rules:
     color: f.blue
 
   - description: feature value
-    regex: "(?<=feature ).*$"
+    regex: '(?<=feature ).*$'
     color: f.orange
 
   # ── boot system flash ────────────────────────────────────────────────────
@@ -274,7 +276,7 @@ rules:
     color: f.blue
 
   - description: boot image name
-    regex: "(?<=boot system flash ).*$"
+    regex: '(?<=boot system flash ).*$'
     color: f.orange
 
   # ── ACL permit / deny (green / red) ───────────────────────────────────────
@@ -302,19 +304,19 @@ rules:
 
   # ── CDP: Device ID / System Name (blue label / cyan value) ───────────────
   - description: CDP Device ID label
-    regex: "Device ID:"
+    regex: 'Device ID:'
     color: f.blue
 
   - description: CDP Device ID value
-    regex: "(?<=Device ID:).*$"
+    regex: '(?<=Device ID:).*$'
     color: f.cyan bold
 
   - description: CDP System Name label
-    regex: "System Name:"
+    regex: 'System Name:'
     color: f.blue
 
   - description: CDP System Name value
-    regex: "(?<=System Name:).*$"
+    regex: '(?<=System Name:).*$'
     color: f.cyan bold
 
   # ── switchport root keyword (lightblue) ───────────────────────────────────
@@ -351,7 +353,7 @@ rules:
     color: f.magenta
 
   - description: Dot1Q ethertype tag value
-    regex: "0x[6-9a-fA-F][0-9a-fA-F]{3}"
+    regex: '0x[6-9a-fA-F][0-9a-fA-F]{3}'
     color: f.lightmagenta
 
   # ── port-security sub-keywords (orange) ──────────────────────────────────
@@ -390,8 +392,9 @@ rules:
     color: f.purple
 
   - description: vrf name (follows vrf context/forwarding/member)
-    regex: '(?<=(?:context|forwarding|member)\s)\S+'
-    color: f.cyan bold
+    regex: '\b(?:context|forwarding|member)\s+(\S+)'
+    color:
+      1: f.cyan bold
 
   # ── ip route (blue keyword / cyan via) ───────────────────────────────────
   - description: ip route keyword
@@ -425,7 +428,7 @@ rules:
     color: f.blue
 
   - description: match-any name value
-    regex: "(?<=match-any ).*$"
+    regex: '(?<=match-any ).*$'
     color: f.orange
 
   # ── SNMP location / contact ───────────────────────────────────────────────
@@ -435,7 +438,7 @@ rules:
 
   # ── Port-channel members ──────────────────────────────────────────────────
   - description: Port-channel members label
-    regex: "Members in this channel:"
+    regex: 'Members in this channel:'
     color: f.purple
 
   # ── Last clearing of counters (grey italic) ───────────────────────────────
@@ -444,7 +447,7 @@ rules:
     color: f.grey italic
 
   - description: Last clearing time value
-    regex: "(?<=counters ).*$"
+    regex: '(?<=counters ).*$'
     color: f.orange
 
   # ── show bgp summary ──────────────────────────────────────────────────────
@@ -501,7 +504,7 @@ rules:
 
   # ── show lldp neighbors / show lldp neighbors detail ─────────────────────
   - description: LLDP section header / total count line
-    regex: "Total entries displayed:"
+    regex: 'Total entries displayed:'
     color: f.blue
 
   - description: LLDP summary column headers
@@ -517,21 +520,25 @@ rules:
     color: f.blue
 
   - description: LLDP detail — system name value
-    regex: '(?<=System Name:\s{1,4}).*$'
-    color: f.cyan bold
+    regex: 'System Name:\s+(.*$)'
+    color:
+      1: f.cyan bold
 
   - description: LLDP detail — system / port description value
-    regex: '(?<=(?:System|Port) Description:\s{1,4}).*$'
-    color: f.grey italic
+    regex: '(?:System|Port) Description:\s+(.*$)'
+    color:
+      1: f.grey italic
 
   - description: LLDP chassis ID value (MAC — caught by MAC rule above)
-    regex: '(?<=Chassis id:\s{1,4})[0-9a-fA-F:\.]{14,}'
-    color: f.gold
+    regex: 'Chassis id:\s+([0-9a-fA-F:\.]{14,})'
+    color:
+      1: f.gold
 
   - description: LLDP capabilities (Router / Bridge / etc.)
     regex: '\b(Router|Bridge|Telephone|Station Only|Repeater|Wlan-Access-Point|DOCSIS-Cable-Device)\b'
     color: f.purple
 
   - description: LLDP Hold time / Time remaining value
-    regex: '(?:(?<=Hold-time\s{1,4}:\s)|(?<=Time remaining:\s))\d+.*$'
-    color: f.grey
+    regex: '(?:Hold-time|Time remaining):\s+(\d+.*$)'
+    color:
+      1: f.grey

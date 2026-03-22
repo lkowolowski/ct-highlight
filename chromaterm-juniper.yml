@@ -15,17 +15,18 @@
 #   grey      #7c8fa0  comments, timestamps, TTL, last-cleared, numeric values
 
 palette:
-  red: "#e06c75"
-  orange: "#d19a66"
-  gold: "#e5c07b"
-  green: "#98c379"
-  cyan: "#56b6c2"
-  blue: "#61afef"
-  lightblue: "#00afff"
-  purple: "#c678dd"
-  grey: "#7c8fa0"
+  red: '#e06c75'
+  orange: '#d19a66'
+  gold: '#e5c07b'
+  green: '#98c379'
+  cyan: '#56b6c2'
+  blue: '#61afef'
+  lightblue: '#00afff'
+  purple: '#c678dd'
+  grey: '#7c8fa0'
 
 rules:
+
   # ── Comments ───────────────────────────────────────────────────────────────
   - description: JunOS description line
     regex: description.*$
@@ -213,11 +214,11 @@ rules:
 
   # ── Physical / logical interface status ───────────────────────────────────
   - description: Physical interface header label
-    regex: "Physical interface:"
+    regex: 'Physical interface:'
     color: f.blue
 
   - description: Logical interface header label
-    regex: "Logical interface"
+    regex: 'Logical interface'
     color: f.blue
 
   - description: Physical link Up / Enabled
@@ -225,7 +226,7 @@ rules:
     color: f.green
 
   - description: Physical link Down / Administratively down
-    regex: "(?:Physical link is Down|Administratively down)"
+    regex: '(?:Physical link is Down|Administratively down)'
     color: f.red bold
 
   - description: Link is Up (short form)
@@ -324,8 +325,9 @@ rules:
     color: f.orange
 
   - description: Alarm / defect value (non-None)
-    regex: '(?<=:\s{1,4})\b(?!None\b)[A-Z][A-Z0-9_-]+'
-    color: f.red bold
+    regex: ':\s+(?!None\b)([A-Z][A-Z0-9_-]+)'
+    color:
+      1: f.red bold
 
   - description: No alarms / defects (None)
     regex: '\bNone\b'
@@ -345,7 +347,7 @@ rules:
     color: f.grey italic
 
   - description: Statistics last cleared line
-    regex: "Statistics last cleared:.*$"
+    regex: 'Statistics last cleared:.*$'
     color: f.grey italic
 
   # ── show route output ─────────────────────────────────────────────────────
@@ -427,7 +429,7 @@ rules:
 
   # ── show lldp neighbors / show lldp neighbors detail ─────────────────────
   - description: LLDP section header
-    regex: "LLDP Neighbor Information:"
+    regex: 'LLDP Neighbor Information:'
     color: f.blue bold
 
   - description: LLDP summary column headers
@@ -439,20 +441,23 @@ rules:
     color: f.cyan bold
 
   - description: LLDP chassis ID (non-MAC form)
-    regex: '(?<=Chassis ID\s{1,10}:\s)[^\s].*$'
-    color: f.gold
+    regex: 'Chassis ID\s*:\s+([^\s].*$)'
+    color:
+      1: f.gold
 
   - description: LLDP detail — field labels
     regex: '^\s+(?:System name|System description|Port description|Port ID|Chassis ID|System capabilities|Enabled capabilities|Auto negotiation|Physical media capabilities|Link aggregation|Maximum frame size)\s*:'
     color: f.blue
 
   - description: LLDP detail — system name value
-    regex: '(?<=System name\s{1,10}:\s).*$'
-    color: f.cyan bold
+    regex: 'System name\s*:\s+(.*$)'
+    color:
+      1: f.cyan bold
 
   - description: LLDP detail — port / system description value
-    regex: '(?<=(?:Port|System) description\s{1,10}:\s).*$'
-    color: f.grey italic
+    regex: '(?:Port|System) description\s*:\s+(.*$)'
+    color:
+      1: f.grey italic
 
   - description: LLDP capabilities (Router / Bridge / etc.)
     regex: '\b(Router|Bridge|Wlan-Access-Point|Telephone|DOCSIS-Cable-Device|Repeater|Station-Only|Other)\b'
