@@ -6,7 +6,7 @@
 #   make markdownlint  markdownlint on all .md files
 #   make pre-commit    run all pre-commit hooks against every file
 SH_FILES    := $(shell find . -name '*.sh' -not -path './.git/*')
-YAML_FILES   := $(shell find . -name '*.yml' -not -name '.pre-commit-config.yaml' -not -path './.git/*')
+YAML_FILES   := $(shell find . -name 'chromaterm*.yml')
 MD_FILES     := $(shell find . -name '*.md' -not -path './.git/*')
 
 XDG_CONFIG_HOME ?= $(HOME)/.config
@@ -23,14 +23,14 @@ pull:
 install:
 	@echo "Installing chromaterm config files to $(DEST)"
 	@mkdir -p $(DEST)
-	@scripts/install-files.sh "$(FILES)" "$(DEST)"
+	@scripts/install-files.sh "$(YAML_FILES)" "$(DEST)"
 
 uninstall:
 	@echo "Removing installed chromaterm config files from $(DEST)"
-	@scripts/uninstall-files.sh "$(FILES)" "$(DEST)"
+	@scripts/uninstall-files.sh "$(YAML_FILES)" "$(DEST)"
 
 restart:
-	ct -r
+	@ct -r
 
 test:
 	@echo "No tests defined"
