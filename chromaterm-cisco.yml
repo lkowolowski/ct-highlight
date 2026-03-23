@@ -179,40 +179,49 @@ rules:
   - description: Cisco-style MAC address (dotted notation)
     regex: '\b[0-9A-Fa-f]{4}\.[0-9A-Fa-f]{4}\.[0-9A-Fa-f]{4}\b'
     color: f.gold
+    exclusive: true
 
   - description: Standard MAC address (colon or dash separated)
     regex: '\b[0-9A-Fa-f]{2}[:\-][0-9A-Fa-f]{2}[:\-][0-9A-Fa-f]{2}[:\-][0-9A-Fa-f]{2}[:\-][0-9A-Fa-f]{2}[:\-][0-9A-Fa-f]{2}\b'
     color: f.gold
+    exclusive: true
 
   # ── IPv4 addresses (gold underline — grouped with MAC as address identifiers)
   - description: IPv4 address (with optional prefix length)
     regex: '\b(?:25[0-5]|2[0-4]\d|[01]?\d{1,2})(?:\.(?:25[0-5]|2[0-4]\d|[01]?\d{1,2})){3}(?:/\d{1,2})?\b'
     color: f.gold underline
+    exclusive: true
 
   # ── Interface type names (cyan underline) ─────────────────────────────────
   - description: Ethernet interface type abbreviation
     regex: '\b(?:[Ee]th(?:ernet)?|[Ff](?:as?t)?(?:[Ee]thernet)?|[Gg]ig?(?:abit[Ee]thernet)?|[Tt]en?(?:[Gg]i(?:gabit[Ee]thernet)?)?)\s*(?=\d)'
     color: f.cyan underline
+    exclusive: true
 
   - description: Serial / Loopback / Tunnel interface type
     regex: '\b(?:[Ss]er(?:ial)?|[Ll]o(?:opback)?|[Tt]un(?:nel)?)\s*(?=\d)'
     color: f.cyan underline
+    exclusive: true
 
   - description: Port-Channel interface type
     regex: '\b[Pp]o(?:rt.[Cc]hannel)?\s*(?=\d)'
     color: f.cyan underline
+    exclusive: true
 
   - description: VLAN interface type
     regex: '\b(?:[Vv]l(?:an)?|[Pp][Vv]lan)\s*(?=\d)'
     color: f.cyan underline
+    exclusive: true
 
   - description: Dot11Radio interface type
     regex: '\b[Dd]ot11[Rr]adio\s*(?=\d)'
     color: f.cyan underline
+    exclusive: true
 
   - description: Null0 interface
     regex: \bNull0\b
     color: f.cyan underline
+    exclusive: true
 
   # ── Interface slot/port numbers (yellow underline) ────────────────────────
   - description: Interface slot/port numbers
@@ -224,7 +233,7 @@ rules:
     regex: '^(?:int|interface|Interface:)\s'
     color: f.blue underline
 
-  # ── Description lines (grey italic) ───────────────────────────────────────
+  # ── Description lines (blue keyword / orange italic text) ────────────────
   - description: Cisco description keyword
     regex: '\b[dD]escription:?\s'
     color: f.blue
@@ -232,7 +241,7 @@ rules:
   - description: Cisco description text
     regex: '[dD]escription:?\s+(.*$)'
     color:
-      1: f.grey italic
+      1: f.orange italic
 
   # ── hostname (blue keyword / orange value) ────────────────────────────────
   - description: hostname keyword
@@ -326,7 +335,7 @@ rules:
 
   # ── switchport base sub-keywords (purple) ────────────────────────────────
   - description: switchport mode / trunk / access / port-security sub-keywords
-    regex: '\b(access|autostate|backup|block|capture|dot1q|host|mode|monitor|trunk|port-security|private-vlan|priority)\b'
+    regex: '(?<![a-zA-Z0-9_-])(access|autostate|backup|block|capture|dot1q|host|mode|monitor|trunk|port-security|private-vlan|priority)(?![a-zA-Z0-9_-])'
     color: f.purple
 
   # ── switchport mode values (magenta) ─────────────────────────────────────
@@ -336,11 +345,11 @@ rules:
 
   # ── switchport trunk vlan operations (magenta) ────────────────────────────
   - description: switchport trunk allowed vlan operations
-    regex: '\b(add|except|remove|none)\b'
+    regex: '(?<![a-zA-Z0-9_-])(add|except|remove|none)(?![a-zA-Z0-9_-])'
     color: f.magenta
 
   - description: switchport trunk allowed / native keywords
-    regex: '\b(allowed|native)\b'
+    regex: '(?<![a-zA-Z0-9_-])(allowed|native)(?![a-zA-Z0-9_-])'
     color: f.lightblue
 
   # ── encapsulation (blue keyword / magenta type) ───────────────────────────
@@ -366,7 +375,7 @@ rules:
     color: f.white underline
 
   - description: port-security sticky
-    regex: \bsticky\b
+    regex: '(?<![a-zA-Z0-9_-])sticky(?![a-zA-Z0-9_-])'
     color: f.white
 
   # ── route-map match (lightblue keyword / purple sub-keywords) ─────────────
@@ -384,11 +393,11 @@ rules:
 
   # ── VRF (lightblue root / purple sub-kw / cyan name) ─────────────────────
   - description: vrf keyword
-    regex: \bvrf\b
+    regex: '(?<![a-zA-Z0-9_-])vrf(?![a-zA-Z0-9_-])'
     color: f.lightblue
 
   - description: vrf sub-keywords (forwarding / context / member)
-    regex: '\b(context|forwarding|member)\b'
+    regex: '(?<![a-zA-Z0-9_-])(context|forwarding|member)(?![a-zA-Z0-9_-])'
     color: f.purple
 
   - description: vrf name (follows vrf context/forwarding/member)
@@ -398,7 +407,7 @@ rules:
 
   # ── ip route (blue keyword / cyan via) ───────────────────────────────────
   - description: ip route keyword
-    regex: \broute\b
+    regex: '(?<![a-zA-Z0-9_-])route(?![a-zA-Z0-9_-])'
     color: f.blue
 
   - description: ip route vrf keyword
@@ -415,7 +424,7 @@ rules:
     color: f.cyan
 
   - description: seq keyword in prefix-list
-    regex: \bseq\b
+    regex: '(?<![a-zA-Z0-9_-])seq(?![a-zA-Z0-9_-])'
     color: f.blue
 
   - description: seq number value
@@ -462,6 +471,43 @@ rules:
   - description: BGP session Idle
     regex: '\bIdle\b'
     color: f.red
+
+  # ── show ip ospf neighbor ─────────────────────────────────────────────────
+  - description: OSPF neighbor state Full / 2Way
+    regex: '\b(FULL|2WAY|Full|2Way)\b'
+    color: f.green
+
+  - description: OSPF neighbor state in progress
+    regex: '\b(EXSTART|EXCHANGE|LOADING|INIT|ATTEMPT|ExStart|Exchange|Loading|Init|Attempt)\b'
+    color: f.orange
+
+  - description: OSPF neighbor state Down
+    regex: '\b(DOWN|Down)\b'
+    color: f.red
+
+  # ── show spanning-tree ────────────────────────────────────────────────────
+  # Cisco bridge ID format: priority.aaaa.bbbb.cccc (dot-separated MAC groups)
+  - description: STP bridge ID (priority.mac Cisco format)
+    regex: '\b\d+\.[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}\b'
+    color: f.gold
+    exclusive: true
+
+  - description: STP port ID (priority:port)
+    regex: '\b\d{1,5}:\d{1,5}\b'
+    color: f.purple
+    exclusive: true
+
+  - description: STP state forwarding (FWD)
+    regex: '\bFWD\b'
+    color: f.green bold
+
+  - description: STP state discarding / blocking (BLK / BKN)
+    regex: '\b(BLK|BKN|DIS)\b'
+    color: f.red bold
+
+  - description: STP role designated / root / alternate / backup
+    regex: '\b(DESG|ROOT|ALTN|BACK|MSTR)\b'
+    color: f.cyan
 
   # ── show chassis / alarms ─────────────────────────────────────────────────
   - description: Alarm — Major severity
