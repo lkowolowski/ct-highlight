@@ -1,19 +1,19 @@
-# ct-highlighting
+# **ct-highlighting**
 
-**TLDR:** This repo will generate a chromaterm config (chromaterm.yml) that can be
-used for real-time syntax highlighting of network device config including Juniper and
-others.
+**TLDR:** This repo will install a collection of chromaterm config files (\*.yml) that
+can be used for real-time syntax highlighting of remote devices including UNIX/Linux,
+Juniper and others.
 
-## TOC
+## **TOC**
 
-- [What's this about?](#What's this about?)
+- [Summary](#summary)
 - [Benefits](#benefits)
 - [Pre-requisites](#pre-requisites)
 - [Usage](#usage)
 - [Limitations](#limitations)
-- [Thanks](#Special thanks)
+- [ThankYou](#thankyou)
 
-## What's this about?
+## **Summary**
 
 Reading through network device output can be challenging. There is a lot of
 text, which can make it difficult to scan through and quickly find what you're
@@ -27,12 +27,12 @@ faster**
 ![Colored_Junos_Security_Policy](resources/Junos_Security_Policy_Colored.png)
 
 This repo is the syntax highlighting I use on a frequent, if not daily basis
-when I have to work on/with network devices.
+when I have to work over an SSH session to network or UNIX/Linux devices.
 
-**Note:** The colors work with both a dark (black) terminal background, or
-blue(ish), as you can see in the images above.
+**Note:** Everything has been designed to work on a dark (black/gray) terminal
+background, or blueish(solarized dark), as you can see in the images above.
 
-## Examples
+## **Examples**
 
 - **Reading Junos Security Policy Rules (Junos)**
   ![Junos_Security_Policy](resources/Junos_Security_Policy_Colored.png)
@@ -47,52 +47,50 @@ blue(ish), as you can see in the images above.
 - **Reading Prefix lists (Junos)**
   ![Junos_Prefix-list](resources/Junos_Prefix-list_Colored.png)
 
-## Benefits
+## **Benefits**
 
 - Quicker troubleshooting allows you to more easily identify mis-configurations
   or issues like interfaces in up/down.
-- Color codes can be customized to your liking. [HTML color
-  codes](https://htmlcolorcodes.com/)
+- Color codes can be customized to your liking. [HTML color codes][html_color_codes]
 - You can define your own regexes to work with what ever platform you want.
 
-## Pre-requisites
+## **Pre-requisites**
 
-- Python 3.7+ Recommended (currently using 3.13)
-- [Chromaterm](https://github.com/hSaria/ChromaTerm) - Shout out to
-  **[hSaria](https://github.com/hSaria)** for buliding this fantastic tool that
-  works with interactive applications such as ssh.
-- On a Mac with [homebrew](https://brew.sh) install [uv](https://docs.astral.sh/uv/)
+- Python 3.7+ Recommended (currently using what ever is the default for homebrew)
+- [Chromaterm][chromaterm]
+- On a Mac with [homebrew][homebrew] install [uv][uv]
   with `brew install uv`
 - Install chromaterm with `uv tool install chromaterm`
-  - By default, uv will install things in ${HOME}/.local/bin
-  - Add it to your path
-    - For bash: `echo 'PATH=$PATH:${HOME}/.local/bin/' >> ${HOME}/.bash_profile`
-    - For zsh: `echo 'path=(path ${HOME}/.local/bin/)' >> ${HOME}/.zshrc`
+  - By default, uv will install things in `${XDG_BIN_HOME}/bin/`
+    (probably `${HOME}/.config/bin/`)
+  - Add it to your path if its not already there
+    - For bash: `echo 'PATH=$PATH:${HOME}/.config/bin/' >> ${HOME}/.bash_profile`
+    - For zsh: `echo 'path=(path ${HOME}/.config/bin/)' >> ${HOME}/.zshrc`
   - You can also install with `pip install chromaterm`
 
-## Usage
+## **Usage**
 
 - Clone this repo: `git clone git@github.com:louisk/ct-highlight.git`
-- Run `make install`. This will create files in ${HOME}/.config/chromaterm/
+- Run `make install`. This will create files in `${XDG_CONFIG_HOME}/chromaterm/`
 - Last, connect to a `Juniper` via ssh and issue a `show interfaces`
-  - `ct ssh user@device`
+  - `ct -c ${XDG_CONFIG_HOME/chromaterm/juniper.yml ssh user@device`
 
-## Customizing
+## **Customizing**
 
-- I've created files split up by the type of system they are designed for. If
-  you don't want to use all of them, or you want to create new ones.
-  - Making a new profile can be done with
-    `cat chromaterm-colors.yml > new_profile.yml` and then adding your own
-    regex.
-- To recreate the chromaterm.yml file and install it, run `make build install`.
-  This will generate a new chromaterm.yml file and install it in
-  ${HOME}.config/chromaterm.
-  - If you have any running chromaterm processes, you can run `make restart` (or
-    append it to the above for `make build install restart` or `make all` for
-    short)
-- To test, open a new window in you terminal, use one of the following examples
-  provided in the resources/ folder and pipe it to chromaterm (ct). For example:
-  `cat resources/interface.junos | ct`
+Couple options for customizing.
+
+1. You can create your own profile(s) from scratch. If you prefix the profile name
+   with `chromaterm-`, it will automagically get picked up by the Makefile when you
+   run `make install`.Its a lot of regex and testing. A lot of the testing is going back
+   and forth because the expressions weren't quite correct, or
+   they were ordered wrong, or they did/didn't use exclusive.
+2. Modify the existing profiles. Changing colors is pretty straight forward. Adding
+   expressions or modifying expressions is more like the previous option, with lots
+   of testing and adjusting.
+
+- If you have any running chromaterm processes, you can run `make restart` (or
+  append it to the above for `make build install restart` or `make all` for
+  short)
 
 If you don't want to prepend your command with `ct` every time, I wrote a zsh
 (zgenom) module you can install by adding this to your .zshrc.d/plugins.zsh:
@@ -101,28 +99,34 @@ If you don't want to prepend your command with `ct` every time, I wrote a zsh
 zgenom load lkowolowski/zsh-ssh-ct
 ```
 
-## Testing
+## **Testing**
 
-- To test, open a new window in you terminal, use one of the following examples
-  provided in the resources/ folder and pipe it to chromaterm (ct). For example:
-  `cat resources/interface.junos | ct`
 - I've included a `resources` dir with relevant snippets of config. You can run
-  `ct cat resources/file` to see what it would look like
+  `ct -c ${XDG_CONFIG_HOME}/chromaterm/profile.yml cat resources/file` to see what it
+  would look like.
 
-## Limitations
+## **Limitations**
 
 - There are lots of (versions of) network operating systems. It's likely that
   not all of them will work with the current set of config files, but you can
-  easily modify it by adding or changing the filters to make the content you
-  want colored the way you want.
+  easily modify it by adding or changing the regular expressions to make the content
+  you want colored the way you want.
 - [This config file](chromaterm-juniper.yml) has been tested with SRX, EX, QFX,
   and MX platforms.
 - [This config file](chromaterm-unix.yml) has been tested with MacOS, FreeBSD
   and Linux platforms.
 - For more information on the `chromaterm` config file options check out
-  [ChromaTerm Highlight Rules](https://github.com/hSaria/ChromaTerm#highlight-rules)
-- For help with regex, I used [regex101](https://regex101.com)
+  [ChromaTerm Highlight Rules][chromaterm_highlight_rules]
+- For help with regex, I used [regex101][regex101]
 
-## Special Thanks
+## **ThankYou**
 
-Thanks to [hSaria](https://github.com/hSaria) for creating [Chromaterm](https://github.com/hSaria/ChromaTerm)
+Thanks to [hSaria][hsaria] for creating [Chromaterm][chromaterm]
+
+[html_color_codes]: https://htmlcolorcodes.com/
+[homebrew]: https://brew.sh
+[uv]: https://docs.astral.sh/uv/
+[chromaterm_highlight_rules]: https://github.com/hSaria/ChromaTerm#highlight-rules
+[regex101]: https://regex101.com
+[hsaria]: https://github.com/hSaria
+[chromaterm]: https://github.com/hSaria/ChromaTerm
