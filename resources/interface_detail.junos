@@ -113,36 +113,36 @@ Physical interface: ge-0/0/7, Enabled, Physical link is Up
     Output packets:            428383099                   30 pps
     Security: Zone: trust
     Allowed host-inbound traffic : bootp bfd bgp dns dvmrp igmp ldp msdp nhrp ospf ospf3 pgm pim rip ripng router-discovery rsvp sap vrrp dhcp finger ftp tftp ident-reset http https ike netconf ping reverse-telnet reverse-ssh rlogin rpm rsh snmp snmp-trap ssh telnet traceroute xnm-clear-text xnm-ssl lsping lsselfping ntp sip dhcpv6 r2cp webapi-clear-text webapi-ssl tcp-encap sdwan-appqoe high-availability
-    Flow Statistics :  
+    Flow Statistics :
     Flow Input statistics :
       Self packets :                     397764
       ICMP packets :                     1552985
       VPN packets :                      0
       Multicast packets :                0
       Bytes permitted by policy :        80563230588
-      Connections established :          8893354 
-    Flow Output statistics: 
+      Connections established :          8893354
+    Flow Output statistics:
       Multicast packets :                0
-      Bytes permitted by policy :        490678232888 
-    Flow error statistics (Packets dropped due to): 
+      Bytes permitted by policy :        490678232888
+    Flow error statistics (Packets dropped due to):
       Address spoofing:                  0
       Authentication failed:             0
       Incoming NAT errors:               0
       Invalid zone received packet:      0
-      Multiple user authentications:     0 
+      Multiple user authentications:     0
       Multiple incoming NAT:             0
       No parent for a gate:              0
-      No one interested in self packets: 0       
-      No minor session:                  0 
+      No one interested in self packets: 0
+      No minor session:                  0
       No more sessions:                  0
-      No NAT gate:                       0 
-      No route present:                  34 
-      No SA for incoming SPI:            0 
+      No NAT gate:                       0
+      No route present:                  34
+      No SA for incoming SPI:            0
       No tunnel found:                   0
-      No session for a gate:             0 
+      No session for a gate:             0
       No zone or NULL zone binding       0
       Policy denied:                     0
-      Security association not active:   0 
+      Security association not active:   0
       TCP sequence number out of window: 42955
       Syn-attack protection:             0
       User authentication errors:        0
