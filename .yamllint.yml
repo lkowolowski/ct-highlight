@@ -6,7 +6,7 @@ extends: default
 rules:
   # Line length: ChromaTerm regex rules can be long
   line-length:
-    max: 300
+    max: 320
     level: warning
 
   # Comments: require a space after #, but don't enforce inline comment spacing
