@@ -1,0 +1,10 @@
+-------------------------------------------------------------------------------
+ID/vsys  application    state  type flag  src[sport]/zone/proto (translated IP[port])
+                                              dst[dport]/zone (translated IP[port]
+-------------------------------------------------------------------------------
+
+
+
+35299/1  facebook       ACTIVE  FLOW        10.16.2.100[52648]/corp-trust/6 (10.16.2.100[52648])
+                                            69.63.176.170[80]/corp-untrust (69.63.176.170[80])
+32026/1  ssl            ACTIVE  FLOW        10.16.3.220[45307]/corp-untrust/6 (10.16.3.220[45307])

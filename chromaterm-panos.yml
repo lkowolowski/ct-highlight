@@ -1,312 +1,322 @@
+# ChromaTerm highlight rules for PAN-OS (Palo Alto Networks)
+# Covers: config mode (set/edit/show), show interface, show routing route,
+#         show arp all, show session all, show high-availability state,
+#         show system info, show log traffic/threat, show counter global.
+#
+# Shared semantic palette (normalized with junos.yml and cisco.yml):
+#   red       #e06c75  errors, deny, down, drop, critical, blocked
+#   orange    #d19a66  warnings, medium severity, degraded states
+#   gold      #e5c07b  MAC addresses, IPv4/IPv6 addresses, zone names
+#   green     #98c379  allow, up, active, established, pass
+#   cyan      #56b6c2  interface names, protocols, application names
+#   blue      #61afef  primary keywords, field labels
+#   lightblue #00afff  root structural keywords (vsys, deviceconfig, network)
+#   purple    #c678dd  config sub-keywords, NAT types, rule types
+#   grey      #7c8fa0  comments, timestamps, secondary info
+#   white     #eeeeee  object/rule names (address objects, security rules)
+#
+# Word boundary: uses (?<![a-zA-Z0-9_-]) / (?![a-zA-Z0-9_-]) for short
+# keywords that could appear inside hyphenated compound words.
+
 palette:
-  #orange: '#dc8968'
-  #orange: '#c96901'
-  #orange: '#ca9102'
-  orange: "#f09536"
-  brown: "#a35a00"
-  blue_gray: "#5698c8"
-  light_blue: "#00D1DB"
-  #magenta: '#ef2e9f'
-  magenta: "#F701FF"
-  pink: "#df99f0"
-  red: "#c71800"
-  #yellow: '#cab902'
-  yellow: "#C6D243"
-  #yellow: '#a2bc02'
-  yellow_green: "#79bf02"
-  #green: '#03d28d'
-  green: "#28c501"
-  white: "#FFFFFF"
-  purple: "#8382f7"
+  red: "#e06c75"
+  orange: "#d19a66"
+  gold: "#e5c07b"
+  green: "#98c379"
+  cyan: "#56b6c2"
+  blue: "#61afef"
+  lightblue: "#00afff"
+  purple: "#c678dd"
+  grey: "#7c8fa0"
+  white: "#eeeeee"
 
 rules:
-  - description: Numbers
-    regex: \s(?<!\.)\d+(\.\d+)?(?!\.)(?:\s|,|$)
-    color: f.orange
+  # ── Comments (# lines) ─────────────────────────────────────────────────────
+  - description: PAN-OS comment line
+    regex: "#.*$"
+    color: f.grey italic
 
-  - description: URL
-    regex: |
-      (?ix)(?:\s|^)
-          ((htt|ft|lda)ps?|telnet|ssh)://  # Scheme
-          ([-%:\w\\/]{1,256}@)?  # User info
-          [-\w]{1,63}(\.[-\w]{1,63}){0,126}(:\d{1,5})?  # Host and port
-          (/[-+=~@%&?#.:;,\w\\/()]*)?  # Path, query, and fragment
-      ((?=[.:;,)])|\s)  # Avoid highlighting trailing path characters by matching them in a lookahead
-    color: f.blue_gray
-    exclusive: true
-
-  - description: IPv4
-    regex: |
-      (?ix)
-      (?:\s|^)
-      (?<!\.)((25[0-5]|(2[0-4]|[0-1]?\d)?\d)\.){3}(25[0-5]|(2[0-4]|[0-1]?\d)?\d)(/\d+)?
-    color: f.light_blue
-    Exclusive: true
-
-  - description: IPv6
-    regex: |
-      (?ix)(?<![\w:])(
-          ([\da-f]{1,4}:){7}[\da-f]{1,4}|  # 1:2:3:4:5:6:7:8
-          [\da-f]{1,4}:(:[\da-f]{1,4}){1,6}|  # 1::3:4:5:6:7:8
-          ([\da-f]{1,4}:){1,2}(:[\da-f]{1,4}){1,5}|  # 1:2::4:5:6:7:8
-          ([\da-f]{1,4}:){1,3}(:[\da-f]{1,4}){1,4}|  # 1:2:3::5:6:7:8
-          ([\da-f]{1,4}:){1,4}(:[\da-f]{1,4}){1,3}|  # 1:2:3:4::6:7:8
-          ([\da-f]{1,4}:){1,5}(:[\da-f]{1,4}){1,2}|  # 1:2:3:4:5::7:8
-          ([\da-f]{1,4}:){1,6}:[\da-f]{1,4}|  # 1:2:3:4:5:6::8
-          ([\da-f]{1,4}:){1,7}:|  # 1:2:3:4:5:6:7::
-          :((:[\da-f]{1,4}){1,7}|:)  # ::2:3:4:5:6:7:8
-      )(:(?=\W))?  # \W is an exclusive-flag hack to color the : before an IPv4-embedded address
-      (%[\da-z]+)?  # Zone index
-      (/\d+)?  # Prefix length
-      (?!:?\w)
-    color: f.light_blue
-    exclusive: true
-
-  - description: MAC address
-    regex: |
-      (?ix:\ )
-      ([\da-f]{1,2}:){5}[\da-f]{1,2} |  # 11:22:33:aa:bb:cc
-      ([\da-f]{4}\.){2}[\da-f]{4}  # 1122.33aa.bbcc
-      (?:\ |$)
-    color: f.blue_gray
-    exclusive: true
-
-  - description: Date
-    regex: |
-      (?ix)(?:\s|^)(
-          (\d{2}|\d{4})(?P<sep1>[-/])(0?[1-9]|1[0-2])(?P=sep1)(3[0-1]|[1-2]\d|0?[1-9])|  # YYYY-MM-DD, YY-MM-DD, YYYY/MM/DD, YY/MM/DD
-          (3[0-1]|[1-2]\d|0?[1-9])(?P<sep2>[-/])(0?[1-9]|1[0-2])(?P=sep2)(\d{2}|\d{4})|  # DD-MM-YYYY, DD-MM-YY, DD/MM/YYYY, DD/MM/YY
-          (0?[1-9]|1[0-2])(?P<sep3>[-/])(3[0-1]|[1-2]\d|0?[1-9])(?P=sep3)(\d{2}|\d{4})|  # MM-DD-YYYY, MM-DD-YY, MM/DD/YYYY, MM/DD/YY
-          (jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\s+(  # MMM
-              (3[0-1]|[1-2]\d|0?[1-9])(\s+\d{4})?|\d{4}  # DD (YYYY)?, YYYY
-          )|(3[0-1]|[1-2]\d|0?[1-9])\s(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)(?!\s+(3[0-1]|[1-2]\d|0?[1-9])([^\w:]|$))(\s+\d{4})?  # DD MMM (YYYY)?
-      )((?=[\WT_])|$)
-    color: f.orange
-    exclusive: true
-
-  - description: Time
-    regex: |
-      (?ix)(?<![\.:])(\s|(?<=T))
-          (2[0-3]|[0-1]\d):[0-5]\d  # Hours and minutes
-          (:[0-5]\d([\.,]\d{3,6})?)?  # (Seconds (sub-seconds, 3 to 6 decimal places)?)?
-          ([\-\+](\d{2}|\d{4})|Z)?  # (Timezone)?
-      (?![\.:])(?:\s|$)
-    color: f.orange
-    exclusive: true
-
-  - description: Size, like 123G 123Gb 123Gib 1.23G 123Gbps
-    regex: |
-      (?ix)
-      (?:\s|^)
-      \d+(\.\d+)?\s?((([kmgtpezy](i?b)?)|b)(ps)?)(/s)?
-      (?:\s|$)
-    color:
-      0: f.pink
-      2: bold
-    exclusive: true
-
-  # Interfaces colored orange
-  - description: Interfaces names
-    regex: |
-      (?x)
-      (?:\ |^)
-      (tunnel\.\d+)| (tunnel) | # IPSec tunnels
-      (ethernet\d+\/\d+) | # Ethernet interfaces
-      (ha\d-[ab]) | # HA interfaces
-      (loopback\.\d+)| (loopback) | # loopback interfaces
-      (ae\d+\.\d+)|(ae\d+) | # Aggregate interfaces
-      (vlan) | # Vlan interfaces
-      (hsci) # HSCI interfaces
-      (?:\ |$)
-    color: f.orange
-
-  # interface descriptions can start with a space, double quote, and end with double quote, or semi-colon
-  - description: Interface description (Light blue)
-    regex: |
-      (?ix)
-      (?:\ |^)
-      (?:(?:D|d)escription\:?\s)
-      (.*)|
-      (?:(?:up|down)\ +(?:up|down)\ +)(.*)
-      (?:\s|$)
-    color:
-      1: f.light_blue
-      2: f.light_blue
-    exclusive: true
-
-  # By default, interface up/up and down/down are properly colored (green/green, red/red)
-  - description: Interface descriptions
-    regex: |
-      (?ix)
-      (?:\ )
-      (
-      (up\ +up)| # up/up is green
-      (up\ +down)| # up/down is yellow
-      (down\ +down)| # down/down is red
-      (down\ +up) # down/up is red
-      )
-      (?:\ |$)
-    color:
-      2: f.green
-      3: f.yellow
-      4: f.red
-      5: f.red
-
-  # Prefix lists
-  - description: prefix-list  set commands
-    regex: |
-      (?ix)
-      (?:\ |^)
-      ((set|deactivate)\ policy-options\ prefix-list)\ ([a-zA-Z0-9_-]+) # set statement (white) name (green)
-      (\ (apply-path)\ (\".*(\<.*\>)\")?)? # apply-path (white)
-    color:
-      1: f.white
-      3: f.green
-      5: f.white
-      6: f.light_blue
-
-  # Routing policies
-  - description: Routing policies set commands
-    regex: |
-      (?ix)(?:^)
-      ((set|deactivate)\spolicy-options\spolicy-statement\s) # set statement (white)
-      ([a-zA-Z0-9_-]+\s)  # policy name (green)
-      ((from|then)?|  # from/then clause (white))
-      ((term\ )([a-zA-Z0-9_-]+\ )(then))?)  # term (white) term-name (green) then (white)
-      (?:\s)
-    color:
-      1: f.white
-      3: f.green
-      5: f.white
-      7: f.white
-      8: f.green
-      9: f.white
-
-  # Firewall rules
-  - description: Firewall filter name (green) apply-flags|then (white) set commands
-    regex: |
-      (?ix)
-      (?:\ |^)
-      ((set|deactivate)\ firewall\ family\ inet6?\ filter\ ) # set command (white)
-      ([a-zA-Z0-9_-]+)\ # filter-name (green)
-      ((apply-flags\ omit)|((term)\ ([a-zA-Z0-9_-]+)\ (from|then))) # apply flags (white), term (white), term-name (green), from/then (white)
-      (?:\ |$)
-    color:
-      1: f.white
-      3: f.green
-      5: f.white
-      7: f.white
-      8: f.green
-      9: f.white
-
-  # Security Policies
-  - description: Security policies set commands
-    regex: |
-      (?ix)
-      (?:\ |^)
-      ((set|deactivate)(\ groups\ [a-zA-Z0-9_-]+)?\ security\ policies\ from-zone)\  # set command (white)
-      ([a-zA-Z0-9_\-\<\>\*]+)\ # zone (green)
-      (to-zone)\ # to-zone (white)
-      ([a-zA-Z0-9_\-\<\>\*]+)\ # zone (red)
-      (policy|apply-groups)\ # policy/apply-groups (white)
-      ([a-zA-Z0-9_-]+) # policy-name (green)
-      (?:\ |$)
-    color:
-      1: f.white
-      4: f.green
-      5: f.white
-      6: f.red
-      7: f.white
-      8: f.green
-
-  - description: Security policies - hierarchical apply-groups
-    regex: |
-      (?x)
-      (?:\ |^)
-      (apply-groups)
-      (?:\ \[)?
-      ([a-zA-Z0-9_\-\s]+)
-      (?:\ \])?
-      (?:;$)
-    color:
-      1: f.white
-      2: f.green
-
-  - description: Security Policies - hierarchical
-    regex: |
-      (?x)
-      (?:\ |^)
-      (inactive:\ )?
-      (policy\ +)
-      (["\/a-zA-Z-2-9\.\ _\*\(\)\,-]+) # policy (white)
-      (?:{?)
-      (\ |$)
-    color:
-      1: f.white
-      2: f.white
-      3: f.green
-
-  - description: Security Policies Description - hierarchical
-    regex: |
-      (?x)
-      (?:\ |^)
-      (?:description\ +)
-      ([a-zA-Z0-9\.\ _\*\(\)\,\/\'\"-]+) # description (light blue)
-      (?:\;$)
-    color:
-      1: f.light_blue
-
-  - description: Security Policies - hierarchical Match|Then
-    regex: |
-      (?x)
-      (?:\ |^)
-      (match|then) # white
-      (?:\ \{$)
+  # ── Quoted strings (exclusive) ─────────────────────────────────────────────
+  - description: PAN-OS quoted string
+    regex: '"[^"]*"'
     color: f.white
+    exclusive: true
 
-  - description: Security Policies - hierarchical Source-Adress/Destination-Address
-    regex: |
-      (?x)
-      (?:\ +|^)
-      (
-      (source-address)| # white
-      (destination-address)| # white
-      (application)
-      )
-      (?:\ \[)? # optionally start a list
-      ([a-zA-Z0-9_\-\s\/\.]+) # address object(s)
-      (?:\ \])? # optionally terminate a list
-      (?:;?)$
-    color:
-      1: f.white
-      5: f.green
+  # ── IPv4 addresses (gold underline) ───────────────────────────────────────
+  - description: IPv4 address (with optional prefix length or netmask)
+    regex: '\b(25[0-5]|2[0-4]\d|[01]?\d{1,2})(\.(25[0-5]|2[0-4]\d|[01]?\d{1,2})){3}(/\d{1,2})?\b'
+    color: f.gold underline
+    exclusive: true
 
-  - description: Security Policies - reject or deny (Red Italic Style)
-    regex: |
-      (?x)
-      (?:\ |^)
-      (
-      (permit)| # permit (green)
-      ((reject)|(deny)|(log [/a-zA-Z0-9\._-]+)) # reject/deny/log (red)
-      )
-      (?:;$)
-    color:
-      2: f.green
-      3: f.red
+  # ── MAC addresses (gold) ───────────────────────────────────────────────────
+  - description: MAC address (colon-separated)
+    regex: '\b[0-9a-fA-F]{2}(?::[0-9a-fA-F]{2}){5}\b'
+    color: f.gold
+    exclusive: true
 
-  - description: BGP summary
-    regex: |
-      (?ix)
-      (?:\:\d+\ )?
-      (?:
-      (establ)|
-      (active)|
-      (connect)|
-      (idle)
-      )
-      (?:$)
+  # ── Interface names (cyan underline) ──────────────────────────────────────
+  - description: PAN-OS ethernet interface (ethernet1/1, ethernet1/1.100)
+    regex: '\bethernet\d+/\d+(?:\.\d+)?\b'
+    color: f.cyan underline
+    exclusive: true
+
+  - description: PAN-OS aggregate ethernet interface (ae1, ae1.200)
+    regex: '\bae\d+(?:\.\d+)?\b'
+    color: f.cyan underline
+    exclusive: true
+
+  - description: PAN-OS tunnel interface (tunnel.1)
+    regex: '\btunnel\.\d+\b'
+    color: f.cyan underline
+    exclusive: true
+
+  - description: PAN-OS loopback interface (loopback.1)
+    regex: '\bloopback\.\d+\b'
+    color: f.cyan underline
+    exclusive: true
+
+  - description: PAN-OS VLAN interface (vlan.10)
+    regex: '\bvlan\.\d+\b'
+    color: f.cyan underline
+    exclusive: true
+
+  - description: PAN-OS management interface
+    regex: '\bmanagement\b'
+    color: f.cyan underline
+
+  - description: PAN-OS HA / HSCI interface
+    regex: '\b(?:hsci|ha\d*)\b'
+    color: f.cyan underline
+
+  # ── Interface status (show interface output) ───────────────────────────────
+  - description: Interface state up
+    regex: "(?<![a-zA-Z0-9_-])up(?![a-zA-Z0-9_-])"
+    color: f.green
+
+  - description: Interface state down
+    regex: "(?<![a-zA-Z0-9_-])down(?![a-zA-Z0-9_-])"
+    color: f.red bold
+
+  # ── Root structural keywords (lightblue) ───────────────────────────────────
+  - description: PAN-OS top-level config stanzas
+    regex: "(?<![a-zA-Z0-9_-])(vsys|deviceconfig|network|shared|panorama|predefined)(?![a-zA-Z0-9_-])"
+    color: f.lightblue
+
+  # ── Zone names — highlight the keyword, name follows as white quoted string
+  - description: PAN-OS zone keyword
+    regex: "(?<![a-zA-Z0-9_-])zone(?![a-zA-Z0-9_-])"
+    color: f.purple
+
+  # ── Security policy actions (green / red) ─────────────────────────────────
+  - description: Security policy action allow
+    regex: "(?<![a-zA-Z0-9_-])allow(?![a-zA-Z0-9_-])"
+    color: f.green bold
+    exclusive: true
+
+  - description: Security policy action deny / drop
+    regex: "(?<![a-zA-Z0-9_-])(deny|drop)(?![a-zA-Z0-9_-])"
+    color: f.red bold
+    exclusive: true
+
+  - description: Security policy action reset
+    regex: '\b(reset-client|reset-server|reset-both)\b'
+    color: f.red bold
+    exclusive: true
+
+  # ── Config mode verbs (blue) ───────────────────────────────────────────────
+  - description: PAN-OS operational / configure mode verbs
+    regex: "(?<![a-zA-Z0-9_-])(set|delete|rename|move|clone|show|edit|exit|quit|commit|revert|save|load|run)(?![a-zA-Z0-9_-])"
+    color: f.blue
+
+  # ── Configuration keywords (purple) ───────────────────────────────────────
+  - description: PAN-OS security rule keywords
+    regex: "(?<![a-zA-Z0-9_-])(source|destination|application|service|category|profile|schedule|tag|description|disabled|log-start|log-end|log-setting|action|profile-setting|group|negate|target|hip-profiles)(?![a-zA-Z0-9_-])"
+    color: f.purple
+
+  - description: PAN-OS network / interface keywords
+    regex: "(?<![a-zA-Z0-9_-])(ip-address|netmask|default-gateway|mtu|speed|duplex|link-state|layer3|layer2|virtual-wire|tap|decrypt-mirror|aggregate-group)(?![a-zA-Z0-9_-])"
+    color: f.purple
+
+  - description: PAN-OS routing keywords
+    regex: "(?<![a-zA-Z0-9_-])(nexthop|metric|admin-dist|path-monitor|bfd|unicast|multicast|route|virtual-router)(?![a-zA-Z0-9_-])"
+    color: f.purple
+
+  - description: PAN-OS NAT keywords
+    regex: "(?<![a-zA-Z0-9_-])(nat|static-ip|dynamic-ip-and-port|dynamic-ip|destination-translation|source-translation|translated-address|translated-port|interface-address)(?![a-zA-Z0-9_-])"
+    color: f.purple
+
+  - description: PAN-OS address object types
+    regex: '\b(ip-netmask|ip-range|ip-wildcard|fqdn)\b'
+    color: f.purple
+
+  # ── Protocols (cyan) ───────────────────────────────────────────────────────
+  - description: PAN-OS L4 protocols
+    regex: "(?<![a-zA-Z0-9_-])(tcp|udp|icmp|icmpv6|sctp|gre|esp|ah)(?![a-zA-Z0-9_-])"
+    color: f.cyan
+
+  - description: PAN-OS routing protocols
+    regex: "(?<![a-zA-Z0-9_-])(ospf|bgp|rip|ebgp|ibgp)(?![a-zA-Z0-9_-])"
+    color: f.cyan
+
+  # ── NAT type (purple) ─────────────────────────────────────────────────────
+  - description: PAN-OS NAT rule type
+    regex: '\b(ipv4|nat64|nptv6)\b'
+    color: f.purple
+
+  # ── HA states (show high-availability state) ───────────────────────────────
+  - description: HA state active / active-active / active-passive
+    regex: '\b(active-active|active-passive|active)\b'
+    color: f.green bold
+
+  - description: HA state passive
+    regex: '\bpassive\b'
+    color: f.orange
+
+  - description: HA state suspended / non-functional / tentative
+    regex: '\b(suspended|non-functional|tentative|initial)\b'
+    color: f.red bold
+
+  - description: HA synchronization state synchronized
+    regex: '\b(?:synchronized|in sync)\b'
+    color: f.green
+
+  - description: HA synchronization state not synchronized
+    regex: '\b(?:not synchronized|out of sync)\b'
+    color: f.red bold
+
+  - description: HA priority / preemption keywords
+    regex: '\b(priority|preemptive|preemption|heartbeat|hello-interval)\b'
+    color: f.blue
+
+  # ── Session table (show session all) ──────────────────────────────────────
+  - description: Session state ACTIVE
+    regex: '\bACTIVE\b'
+    color: f.green
+
+  - description: Session state CLOSING / CLOSED
+    regex: '\b(CLOSING|CLOSED)\b'
+    color: f.orange
+
+  - description: Session state FREE / INIT
+    regex: '\b(FREE|INIT)\b'
+    color: f.grey
+
+  - description: Session type NS (normal) / PREDICT / TUNNEL
+    regex: '\b(NS|PREDICT|TUNNEL|APP-ID|CAPTIVE)\b'
+    color: f.cyan
+
+  - description: Session flag flow allow / deny
+    regex: '\bflow (allow|deny)\b'
     color:
       1: f.green
-      2: f.yellow
-      3: f.yellow
-      4: f.red
+
+  # ── Threat / log severity ─────────────────────────────────────────────────
+  - description: Severity critical
+    regex: '(?i)\bcritical\b'
+    color: f.red bold
+
+  - description: Severity high
+    regex: "(?i)(?<![a-zA-Z0-9_-])high(?![a-zA-Z0-9_-])"
+    color: f.red
+
+  - description: Severity medium
+    regex: '(?i)\bmedium\b'
+    color: f.orange
+
+  - description: Severity low
+    regex: "(?i)(?<![a-zA-Z0-9_-])low(?![a-zA-Z0-9_-])"
+    color: f.orange
+
+  - description: Severity informational
+    regex: '(?i)\binformational\b'
+    color: f.blue
+
+  # ── Counters / error conditions (show counter global) ─────────────────────
+  - description: Non-zero drop / error counter
+    regex: '[1-9]\d*\s+(?:drop|error|err|discard|exceed|overflow|timeout|fail)\w*'
+    color: f.red bold
+
+  - description: Counter severity error/warn labels
+    regex: '\b(error|warn)\b'
+    color: f.orange
+
+  # ── show routing route ─────────────────────────────────────────────────────
+  - description: Route flags active / best
+    regex: '\b[AEBHCSIO]\b(?=\s)'
+    color: f.cyan
+
+  - description: Route nexthop keyword
+    regex: '\bnexthop\b'
+    color: f.blue
+
+  - description: Route metric / preference
+    regex: '(?<![a-zA-Z0-9_-])(metric|preference)(?![a-zA-Z0-9_-])\s+\d+'
+    color: f.purple
+
+  - description: Route age / uptime
+    regex: '\b(?:(?:\d+w)?(?:\d+d)?\s*\d{1,2}:\d{2}:\d{2}|(?:\d+w)?\d+d|\d+w)\b'
+    color: f.orange
+    exclusive: true
+
+  # ── show arp all ──────────────────────────────────────────────────────────
+  - description: ARP entry complete / reachable
+    regex: '(?i)\b(complete|reachable|static)\b'
+    color: f.green
+
+  - description: ARP entry incomplete / stale
+    regex: '(?i)\b(incomplete|stale)\b'
+    color: f.red
+
+  # ── show system info ───────────────────────────────────────────────────────
+  - description: System info field labels
+    regex: '^\s*[a-z][a-z0-9_-]+\s*:'
+    color: f.blue
+
+  - description: System operational status
+    regex: '(?i)\b(operational|normal|degraded|failed)\b'
+    color: f.green
+
+  - description: System failed / degraded status
+    regex: '(?i)\b(failed|degraded|fault)\b'
+    color: f.red bold
+
+  - description: PAN-OS software version
+    regex: '\b\d+\.\d+\.\d+(?:-h\d+)?\b'
+    color: f.gold
+
+  # ── Timestamps / dates (grey) ─────────────────────────────────────────────
+  - description: Syslog / BSD timestamp (MMM DD HH:MM:SS)
+    regex: '\b(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+\d{1,2}\s+\d{2}:\d{2}:\d{2}\b'
+    color: f.grey
+    exclusive: true
+
+  - description: ISO 8601 datetime
+    regex: '\b\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}:\d{2}\b'
+    color: f.grey
+    exclusive: true
+
+  - description: Time only (HH:MM:SS)
+    regex: '\b\d{2}:\d{2}:\d{2}\b'
+    color: f.grey
+
+  # ── Syslog severity ────────────────────────────────────────────────────────
+  - description: Syslog ERROR severity
+    regex: '\bERROR\b'
+    color: f.red bold
+
+  - description: Syslog WARNING severity
+    regex: '\bWARNING\b'
+    color: f.orange bold
+
+  - description: Syslog INFO / NOTICE severity
+    regex: '\b(INFO|NOTICE)\b'
+    color: f.blue
+
+  # ── yes / no values ────────────────────────────────────────────────────────
+  - description: Boolean yes / enabled
+    regex: "(?<![a-zA-Z0-9_-])(yes|enabled)(?![a-zA-Z0-9_-])"
+    color: f.green
+
+  - description: Boolean no / disabled
+    regex: "(?<![a-zA-Z0-9_-])(no|disabled)(?![a-zA-Z0-9_-])"
+    color: f.red
