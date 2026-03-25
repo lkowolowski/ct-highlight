@@ -1,0 +1,312 @@
+palette:
+  #orange: '#dc8968'
+  #orange: '#c96901'
+  #orange: '#ca9102'
+  orange: "#f09536"
+  brown: "#a35a00"
+  blue_gray: "#5698c8"
+  light_blue: "#00D1DB"
+  #magenta: '#ef2e9f'
+  magenta: "#F701FF"
+  pink: "#df99f0"
+  red: "#c71800"
+  #yellow: '#cab902'
+  yellow: "#C6D243"
+  #yellow: '#a2bc02'
+  yellow_green: "#79bf02"
+  #green: '#03d28d'
+  green: "#28c501"
+  white: "#FFFFFF"
+  purple: "#8382f7"
+
+rules:
+  - description: Numbers
+    regex: \s(?<!\.)\d+(\.\d+)?(?!\.)(?:\s|,|$)
+    color: f.orange
+
+  - description: URL
+    regex: |
+      (?ix)(?:\s|^)
+          ((htt|ft|lda)ps?|telnet|ssh)://  # Scheme
+          ([-%:\w\\/]{1,256}@)?  # User info
+          [-\w]{1,63}(\.[-\w]{1,63}){0,126}(:\d{1,5})?  # Host and port
+          (/[-+=~@%&?#.:;,\w\\/()]*)?  # Path, query, and fragment
+      ((?=[.:;,)])|\s)  # Avoid highlighting trailing path characters by matching them in a lookahead
+    color: f.blue_gray
+    exclusive: true
+
+  - description: IPv4
+    regex: |
+      (?ix)
+      (?:\s|^)
+      (?<!\.)((25[0-5]|(2[0-4]|[0-1]?\d)?\d)\.){3}(25[0-5]|(2[0-4]|[0-1]?\d)?\d)(/\d+)?
+    color: f.light_blue
+    Exclusive: true
+
+  - description: IPv6
+    regex: |
+      (?ix)(?<![\w:])(
+          ([\da-f]{1,4}:){7}[\da-f]{1,4}|  # 1:2:3:4:5:6:7:8
+          [\da-f]{1,4}:(:[\da-f]{1,4}){1,6}|  # 1::3:4:5:6:7:8
+          ([\da-f]{1,4}:){1,2}(:[\da-f]{1,4}){1,5}|  # 1:2::4:5:6:7:8
+          ([\da-f]{1,4}:){1,3}(:[\da-f]{1,4}){1,4}|  # 1:2:3::5:6:7:8
+          ([\da-f]{1,4}:){1,4}(:[\da-f]{1,4}){1,3}|  # 1:2:3:4::6:7:8
+          ([\da-f]{1,4}:){1,5}(:[\da-f]{1,4}){1,2}|  # 1:2:3:4:5::7:8
+          ([\da-f]{1,4}:){1,6}:[\da-f]{1,4}|  # 1:2:3:4:5:6::8
+          ([\da-f]{1,4}:){1,7}:|  # 1:2:3:4:5:6:7::
+          :((:[\da-f]{1,4}){1,7}|:)  # ::2:3:4:5:6:7:8
+      )(:(?=\W))?  # \W is an exclusive-flag hack to color the : before an IPv4-embedded address
+      (%[\da-z]+)?  # Zone index
+      (/\d+)?  # Prefix length
+      (?!:?\w)
+    color: f.light_blue
+    exclusive: true
+
+  - description: MAC address
+    regex: |
+      (?ix:\ )
+      ([\da-f]{1,2}:){5}[\da-f]{1,2} |  # 11:22:33:aa:bb:cc
+      ([\da-f]{4}\.){2}[\da-f]{4}  # 1122.33aa.bbcc
+      (?:\ |$)
+    color: f.blue_gray
+    exclusive: true
+
+  - description: Date
+    regex: |
+      (?ix)(?:\s|^)(
+          (\d{2}|\d{4})(?P<sep1>[-/])(0?[1-9]|1[0-2])(?P=sep1)(3[0-1]|[1-2]\d|0?[1-9])|  # YYYY-MM-DD, YY-MM-DD, YYYY/MM/DD, YY/MM/DD
+          (3[0-1]|[1-2]\d|0?[1-9])(?P<sep2>[-/])(0?[1-9]|1[0-2])(?P=sep2)(\d{2}|\d{4})|  # DD-MM-YYYY, DD-MM-YY, DD/MM/YYYY, DD/MM/YY
+          (0?[1-9]|1[0-2])(?P<sep3>[-/])(3[0-1]|[1-2]\d|0?[1-9])(?P=sep3)(\d{2}|\d{4})|  # MM-DD-YYYY, MM-DD-YY, MM/DD/YYYY, MM/DD/YY
+          (jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\s+(  # MMM
+              (3[0-1]|[1-2]\d|0?[1-9])(\s+\d{4})?|\d{4}  # DD (YYYY)?, YYYY
+          )|(3[0-1]|[1-2]\d|0?[1-9])\s(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)(?!\s+(3[0-1]|[1-2]\d|0?[1-9])([^\w:]|$))(\s+\d{4})?  # DD MMM (YYYY)?
+      )((?=[\WT_])|$)
+    color: f.orange
+    exclusive: true
+
+  - description: Time
+    regex: |
+      (?ix)(?<![\.:])(\s|(?<=T))
+          (2[0-3]|[0-1]\d):[0-5]\d  # Hours and minutes
+          (:[0-5]\d([\.,]\d{3,6})?)?  # (Seconds (sub-seconds, 3 to 6 decimal places)?)?
+          ([\-\+](\d{2}|\d{4})|Z)?  # (Timezone)?
+      (?![\.:])(?:\s|$)
+    color: f.orange
+    exclusive: true
+
+  - description: Size, like 123G 123Gb 123Gib 1.23G 123Gbps
+    regex: |
+      (?ix)
+      (?:\s|^)
+      \d+(\.\d+)?\s?((([kmgtpezy](i?b)?)|b)(ps)?)(/s)?
+      (?:\s|$)
+    color:
+      0: f.pink
+      2: bold
+    exclusive: true
+
+  # Interfaces colored orange
+  - description: Interfaces names
+    regex: |
+      (?x)
+      (?:\ |^)
+      (tunnel\.\d+)| (tunnel) | # IPSec tunnels
+      (ethernet\d+\/\d+) | # Ethernet interfaces
+      (ha\d-[ab]) | # HA interfaces
+      (loopback\.\d+)| (loopback) | # loopback interfaces
+      (ae\d+\.\d+)|(ae\d+) | # Aggregate interfaces
+      (vlan) | # Vlan interfaces
+      (hsci) # HSCI interfaces
+      (?:\ |$)
+    color: f.orange
+
+  # interface descriptions can start with a space, double quote, and end with double quote, or semi-colon
+  - description: Interface description (Light blue)
+    regex: |
+      (?ix)
+      (?:\ |^)
+      (?:(?:D|d)escription\:?\s)
+      (.*)|
+      (?:(?:up|down)\ +(?:up|down)\ +)(.*)
+      (?:\s|$)
+    color:
+      1: f.light_blue
+      2: f.light_blue
+    exclusive: true
+
+  # By default, interface up/up and down/down are properly colored (green/green, red/red)
+  - description: Interface descriptions
+    regex: |
+      (?ix)
+      (?:\ )
+      (
+      (up\ +up)| # up/up is green
+      (up\ +down)| # up/down is yellow
+      (down\ +down)| # down/down is red
+      (down\ +up) # down/up is red
+      )
+      (?:\ |$)
+    color:
+      2: f.green
+      3: f.yellow
+      4: f.red
+      5: f.red
+
+  # Prefix lists
+  - description: prefix-list  set commands
+    regex: |
+      (?ix)
+      (?:\ |^)
+      ((set|deactivate)\ policy-options\ prefix-list)\ ([a-zA-Z0-9_-]+) # set statement (white) name (green)
+      (\ (apply-path)\ (\".*(\<.*\>)\")?)? # apply-path (white)
+    color:
+      1: f.white
+      3: f.green
+      5: f.white
+      6: f.light_blue
+
+  # Routing policies
+  - description: Routing policies set commands
+    regex: |
+      (?ix)(?:^)
+      ((set|deactivate)\spolicy-options\spolicy-statement\s) # set statement (white)
+      ([a-zA-Z0-9_-]+\s)  # policy name (green)
+      ((from|then)?|  # from/then clause (white))
+      ((term\ )([a-zA-Z0-9_-]+\ )(then))?)  # term (white) term-name (green) then (white)
+      (?:\s)
+    color:
+      1: f.white
+      3: f.green
+      5: f.white
+      7: f.white
+      8: f.green
+      9: f.white
+
+  # Firewall rules
+  - description: Firewall filter name (green) apply-flags|then (white) set commands
+    regex: |
+      (?ix)
+      (?:\ |^)
+      ((set|deactivate)\ firewall\ family\ inet6?\ filter\ ) # set command (white)
+      ([a-zA-Z0-9_-]+)\ # filter-name (green)
+      ((apply-flags\ omit)|((term)\ ([a-zA-Z0-9_-]+)\ (from|then))) # apply flags (white), term (white), term-name (green), from/then (white)
+      (?:\ |$)
+    color:
+      1: f.white
+      3: f.green
+      5: f.white
+      7: f.white
+      8: f.green
+      9: f.white
+
+  # Security Policies
+  - description: Security policies set commands
+    regex: |
+      (?ix)
+      (?:\ |^)
+      ((set|deactivate)(\ groups\ [a-zA-Z0-9_-]+)?\ security\ policies\ from-zone)\  # set command (white)
+      ([a-zA-Z0-9_\-\<\>\*]+)\ # zone (green)
+      (to-zone)\ # to-zone (white)
+      ([a-zA-Z0-9_\-\<\>\*]+)\ # zone (red)
+      (policy|apply-groups)\ # policy/apply-groups (white)
+      ([a-zA-Z0-9_-]+) # policy-name (green)
+      (?:\ |$)
+    color:
+      1: f.white
+      4: f.green
+      5: f.white
+      6: f.red
+      7: f.white
+      8: f.green
+
+  - description: Security policies - hierarchical apply-groups
+    regex: |
+      (?x)
+      (?:\ |^)
+      (apply-groups)
+      (?:\ \[)?
+      ([a-zA-Z0-9_\-\s]+)
+      (?:\ \])?
+      (?:;$)
+    color:
+      1: f.white
+      2: f.green
+
+  - description: Security Policies - hierarchical
+    regex: |
+      (?x)
+      (?:\ |^)
+      (inactive:\ )?
+      (policy\ +)
+      (["\/a-zA-Z-2-9\.\ _\*\(\)\,-]+) # policy (white)
+      (?:{?)
+      (\ |$)
+    color:
+      1: f.white
+      2: f.white
+      3: f.green
+
+  - description: Security Policies Description - hierarchical
+    regex: |
+      (?x)
+      (?:\ |^)
+      (?:description\ +)
+      ([a-zA-Z0-9\.\ _\*\(\)\,\/\'\"-]+) # description (light blue)
+      (?:\;$)
+    color:
+      1: f.light_blue
+
+  - description: Security Policies - hierarchical Match|Then
+    regex: |
+      (?x)
+      (?:\ |^)
+      (match|then) # white
+      (?:\ \{$)
+    color: f.white
+
+  - description: Security Policies - hierarchical Source-Adress/Destination-Address
+    regex: |
+      (?x)
+      (?:\ +|^)
+      (
+      (source-address)| # white
+      (destination-address)| # white
+      (application)
+      )
+      (?:\ \[)? # optionally start a list
+      ([a-zA-Z0-9_\-\s\/\.]+) # address object(s)
+      (?:\ \])? # optionally terminate a list
+      (?:;?)$
+    color:
+      1: f.white
+      5: f.green
+
+  - description: Security Policies - reject or deny (Red Italic Style)
+    regex: |
+      (?x)
+      (?:\ |^)
+      (
+      (permit)| # permit (green)
+      ((reject)|(deny)|(log [/a-zA-Z0-9\._-]+)) # reject/deny/log (red)
+      )
+      (?:;$)
+    color:
+      2: f.green
+      3: f.red
+
+  - description: BGP summary
+    regex: |
+      (?ix)
+      (?:\:\d+\ )?
+      (?:
+      (establ)|
+      (active)|
+      (connect)|
+      (idle)
+      )
+      (?:$)
+    color:
+      1: f.green
+      2: f.yellow
+      3: f.yellow
+      4: f.red
