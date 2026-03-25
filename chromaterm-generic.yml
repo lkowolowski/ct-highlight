@@ -1,84 +1,71 @@
-- description: Numbers
-  regex: \s(?<!\.)\d+(\.\d+)?(?!\.)(?:\s|,|$)
-  color: f.orange
+# ChromaTerm default highlight rules
+# Used when no profile is specified or the specified profile does not exist.
+# Covers universally useful patterns: addresses, URLs, timestamps.
+#
+# Palette matches the shared semantic palette used across all profiles
+# so output looks consistent when switching between profiles:
+#   gold    #e5c07b  network addresses (IPv4, IPv6, MAC)
+#   cyan    #56b6c2  URLs
+#   grey    #7c8fa0  timestamps / dates
+#
+# Rule ordering: more specific patterns first so exclusive correctly
+# protects complex tokens (MAC, IPv6) from being fragmented by simpler ones.
 
-- description: URL
-  regex: |
-    (?ix)(?:\s|^)
-        ((htt|ft|lda)ps?|telnet|ssh)://  # Scheme
-        ([-%:\w\\/]{1,256}@)?  # User info
-        [-\w]{1,63}(\.[-\w]{1,63}){0,126}(:\d{1,5})?  # Host and port
-        (/[-+=~@%&?#.:;,\w\\/()]*)?  # Path, query, and fragment
-    ((?=[.:;,)])|\s)  # Avoid highlighting trailing path characters by matching them in a lookahead
-  color: f.blue_gray
-  exclusive: true
+palette:
+  gold: "#e5c07b"
+  cyan: "#56b6c2"
+  grey: "#7c8fa0"
 
-- description: IPv4
-  regex: |
-    (?ix)
-    (?:\s|^)
-    (?<!\.)((25[0-5]|(2[0-4]|[0-1]?\d)?\d)\.){3}(25[0-5]|(2[0-4]|[0-1]?\d)?\d)(/\d+)?
-  color: f.light_blue
-  exclusive: true
+rules:
+  # ── URLs (cyan) ────────────────────────────────────────────────────────────
+  # Match before IPv4 so http://1.2.3.4/path is caught as a whole URL
+  - description: URL (http / https)
+    regex: 'https?://[a-zA-Z0-9\-._~:/?#\[\]@!$&''()*+,;=%]+'
+    color: f.cyan
+    exclusive: true
 
-- description: IPv6
-  regex: |
-    (?ix)(?<![\w:])(
-        ([\da-f]{1,4}:){7}[\da-f]{1,4}|  # 1:2:3:4:5:6:7:8
-        [\da-f]{1,4}:(:[\da-f]{1,4}){1,6}|  # 1::3:4:5:6:7:8
-        ([\da-f]{1,4}:){1,2}(:[\da-f]{1,4}){1,5}|  # 1:2::4:5:6:7:8
-        ([\da-f]{1,4}:){1,3}(:[\da-f]{1,4}){1,4}|  # 1:2:3::5:6:7:8
-        ([\da-f]{1,4}:){1,4}(:[\da-f]{1,4}){1,3}|  # 1:2:3:4::6:7:8
-        ([\da-f]{1,4}:){1,5}(:[\da-f]{1,4}){1,2}|  # 1:2:3:4:5::7:8
-        ([\da-f]{1,4}:){1,6}:[\da-f]{1,4}|  # 1:2:3:4:5:6::8
-        ([\da-f]{1,4}:){1,7}:|  # 1:2:3:4:5:6:7::
-        :((:[\da-f]{1,4}){1,7}|:)  # ::2:3:4:5:6:7:8
-    )(:(?=\W))?  # \W is an exclusive-flag hack to color the : before an IPv4-embedded address
-    (%[\da-z]+)?  # Zone index
-    (/\d+)?  # Prefix length
-    (?!:?\w)
-  color: f.light_blue
-  exclusive: true
+  # ── MAC addresses (gold) ──────────────────────────────────────────────────
+  # Match before IPv4/IPv6 — MAC octets contain digits that IPv4 would grab
+  - description: MAC address (colon-separated)
+    regex: '\b[0-9a-fA-F]{2}(?::[0-9a-fA-F]{2}){5}\b'
+    color: f.gold
+    exclusive: true
 
-- description: MAC address
-  regex: |
-    (?ix:\s)(
-        (?<!:)([\da-f]{1,2}:){5}[\da-f]{1,2}(?!:)|  # 11:22:33:aa:bb:cc
-        (?<!\.)([\da-f]{4}\.){2}[\da-f]{4}(?!\.)  # 1122.33aa.bbcc
-    )(?:\s|$)
-  color: f.blue_gray
-  exclusive: true
+  - description: MAC address (Cisco dotted notation)
+    regex: '\b[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}\.[0-9a-fA-F]{4}\b'
+    color: f.gold
+    exclusive: true
 
-- description: Date
-  regex: |
-    (?ix)(?:\s|^)(
-        (\d{2}|\d{4})(?P<sep1>[-/])(0?[1-9]|1[0-2])(?P=sep1)(3[0-1]|[1-2]\d|0?[1-9])|  # YYYY-MM-DD, YY-MM-DD, YYYY/MM/DD, YY/MM/DD
-        (3[0-1]|[1-2]\d|0?[1-9])(?P<sep2>[-/])(0?[1-9]|1[0-2])(?P=sep2)(\d{2}|\d{4})|  # DD-MM-YYYY, DD-MM-YY, DD/MM/YYYY, DD/MM/YY
-        (0?[1-9]|1[0-2])(?P<sep3>[-/])(3[0-1]|[1-2]\d|0?[1-9])(?P=sep3)(\d{2}|\d{4})|  # MM-DD-YYYY, MM-DD-YY, MM/DD/YYYY, MM/DD/YY
-        (jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\s+(  # MMM
-            (3[0-1]|[1-2]\d|0?[1-9])(\s+\d{4})?|\d{4}  # DD (YYYY)?, YYYY
-        )|(3[0-1]|[1-2]\d|0?[1-9])\s(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)(?!\s+(3[0-1]|[1-2]\d|0?[1-9])([^\w:]|$))(\s+\d{4})?  # DD MMM (YYYY)?
-    )((?=[\WT_])|$)
-  color: f.orange
-  exclusive: true
+  # ── IPv6 addresses (gold underline) ───────────────────────────────────────
+  # Requires :: or a hex letter to distinguish from HH:MM:SS time strings
+  - description: IPv6 address (with optional prefix length or zone ID)
+    regex: '(?:::(?:[0-9a-fA-F]{1,4}:)*[0-9a-fA-F]{0,4}|(?:[0-9a-fA-F]{1,4}:)+:[0-9a-fA-F]{0,4}|[0-9a-fA-F]*[a-fA-F][0-9a-fA-F]*(?::[0-9a-fA-F]{0,4}){1,7})(?:%[a-z][a-z0-9]*)?(?:/\d{1,3})?'
+    color: f.gold underline
+    exclusive: true
 
-- description: Time
-  regex: |
-    (?ix)(?<![\.:])(\s|(?<=T))
-        (2[0-3]|[0-1]\d):[0-5]\d  # Hours and minutes
-        (:[0-5]\d([\.,]\d{3,6})?)?  # (Seconds (sub-seconds, 3 to 6 decimal places)?)?
-        ([\-\+](\d{2}|\d{4})|Z)?  # (Timezone)?
-    (?![\.:])(?:\s|$)
-  color: f.orange
-  exclusive: true
+  # ── IPv4 addresses (gold underline) ───────────────────────────────────────
+  - description: IPv4 address (with optional prefix length)
+    regex: '\b(25[0-5]|2[0-4]\d|[01]?\d{1,2})(\.(25[0-5]|2[0-4]\d|[01]?\d{1,2})){3}(/[0-9]{1,2})?\b'
+    color: f.gold underline
+    exclusive: true
 
-- description: Size, like 123G 123Gb 123Gib 1.23G 123Gbps
-  regex: |
-    (?ix)
-    (?:\s|^)
-    \d+(\.\d+)?\s?((([kmgtpezy](i?b)?)|b)(ps)?)(/s)?
-    (?:\s|$)
-  color:
-    0: f.pink
-    2: bold
-  exclusive: true
+  # ── Timestamps and dates (grey) ───────────────────────────────────────────
+  - description: Syslog / BSD timestamp (MMM DD HH:MM:SS)
+    regex: '\b(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+\d{1,2}\s+\d{2}:\d{2}:\d{2}\b'
+    color: f.grey
+    exclusive: true
+
+  - description: ISO 8601 datetime (YYYY-MM-DD HH:MM:SS or YYYY-MM-DDTHH:MM:SS)
+    regex: '\b\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}:\d{2}\b'
+    color: f.grey
+    exclusive: true
+
+  - description: Apache / common log date (DD/Mon/YYYY:HH:MM:SS)
+    regex: '\b\d{2}/(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)/\d{4}:\d{2}:\d{2}:\d{2}\b'
+    color: f.grey
+    exclusive: true
+
+  - description: Time only (HH:MM:SS)
+    regex: '\b\d{2}:\d{2}:\d{2}\b'
+    color: f.grey
+    exclusive: true

@@ -1,0 +1,39 @@
+hostname: PA-850
+ip-address: 10.10.10.23
+public-ip-address: unknown
+netmask: 255.255.255.0
+default-gateway: 10.10.10.1
+ip-assignment: static
+ipv6-address: unknown
+ipv6-link-local-address: fe80::d6f4:beff:febe:ba00/64
+ipv6-default-gateway:
+mac-address: d4:f4:be:be:ba:00
+time: Tue Feb  12 08:40:09 2019
+uptime: 6 days, 11:51:18
+family: 800
+model: PA-850
+serial: 011901000300
+cloud-mode: non-cloud
+sw-version: 9.0.0-c300
+global-protect-client-package-version: 0.0.0
+app-version: 8114-5254
+app-release-date: 2019/01/16 15:14:11 PST
+av-version: 2860-3370
+av-release-date: 2019/01/16 10:05:59 PST
+threat-version: 8114-5254
+threat-release-date: 2019/01/16 15:14:11 PST
+wf-private-version: 0
+wf-private-release-date: unknown
+url-db: paloaltonetworks
+wildfire-version: 314895-317564
+wildfire-release-date: 2019/01/16 18:20:09 PST
+url-filtering-version: 20190201.20201
+global-protect-datafile-version: unknown
+global-protect-datafile-release-date: unknown
+global-protect-clientless-vpn-version: 0
+global-protect-clientless-vpn-release-date:
+logdb-version: 9.0.10
+platform-family: 800
+vpn-disable-mode: off
+multi-vsys: off
+operational-mode: normal

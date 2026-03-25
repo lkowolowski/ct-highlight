@@ -1,0 +1,16 @@
+router eigrp 1
+ redistribute ospf 1 route-map ospf-to-eigrp
+ default-metric 20000 2000 255 1 1500
+!--- Output suppressed.
+!
+route-map ospf-to-eigrp deny 10
+ match tag 6
+ match route-type external type-2
+!
+route-map ospf-to-eigrp permit 20
+ match ip address prefix-list pfx
+ set metric 40000 1000 255 1 1500
+!
+route-map ospf-to-eigrp permit 30
+ set tag 8
+!

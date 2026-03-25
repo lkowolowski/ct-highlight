@@ -1,0 +1,30 @@
+-------------------------------------------------------------------------------
+Name: Management Interface
+Link status:
+ Runtime link speed/duplex/state: unknown/unknown/up
+ Configured link speed/duplex/state: auto/auto/auto
+MAC address:
+ Port MAC address 00:0c:29:00:00:00
+
+Ip address: 10.21.56.125
+Netmask: 255.255.255.0
+Default gateway: 10.21.56.1
+Ipv6 address: unknown
+Ipv6 link local address: fe80::20c:0000:0000:0000/64
+Ipv6 default gateway:
+-------------------------------------------------------------------------------
+
+
+-------------------------------------------------------------------------------
+Logical interface counters:
+-------------------------------------------------------------------------------
+bytes received                   250891661
+bytes transmitted                56986084
+packets received                 855754
+packets transmitted              218444
+receive errors                   0
+transmit errors                  0
+receive packets dropped          55276
+transmit packets dropped         0
+multicast packets received       56
+-------------------------------------------------------------------------------

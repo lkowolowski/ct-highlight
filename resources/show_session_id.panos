@@ -1,0 +1,33 @@
+session    35299
+        c2s flow:
+                source:  x.x.x.x[corp-trust]
+                dst:      x.x.x.x
+                sport:    52648        dport:    80
+                proto:    6            dir:      c2s
+                state:    INIT          type:    FLOW
+                ipver:    4
+                src-user: unknown
+                dst-user: unknown
+        s2c flow:
+                source:  x.x.x.x[corp-untrust]
+                dst:      x.x.x.x
+                sport:    80            dport:    52648
+                proto:    6            dir:      s2c
+                state:    INIT          type:    FLOW
+                ipver:    4
+                src-user: unknown
+                dst-user: unknown
+        start time            : Thu May 28 11:31:58 2009
+        timeout              : 30 sec
+        total byte count      : 1603
+        layer7 packet count  : 13
+        vsys                  : vsys1
+        application          : facebook
+        rule                  : rule38
+        session to be logged at end      : yes
+        session in session ager          : no
+        session sync'ed from HA peer    : no
+        layer7 processing                : enabled
+        URL filtering enabled            : yes
+        URL category                    : personal-sites-and-blogs
+        session QoS rule index          : default (class 4)

@@ -1,0 +1,6 @@
+!
+ip prefix-list aws-prefix-list
+ seq 10 permit 10.100.0.0/14
+ seq 20 permit 10.104.0.0/14
+ seq 30 permit 10.10.2.20/8 ge 8 le 24
+!
